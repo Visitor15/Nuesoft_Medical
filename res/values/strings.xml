@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Nuesoft Medical</string>
+    <string name="action_settings">Settings</string>
+    <string name="medication">Medication</string>
+    <string name="allergies">Allergies</string>
+    <string name="family_history">Family History</string>
+    <string name="social_information">Social Information</string>
+    <string name="immunizations">Immunization</string>
+    <string name="history">History</string>
+	<string name="patient_summary">Patient Summary</string>
+	<string name="overview">Overview</string>
+	<string name="reason_for_referral">Reason for referral</string>
+	<string name="reason_for_visit">Reason for visit</string>
+	<string name="current_referral">Current Referral</string>
+	<string name="patient_records">Patient Records</string>
+	<string name="patient_history">Patient History</string>
+	<string name="previous_referrals">Previous Referrals</string>
+    
+</resources>

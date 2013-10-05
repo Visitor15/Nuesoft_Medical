@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="64dip"
+    android:layout_height="64dip" >
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/place_holder_icon" />
+
+    <com.mobile.nuesoft.ui.NuesoftTextView
+        android:id="@+id/nt_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        custom:textStyle="fonts/Roboto-Bold.ttf"
+        android:padding="4dip"
+        android:layout_below="@id/iv_icon" />
+
+</RelativeLayout>

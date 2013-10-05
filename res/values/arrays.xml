@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="profile_categories">
+        <item>@string/overview</item>
+        <item>@string/medication</item>
+        <item>@string/allergies</item>
+        <item>@string/family_history</item>
+        <item>@string/patient_history</item>
+        <item>@string/social_information</item>
+        <item>@string/immunizations</item>
+    </string-array>
+
+    <integer-array name="profile_category_icons">
+        <item>@drawable/place_holder_icon</item>
+        <item>@drawable/place_holder_icon</item>
+        <item>@drawable/place_holder_icon</item>
+        <item>@drawable/place_holder_icon</item>
+        <item>@drawable/place_holder_icon</item>
+        <item>@drawable/place_holder_icon</item>
+    </integer-array>
+
+    <string-array name="document_categories">
+        <item>@string/overview</item>
+        <item>@string/reason_for_referral</item>
+        <item>@string/reason_for_visit</item>
+        <item>@string/previous_referrals</item>
+    </string-array>
+
+</resources>

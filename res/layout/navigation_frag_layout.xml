@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.mobile.nuesoft.ui.NuesoftTextView
+        android:id="@+id/nt_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dip"
+        android:text="Patient&apos;s Name"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="240dp"
+        android:layout_height="0dip"
+        android:layout_gravity="start"
+        android:layout_weight="1"
+        android:cacheColorHint="@null"
+        android:choiceMode="singleChoice"
+        android:divider="#FFFFFF"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/ll_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dip" >
+
+        <ImageView
+            android:id="@+id/iv_settings"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:src="@drawable/action_settings" />
+    </LinearLayout>
+
+</LinearLayout>
