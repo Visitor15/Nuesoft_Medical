@@ -8,10 +8,10 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
 import android.util.Base64;
-import android.util.Log;
 
 /*
- * Simple class used to represent a user during registration or login
+ * Simple class used to represent a user during registration or login.
+ * This is also the object that gets stored in preferences after a successful registraton.
  */
 public class NuesoftUser {
 	
