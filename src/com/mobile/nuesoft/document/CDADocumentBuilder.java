@@ -2,6 +2,8 @@ package com.mobile.nuesoft.document;
 
 import java.util.ArrayList;
 
+import android.net.Uri;
+
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 
 public class CDADocumentBuilder {
@@ -24,11 +26,18 @@ public class CDADocumentBuilder {
 	private String mCode;
 	private String mCodeSystem;
 	private String mCodeSystemName;
+	private Uri docUri;
 
-	public CDADocumentBuilder() {
+	public CDADocumentBuilder() {}
 
+	public Uri getDocUri() {
+		return this.docUri;
 	}
-
+	
+	public void setDocUri(final Uri docUri) {
+		this.docUri = docUri;
+	}
+	
 	public String getmID() {
 		return mID;
 	}
@@ -181,6 +190,7 @@ public class CDADocumentBuilder {
 		private final String CODE;
 		private final String CODE_SYSTEM;
 		private final String CODE_SYSTEM_NAME;
+		private final Uri DOC_URI;
 
 		public CDADocument(final CDADocumentBuilder builder) {
 			this.PATIENT = builder.getmPatient();
@@ -199,6 +209,11 @@ public class CDADocumentBuilder {
 			this.CODE = builder.getmCode();
 			this.CODE_SYSTEM = builder.getmCodeSystem();
 			this.CODE_SYSTEM_NAME = builder.getmCodeSystemName();
+			this.DOC_URI = builder.getDocUri();
+		}
+		
+		public Uri getDOC_URI() {
+			return DOC_URI;
 		}
 
 		public String getID() {
@@ -271,6 +286,7 @@ public class CDADocumentBuilder {
 			int i = 0;
 
 			val += "CDADocument: " + this.getDISPLAY_TITLE() + "\n";
+			val += "URI: " + this.getDOC_URI() + "\n";
 			val += "PATIENT: " + this.getPATIENT().getDisplayName();
 			val += "CREATED: " + this.getEFFECTIVE_TIME() + "\n";
 			val += "SUMMARY: " + this.getSUMMARY_TITLE() + "\n";
