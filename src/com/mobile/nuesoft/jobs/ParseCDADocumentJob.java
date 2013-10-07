@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -216,6 +217,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		dataNode = XMLParserUtil.getNode("serviceEvent", dataNode.getChildNodes());
 		mServiceEvent = parseForServiceEvent(dataNode);
 
+		docBuilder.setDocUri(Uri.fromFile(docFile));
 		docBuilder.setmPatient(patient);
 		docBuilder.setmAuthor(mAuthors);
 		docBuilder.setmCode(mCode);
