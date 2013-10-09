@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.mobile.nuesoft.ui.DocumentListFragment;
 import com.mobile.nuesoft.ui.FragmentCallbackEvent;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
+import com.mobile.nuesoft.util.Util;
 
 public class MainActivity extends FragmentActivity {
 
@@ -26,6 +29,8 @@ public class MainActivity extends FragmentActivity {
 	private RelativeLayout mainContainer;
 
 	private DrawerLayout navDrawer;
+	
+	private ImageView navHandle;
 
 	private OnFragmentCallbackListener fragCallbackListener = new OnFragmentCallbackListener();
 
@@ -81,16 +86,33 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void init() {
-		navDrawer.setScrimColor(Color.parseColor("#CC000000"));
-
+		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
+		
 		Fragment frag = new DocumentListFragment();
 		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, DocumentListFragment.TAG)
 		        .commit();
+		
+		initNavHandle();
 	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
 		this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag, NuesoftFragment.TAG)
 		        .addToBackStack(NuesoftFragment.TAG).commit();
+	}
+	
+	private void initNavHandle() {
+		navHandle = new ImageView(Nuesoft.getReference());
+		
+		navHandle.setBackgroundResource(R.drawable.nav_handle);
+		navHandle.setImageResource(R.drawable.menu_overflow);
+		
+		int width = Util.convertDpToPixel(32f, this);
+		int height = Util.convertDpToPixel(32f, this);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		navHandle.setLayoutParams(params);
+		
+		mainContainer.addView(navHandle);
 	}
 
 	private void onHandleFragmentCallback(final int actionID) {
