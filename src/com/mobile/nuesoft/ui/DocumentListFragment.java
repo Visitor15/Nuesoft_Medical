@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +149,14 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 			TextView textView = (TextView) convertView.findViewById(R.id.nt_text);
 			textView.setText(mDocFile.name);
+			
+			TextView dateTextView = (TextView) convertView.findViewById(R.id.nt_date_value);
+			
+			File data = new File(mDocFile.mUri.getPath());
+			if(data.exists()) {
+				CharSequence mDate = DateFormat.format("MM-dd-yyyy", data.lastModified());
+				dateTextView.setText(mDate);
+			}
 			
 			mContainer.setOnClickListener(DocumentListFragment.this);
 

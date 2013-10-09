@@ -5,15 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    
+    
     <com.mobile.nuesoft.ui.NuesoftTextView
         android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="12dip"
-        android:text="Available referrals"
-        android:textColor="#AA282828"
-        android:textSize="24sp"
+        android:layout_marginTop="12dip"
+        android:layout_marginBottom="12dip"
+        android:padding="20dip"
+        android:text="Available Documents"
+        android:background="#AA282828"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
     <ListView
