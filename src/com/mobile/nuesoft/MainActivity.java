@@ -91,28 +91,11 @@ public class MainActivity extends FragmentActivity {
 		Fragment frag = new DocumentListFragment();
 		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, DocumentListFragment.TAG)
 		        .commit();
-		
-		initNavHandle();
 	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
 		this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag, NuesoftFragment.TAG)
 		        .addToBackStack(NuesoftFragment.TAG).commit();
-	}
-	
-	private void initNavHandle() {
-		navHandle = new ImageView(Nuesoft.getReference());
-		
-		navHandle.setBackgroundResource(R.drawable.nav_handle);
-		navHandle.setImageResource(R.drawable.menu_overflow);
-		
-		int width = Util.convertDpToPixel(32f, this);
-		int height = Util.convertDpToPixel(32f, this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		navHandle.setLayoutParams(params);
-		
-		mainContainer.addView(navHandle);
 	}
 
 	private void onHandleFragmentCallback(final int actionID) {
