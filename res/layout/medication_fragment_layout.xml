@@ -26,7 +26,9 @@
 
         <include
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
             layout="@layout/medication_fragment_meds_layout" />
     </RelativeLayout>
 

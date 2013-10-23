@@ -17,10 +17,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
+import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
 
 public class DocumentListFragment extends NuesoftFragment implements OnClickListener {
 
@@ -178,12 +178,16 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
     public void onClick(View v) {
 	    Uri mUri = Uri.parse((String) v.getTag());
 	    
-	    Log.d(TAG, "CLICKED URI: " + mUri);
-	    
-	    Bundle b = new Bundle();
-		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
-		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
-		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+	    ParseCDADocumentJob job = new ParseCDADocumentJob();
+	    job.execute(mUri.getPath());
+//	    
+//	    
+//	    Log.d(TAG, "CLICKED URI: " + mUri);
+//	    
+//	    Bundle b = new Bundle();
+//		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+//		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
+//		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
+//		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
     }
 }

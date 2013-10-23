@@ -90,8 +90,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
 		navHandle.setOnClickListener(this);
 		
-		Fragment frag = new DocumentListFragment();
-		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, DocumentListFragment.TAG)
+		Fragment frag = new PatientFragment();
+		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, PatientFragment.TAG)
 		        .commit();
 	}
 	
@@ -134,7 +134,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					case 0: {
 						unlockDrawer();
 						Uri mUri = Uri.parse(b.getString(FragmentCallbackEvent.DATA));
-						replaceMainContent(new PatientFragment(mUri));
+						replaceMainContent(new PatientFragment());
 						break;
 					}
 				}

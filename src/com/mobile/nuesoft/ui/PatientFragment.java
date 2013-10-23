@@ -29,8 +29,6 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 
 public class PatientFragment extends NuesoftFragment implements OnPatientObjUpdated {
 
-	public static final String TAG = "PatientFragment";
-
 	public static final int NUM_OF_CARDS = 5;
 
 	private ViewPager mPager;
@@ -56,10 +54,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	private OnPatientUpdatedListener onPatientUpdatedListener = new OnPatientUpdatedListener();
 
 	public PatientFragment() {
-	}
-
-	public PatientFragment(final Uri parseUri) {
-		this.parseUri = parseUri;
+		TAG = "PatientFragment";
 	}
 
 	@Override
@@ -84,19 +79,19 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentStart() {
-		if (docParseJob == null || shouldParse) {
-			docParseJob = new ParseCDADocumentJob();
-
-			if (parseUri != null) {
-				docParseJob.execute(parseUri.getPath());
-			} else if (docPath != null || docPath.trim().length() > 0) {
-				docParseJob.execute(docPath);
-				
-				shouldParse = false;
-			} else {
-				Toast.makeText(getActivity(), "A parse error has occurred: No file found", Toast.LENGTH_LONG).show();
-			}
-		}
+//		if (docParseJob == null || shouldParse) {
+//			docParseJob = new ParseCDADocumentJob();
+//
+//			if (parseUri != null) {
+//				docParseJob.execute(parseUri.getPath());
+//			} else if (docPath != null || docPath.trim().length() > 0) {
+//				docParseJob.execute(docPath);
+//				
+//				shouldParse = false;
+//			} else {
+//				Toast.makeText(getActivity(), "A parse error has occurred: No file found", Toast.LENGTH_LONG).show();
+//			}
+//		}
 	}
 
 	@Override
