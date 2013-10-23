@@ -23,6 +23,7 @@
         android:layout_weight="1" >
 
         <com.mobile.nuesoft.ui.ProfilePicImageView
+            android:id="@+id/nt_profile_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dip"

@@ -7,8 +7,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -22,7 +22,7 @@ import com.mobile.nuesoft.ui.FragmentCallbackEvent;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
 
-public class MainActivity extends FragmentActivity implements OnClickListener {
+public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	public static final String TAG = "MainActivity";
 

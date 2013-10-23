@@ -8,10 +8,10 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +37,9 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	private ScreenSlidePagerAdapter mPagerAdapter;
 
-	// private SlidingDrawer mDrawer;
-	//
-	// private GridView mDrawerGridView;
-
 	private TextView mPatientTitleName;
+	
+	private ProfilePicImageView profileIcon;
 
 	private PatientObj mPatient;
 
@@ -109,34 +107,22 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	@Override
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_frag_layout, null);
-
-//		activeReferralContainer = (LinearLayout) v.findViewById(R.id.ll_active_referrals_container);
+		
 		mPatientTitleName = (TextView) v.findViewById(R.id.nt_name);
-
+		profileIcon = (ProfilePicImageView) v.findViewById(R.id.nt_profile_pic);
+		
 		// Instantiate a ViewPager and a PagerAdapter.
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
 		mPager.setAdapter(mPagerAdapter);
 		
-//		initActiveReferralFragment();
-
 		return v;
 	}
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-
+		((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(profileIcon.getDrawable());
 	}
-
-//	private void initActiveReferralFragment() {
-//		this.getChildFragmentManager().beginTransaction()
-//		        .replace(R.id.ll_active_referrals_container, new ActiveReferralsFragment()).commit();
-//	}
-
-	// private void initDrawer() {
-	// mDrawerGridView.setAdapter(new
-	// GridViewAdapter(getActivity().getApplicationContext()));
-	// }
 
 	/**
 	 * A simple pager adapter that represents 5 ScreenSlidePageFragment objects,
