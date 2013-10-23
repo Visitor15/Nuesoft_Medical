@@ -2,58 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dip"
+    android:layout_height="match_parent"
     android:background="@drawable/card_ui_selectable_background"
-    android:orientation="vertical"
-    android:padding="4dip" >
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <com.mobile.nuesoft.ui.NuesoftTextView
+        android:id="@+id/nt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dip" >
-
-        <com.mobile.nuesoft.ui.NuesoftTextView
-            android:id="@+id/nt_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Patient&apos;s Name"
-            android:textColor="#AA282828"
-            android:textSize="24sp"
-            custom:textStyle="fonts/Roboto-Bold.ttf" />
-
-<!--         <com.mobile.nuesoft.ui.NuesoftTextView
-            android:id="@+id/nt_summary_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="2dip"
-            android:text="SSN: 555-55-5555"
-            android:textColor="#AA282828"
-            android:textSize="18sp"
-            custom:textStyle="fonts/Roboto-Thin.ttf" /> -->
-    </LinearLayout>
+        android:gravity="center"
+        android:layout_marginTop="12dip"
+        android:text="Patient&apos;s Name"
+        android:textColor="#AA282828"
+        android:textSize="24sp"
+        custom:textStyle="fonts/Roboto-Bold.ttf" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <FrameLayout
-            android:id="@+id/top"
-            android:layout_width="match_parent"
-            android:layout_height="36dip" />
-
-        <FrameLayout
-            android:id="@+id/bottom"
-            android:layout_width="match_parent"
-            android:layout_height="36dip"
-            android:layout_below="@id/top" />
+        android:layout_height="0dip"
+        android:layout_weight="1" >
 
         <com.mobile.nuesoft.ui.ProfilePicImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="12dip"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 

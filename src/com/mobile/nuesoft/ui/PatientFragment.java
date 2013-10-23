@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -116,7 +117,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
 		mPager.setAdapter(mPagerAdapter);
-
+		
 //		initActiveReferralFragment();
 
 		return v;
@@ -156,7 +157,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 				categoryList.add(s);
 			}
 
-			dataList.add(new SummaryFragment());
+			dataList.add(new DocumentListFragment());
 			dataList.add(new ScreenSlidePageFragment("Allergies"));
 			dataList.add(new MedicationFragment());
 			dataList.add(new ScreenSlidePageFragment("Family History"));

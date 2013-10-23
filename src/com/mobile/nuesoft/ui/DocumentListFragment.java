@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
@@ -73,7 +74,6 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 		rootView = inflater.inflate(R.layout.document_list_frag_layout, container, false);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
-
 		listView.setBackgroundResource(R.color.light_grey);
 
 		mAdapter = new ListViewAdapter(Nuesoft.getReference(), Uri.parse("storage/sdcard0/Download"));

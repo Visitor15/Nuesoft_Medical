@@ -3,17 +3,18 @@
     xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dip"
     android:background="@drawable/card_ui_selectable_background"
-    android:orientation="vertical"
-    android:padding="4dip" >
+    android:orientation="vertical" >
 
     <com.mobile.nuesoft.ui.NuesoftTextView
         android:id="@+id/nt_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#282828"
+        android:layout_marginBottom="12dip"
+        android:background="#AA282828"
+        android:gravity="center"
+        android:padding="4dip"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
@@ -27,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/medication_fragment_meds_layout" />
-
     </RelativeLayout>
 
 </LinearLayout>

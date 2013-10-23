@@ -10,19 +10,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
-import android.view.ViewGroup;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.mobile.nuesoft.ui.DocumentListFragment;
 import com.mobile.nuesoft.ui.FragmentCallbackEvent;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
-import com.mobile.nuesoft.util.Util;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	public static final String TAG = "MainActivity";
 
@@ -40,6 +40,7 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.main);
 
 		navDrawer = (DrawerLayout) findViewById(R.id.nav_drawer);
+		navHandle = (ImageView) findViewById(R.id.nav_handle);
 		mainContainer = (RelativeLayout) findViewById(R.id.content_frame);
 
 		init();
@@ -87,10 +88,22 @@ public class MainActivity extends FragmentActivity {
 
 	private void init() {
 		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
+		navHandle.setOnClickListener(this);
 		
 		Fragment frag = new DocumentListFragment();
 		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, DocumentListFragment.TAG)
 		        .commit();
+	}
+	
+	public void closeAndLockDrawer() {
+		navDrawer.closeDrawers();
+		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+		navHandle.setVisibility(View.GONE);
+	}
+	
+	public void unlockDrawer() {
+		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+		navHandle.setVisibility(View.VISIBLE);
 	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
@@ -98,14 +111,14 @@ public class MainActivity extends FragmentActivity {
 		        .addToBackStack(NuesoftFragment.TAG).commit();
 	}
 
-	private void onHandleFragmentCallback(final int actionID) {
-		switch (actionID) {
-
-			default: {
-				Toast.makeText(getApplicationContext(), "ID is: " + actionID, Toast.LENGTH_LONG).show();
-			}
-		}
-	}
+//	private void onHandleFragmentCallback(final int actionID) {
+//		switch (actionID) {
+//
+//			default: {
+//				Toast.makeText(getApplicationContext(), "ID is: " + actionID, Toast.LENGTH_LONG).show();
+//			}
+//		}
+//	}
 
 	private void onHandleFragmentCallback(final Bundle b) {
 		int mActionID = b.getInt(FragmentCallbackEvent.ACTION_KEY);
@@ -119,6 +132,7 @@ public class MainActivity extends FragmentActivity {
 
 				// Patient fragment
 					case 0: {
+						unlockDrawer();
 						Uri mUri = Uri.parse(b.getString(FragmentCallbackEvent.DATA));
 						replaceMainContent(new PatientFragment(mUri));
 						break;
@@ -128,6 +142,18 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	}
+	
+	@Override
+    public void onClick(View v) {
+		switch(v.getId()) {
+			case R.id.nav_handle: {
+				
+				navDrawer.openDrawer(Gravity.LEFT);
+				
+				break;
+			}
+		}
+    }
 
 	public class OnFragmentCallbackListener extends NuesoftBroadcastReceiver {
 		void register() {

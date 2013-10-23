@@ -19,31 +19,23 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="4dip"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:layout_marginTop="8dip"
-                layout="@layout/profile_header_layout"
-                android:padding="4dip" />
+                layout="@layout/profile_header_layout"/>
 
-<!--             <LinearLayout
+            <!--
+                 <LinearLayout
                 android:id="@+id/ll_active_referrals_container"
                 android:layout_width="match_parent"
                 android:layout_height="48dip"
                 android:layout_alignParentTop="true"
-                android:orientation="vertical" /> -->
+                android:orientation="vertical" />
+            -->
         </RelativeLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginBottom="8dip"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
-            android:layout_marginTop="4dip"
             android:layout_weight="1" />
-        
     </LinearLayout>
 
     <!--

@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="12dip"
         android:layout_marginBottom="12dip"
-        android:padding="20dip"
+        android:padding="4dip"
         android:text="Available Documents"
         android:background="#AA282828"
         android:textColor="#FFFFFF"
-        android:textSize="26sp"
+        android:textSize="24sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
     <ListView
