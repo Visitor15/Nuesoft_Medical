@@ -5,9 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.NuesoftFragment;
+import com.mobile.nuesoft.R;
 
 public class RegistrationFragment extends NuesoftFragment {
+	
+	View rootView;
+	private LayoutInflater mInflater;
+	
+	public RegistrationFragment() {
+		TAG = "RegistrationFragment";
+	}
 
 	@Override
     public void onFragmentCreate(Bundle savedInstanceState) {
@@ -47,8 +56,12 @@ public class RegistrationFragment extends NuesoftFragment {
 
 	@Override
     public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    // TODO Auto-generated method stub
-	    return null;
+		mInflater = inflater;
+		rootView = mInflater.inflate(R.layout.registration_fragment_layout, container, false);
+		
+		((MainActivity) getActivity()).closeAndLockDrawer();
+		
+		return rootView;
     }
 
 	@Override
