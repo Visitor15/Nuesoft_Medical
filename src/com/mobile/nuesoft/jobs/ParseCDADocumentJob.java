@@ -1086,6 +1086,19 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 //		Log.d(TAG, "# OF MEDICATION ENTRIES: " + entryList.size());
 
 		for (int i = 0; i < entryList.size(); i++) {
+			mTitle = "";
+			mInstructions = "";
+			mDateLow = "";
+			mDateHigh = "";
+			mStatus = "";
+			mManufacturerCode = "";
+			mManufacturerCodeSystem = "";
+			mManufacturerCodeSystemName = "";
+			mAdministeredType = "";
+			mAdministeredMethod = "";
+			mAdministeredFreq = "";
+			mDosageQuantity = "";
+			
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 
 			tempNode = XMLParserUtil.getNode("statusCode", tempNode.getChildNodes());
@@ -1102,7 +1115,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 				for (int k = 0; k < dateNode.getChildNodes().getLength(); k++) {
 					tempNode = dateNode.getChildNodes().item(k);
-//					Log.d(TAG, "MEDICATION DATE NODE NAME: " + tempNode.getNodeName());
+					Log.d(TAG, "MEDICATION DATE NODE NAME: " + tempNode.getNodeName());
 					if (tempNode.getNodeName().equals("low")) {
 						mDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
 					} else if (tempNode.getNodeName().equals("high")) {
@@ -1145,6 +1158,8 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 			mInstructions = medicationNarrativeName.get(i);
 
+			Log.d(TAG, "NCC - M_DATE_HIGH" + mDateHigh + " M_LOW_DATE: " + mDateLow + " For: " + mTitle);
+			
 			if (mDateHigh.trim().length() > 0) {
 				patient.addMedicationPrevious(new Medication(mTitle, mInstructions, mDateLow, mDateHigh, mStatus,
 				        mManufacturerCode, mManufacturerCodeSystem, mManufacturerCodeSystemName, mAdministeredType,
