@@ -2,6 +2,7 @@ package com.mobile.nuesoft;
 
 import android.app.Application;
 
+import com.mobile.nuesoft.document.CDADocumentBuilder.CDADocument;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 
 public class Nuesoft  extends Application  {
@@ -12,6 +13,8 @@ public class Nuesoft  extends Application  {
 	
 	private static PatientObj currentPatient;
 
+	private static CDADocument currentCDADocument;
+
 	public static final Nuesoft getReference() {
 		return Nuesoft.singleton;
 	}
@@ -20,9 +23,14 @@ public class Nuesoft  extends Application  {
 		return Nuesoft.currentPatient;
 	}
 	
-	public void setPatientToCurrent(final PatientObj patient) {
-		Nuesoft.currentPatient = patient;
+	public static CDADocument getCurrentCDADocument() {
+		return Nuesoft.currentCDADocument;
 	}
+	
+	public void setCurrentCDADocument(final CDADocument document) {
+		Nuesoft.currentCDADocument = document;
+		Nuesoft.currentPatient = document.getPATIENT();
+    }
 	
 	public static NuesoftUser getCurrentUser() {
 		return Nuesoft.currentUser;
@@ -41,4 +49,6 @@ public class Nuesoft  extends Application  {
 	    Nuesoft.singleton = this;
 	    super.onCreate();
 	}
+
+
 }

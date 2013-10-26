@@ -14,6 +14,8 @@ public class PatientBuilder {
 	private String race;
 	private String religion;
 	private String ethnicGroup;
+	private String reasonForReferral;
+	private String reasonForVisit;
 	private Marital.STATUS maritalStatus;
 	private ArrayList<Language> languages = new ArrayList<Language>();
 	private ArrayList<Medication> medicationCurrent = new ArrayList<Medication>();
@@ -141,6 +143,22 @@ public class PatientBuilder {
 	public void setEthnicGroup(String ethnicGroup) {
 		this.ethnicGroup = ethnicGroup;
 	}
+	
+	public String getReasonForReferral() {
+		return reasonForReferral;
+	}
+	
+	public void setReasonForReferral(String reasonForReferral) {
+		this.reasonForReferral = reasonForReferral;
+	}
+	
+	public String getReasonForVisit() {
+		return reasonForVisit;
+	}
+	
+	public void setReasonForVisit(String reasonForVisit) {
+		this.reasonForVisit = reasonForVisit;
+	}
 
 	public List<Language> getLanguages() {
 		return languages;
@@ -151,14 +169,14 @@ public class PatientBuilder {
 	}
 
 	public PatientObj build() {
-		return new PatientObj(id, birthTime, gender, race, religion, ethnicGroup, languages, allergies,
+		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, allergies,
 		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus);
 	}
 
 	public class PatientObj implements Serializable {
 
 		/**
-		 * Serializing purposes
+		 *	GENERATED SERIAL ID
 		 */
 		private static final long serialVersionUID = -5213206329002435084L;
 
@@ -167,6 +185,8 @@ public class PatientBuilder {
 		private final String RACE;
 		private final String RELIGION;
 		private final String ETHNIC_GROUP;
+		private final String REASON_FOR_REFERRAL;
+		private final String REASON_FOR_VISIT;
 		private final Gender GENDER;
 		private final Marital.STATUS MARITAL;
 
@@ -178,7 +198,7 @@ public class PatientBuilder {
 		private ArrayList<PatientTest> TESTS;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
-		        final String RACE, final String RELIGION, final String ETHNIC_GROUP,
+		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
 		        final ArrayList<Language> LANGUAGES, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
@@ -188,6 +208,8 @@ public class PatientBuilder {
 			this.BIRTH_TIME = BIRTH_TIME;
 			this.GENDER = GENDER;
 			this.RACE = RACE;
+			this.REASON_FOR_REFERRAL = REASON_FOR_REFERRAL;
+			this.REASON_FOR_VISIT = REASON_FOR_VISIT;
 			this.RELIGION = RELIGION;
 			this.ETHNIC_GROUP = ETHNIC_GROUP;
 			this.LANGUAGES = LANGUAGES;
@@ -222,6 +244,8 @@ public class PatientBuilder {
 		public void setALLERGIES(ArrayList<Allergy> aLLERGIES) {
 			ALLERGIES = aLLERGIES;
 		}
+		
+		
 
 		public ArrayList<Medication> getMEDICATION_CURRENT() {
 			return (ArrayList<Medication>) MEDICATION_CURRENT.clone();
@@ -265,6 +289,14 @@ public class PatientBuilder {
 
 		public void setLANGUAGES(ArrayList<Language> lANGUAGES) {
 			LANGUAGES = lANGUAGES;
+		}
+		
+		public String getREASON_FOR_REFFERAL() {
+			return REASON_FOR_REFERRAL;
+		}
+		
+		public String getREASON_FOR_VISIT() {
+			return REASON_FOR_VISIT;
 		}
 
 		public String getRACE() {

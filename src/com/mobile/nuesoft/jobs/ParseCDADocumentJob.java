@@ -87,11 +87,11 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			updateBundle = new Bundle();
 			updateBundle.putBoolean(ParseCDADocumentJob.IS_FINISHED_KEY, true);
 			updateBundle.putSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY, result.getPATIENT());
+			updateBundle.putSerializable(CDADocumentUpdateEvent.CDA_DOC_OBJ_KEY, result);
 
-//			Log.d(TAG, "On Post Execute for DOCUMENT: " + mDocument.toString());
+			Nuesoft.getReference().setCurrentCDADocument(result);
 
-			Nuesoft.getReference().setPatientToCurrent(result.getPATIENT());
-
+			CDADocumentUpdateEvent.broadcast(Nuesoft.getReference(), updateBundle);
 			PatientUpdateEvent.broadcast(Nuesoft.getReference(), updateBundle);
 		}
 	}
@@ -115,7 +115,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		updateBundle.putBoolean(ParseCDADocumentJob.IS_FINISHED_KEY, false);
 		updateBundle.putSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY, updatedPatient);
 
-		Nuesoft.getReference().setPatientToCurrent(updatedPatient);
+//		Nuesoft.getReference().setPatientToCurrent(updatedPatient);
 
 		PatientUpdateEvent.broadcast(Nuesoft.getReference(), updateBundle);
 	}
@@ -822,8 +822,11 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientReasonForReferralFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
+		String val = XMLParserUtil.getNodeValue(dataNode);
+		
+		patBuilder.setReasonForVisit(val);
 	}
 
 	private void parsePatientProceduresFromNode(final Node sectionNode, final PatientBuilder patBuilder) {

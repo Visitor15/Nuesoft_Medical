@@ -184,10 +184,10 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 //	    
 //	    Log.d(TAG, "CLICKED URI: " + mUri);
 //	    
-//	    Bundle b = new Bundle();
-//		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-//		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
-//		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
-//		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+	    Bundle b = new Bundle();
+		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
+		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
+		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
     }
 }

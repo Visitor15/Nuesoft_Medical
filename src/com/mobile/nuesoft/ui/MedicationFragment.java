@@ -91,7 +91,7 @@ public class MedicationFragment extends NuesoftFragment {
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		mAdapter.notifyDataSetChanged();
+		
 	}
 	
 //	public void setPatientObj(final PatientObj patient) {

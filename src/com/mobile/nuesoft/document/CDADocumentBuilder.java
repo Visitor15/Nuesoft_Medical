@@ -1,5 +1,6 @@
 package com.mobile.nuesoft.document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.net.Uri;
@@ -170,7 +171,12 @@ public class CDADocumentBuilder {
 		return new CDADocument(this);
 	}
 
-	public class CDADocument {
+	public class CDADocument implements Serializable {
+
+		/*
+		 *	GENERATED SERIAL ID 
+		 */
+        private static final long serialVersionUID = 3113746183654534918L;
 
 		public static final String TAG = "CDADocument";
 

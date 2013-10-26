@@ -6,19 +6,123 @@
     android:orientation="vertical" >
 
     <com.mobile.nuesoft.ui.NuesoftTextView
-        android:id="@+id/nt_name"
+        android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dip"
+        android:background="#AA282828"
         android:gravity="center"
-        android:text="Document Title"
-        android:textColor="#AA282828"
+        android:padding="4dip"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        custom:textStyle="fonts/Roboto-Bold.ttf" />
+        custom:textStyle="fonts/Roboto-Thin.ttf" />
 
-    <ExpandableListView
-        android:id="@+id/expandable_list"
+    <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ExpandableListView>
+
+<!--         <com.mobile.nuesoft.ui.NuesoftTextView -->
+<!--             android:id="@+id/nt_name" -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_centerHorizontal="true" -->
+<!--             android:layout_margin="8dip" -->
+<!--             android:text="Document Title" -->
+<!--             android:textColor="#AA282828" -->
+<!--             android:textSize="24sp" -->
+<!--             custom:textStyle="fonts/Roboto-Bold.ttf" /> -->
+
+<!--         <com.mobile.nuesoft.ui.NuesoftTextView -->
+<!--             android:id="@+id/nt_date" -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_below="@id/nt_name" -->
+<!--             android:layout_centerHorizontal="true" -->
+<!--             android:text="Document Title" -->
+<!--             android:textColor="#AA282828" -->
+<!--             android:textSize="12sp" -->
+<!--             custom:textStyle="fonts/Roboto-Thin.ttf" /> -->
+
+        <LinearLayout
+            android:id="@+id/ll_from_to_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:id="@+id/nt_from_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dip"
+                    android:gravity="center_vertical|right"
+                    android:text="From"
+                    android:textColor="#AA282828"
+                    android:textSize="24sp"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:id="@+id/nt_from_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dip"
+                    android:gravity="center_vertical|left"
+                    android:text="Hello, I&apos;m placeholder text"
+                    android:textColor="#AA282828"
+                    android:textSize="24sp"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:id="@+id/nt_to_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dip"
+                    android:gravity="center_vertical|right"
+                    android:text="To"
+                    android:textColor="#AA282828"
+                    android:textSize="24sp"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:id="@+id/nt_to_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dip"
+                    android:gravity="center_vertical|left"
+                    android:text="Hello, I&apos;m placeholder text"
+                    android:textColor="#AA282828"
+                    android:textSize="24sp"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <ExpandableListView
+            android:id="@+id/expandable_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip" >
+        </ExpandableListView>
+    </RelativeLayout>
 
 </LinearLayout>

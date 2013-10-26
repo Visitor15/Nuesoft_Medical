@@ -39,6 +39,10 @@ public class Personnel {
 		return SUFFIX;
 	}
 	
+	public String getPRINTABLE_NAME() {
+		return FAMILY_NAME + ", " + GIVEN_NAME;
+	}
+	
 	public String getEMAIL() {
 		return EMAIL;
 	}
