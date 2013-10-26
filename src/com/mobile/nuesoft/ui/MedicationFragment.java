@@ -103,7 +103,7 @@ public class MedicationFragment extends NuesoftFragment {
 //	}
 	
 	public void showNoDataView(final View v) {
-		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
+//		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
 		
 		RelativeLayout view = (RelativeLayout) mInflater.inflate(R.layout.no_data_layout, null);
 		
@@ -119,6 +119,7 @@ public class MedicationFragment extends NuesoftFragment {
 		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(addedView);
 		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) addedView
 		        .getLayoutParams();
+		
 
 		int mMargin = Util.convertDpToPixel(4f, getActivity());
 		mlp.setMargins(mMargin, 0, mMargin, 0);

@@ -9,7 +9,6 @@
         android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dip"
         android:background="#AA282828"
         android:gravity="center"
         android:padding="4dip"
@@ -60,7 +59,6 @@
                     android:id="@+id/nt_from_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dip"
                     android:gravity="center_vertical|right"
                     android:text="From"
                     android:textColor="#AA282828"
@@ -71,7 +69,6 @@
                     android:id="@+id/nt_from_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dip"
                     android:gravity="center_vertical|left"
                     android:text="Hello, I&apos;m placeholder text"
                     android:textColor="#AA282828"
@@ -89,7 +86,6 @@
                     android:id="@+id/nt_to_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dip"
                     android:gravity="center_vertical|right"
                     android:text="To"
                     android:textColor="#AA282828"
@@ -100,7 +96,6 @@
                     android:id="@+id/nt_to_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dip"
                     android:gravity="center_vertical|left"
                     android:text="Hello, I&apos;m placeholder text"
                     android:textColor="#AA282828"
@@ -113,13 +108,16 @@
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dip"
         android:layout_weight="1" >
 
         <ExpandableListView
             android:id="@+id/expandable_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@null"
+            android:paddingTop="12dip"
+            android:clipToPadding="false"
             android:layout_marginLeft="8dip"
             android:layout_marginRight="8dip" >
         </ExpandableListView>
