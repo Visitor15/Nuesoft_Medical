@@ -817,8 +817,11 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientReasonForVisitFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
+		String val = XMLParserUtil.getNodeValue(dataNode);
+		
+		patBuilder.setReasonForVisit(val);
 	}
 
 	private void parsePatientReasonForReferralFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
@@ -826,7 +829,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
 		String val = XMLParserUtil.getNodeValue(dataNode);
 		
-		patBuilder.setReasonForVisit(val);
+		patBuilder.setReasonForReferral(val);
 	}
 
 	private void parsePatientProceduresFromNode(final Node sectionNode, final PatientBuilder patBuilder) {

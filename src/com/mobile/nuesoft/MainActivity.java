@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.mobile.nuesoft.ui.FragmentCallbackEvent;
+import com.mobile.nuesoft.ui.LoginFragment;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
-import com.mobile.nuesoft.ui.RegistrationFragment;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
@@ -90,9 +90,17 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
 		navHandle.setOnClickListener(this);
 		
-		Fragment frag = new PatientFragment();
-		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, PatientFragment.TAG)
+		Fragment frag = new LoginFragment();
+		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, LoginFragment.TAG)
 		        .commit();
+		
+//		Fragment frag = new RegistrationFragment();
+//		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, RegistrationFragment.TAG)
+//		        .commit();
+		
+//		Fragment frag = new PatientFragment();
+//		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, PatientFragment.TAG)
+//		        .commit();
 	}
 	
 	public void closeAndLockDrawer() {

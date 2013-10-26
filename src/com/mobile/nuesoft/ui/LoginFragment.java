@@ -16,15 +16,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.NuesoftUser;
 import com.mobile.nuesoft.R;
-import com.mobile.nuesoft.jobs.UserLoginJob;
 import com.mobile.nuesoft.jobs.NuesoftRegisteredUserEvent;
 import com.mobile.nuesoft.jobs.NuesoftUserLoginEvent;
 import com.mobile.nuesoft.jobs.RegisterUserJob;
+import com.mobile.nuesoft.jobs.UserLoginJob;
 
 public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
@@ -34,7 +36,7 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 	EditText password;
 
 	Button btnLogin;
-	Button btnRegister;
+	TextView btnRegister;
 
 	OnLoginEventListener loginEventListener = new OnLoginEventListener();
 	OnNuesoftRegisteredEventListener registeredEventListener = new OnNuesoftRegisteredEventListener();
@@ -82,13 +84,15 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.login_fragment_layout, container, false);
 
-		userName = (EditText) rootView.findViewById(R.id.user_name);
-		password = (EditText) rootView.findViewById(R.id.password);
+		userName = (EditText) rootView.findViewById(R.id.et_username);
+		password = (EditText) rootView.findViewById(R.id.et_password);
 		btnLogin = (Button) rootView.findViewById(R.id.btn_login);
-		btnRegister = (Button) rootView.findViewById(R.id.btn_register);
+		btnRegister = (TextView) rootView.findViewById(R.id.btn_register);
 
 		btnLogin.setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
+		
+		((MainActivity) getActivity()).closeAndLockDrawer();
 
 		return rootView;
 	}

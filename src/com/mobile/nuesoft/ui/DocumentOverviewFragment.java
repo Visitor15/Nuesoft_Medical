@@ -167,7 +167,7 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 			mInflater = LayoutInflater.from(Nuesoft.getReference());
 			parentElements = new ArrayList<Object>();
 			parentElements.add(mDocument.getPATIENT().getREASON_FOR_REFFERAL());
-			parentElements.add(mDocument.getPATIENT().getREASON_FOR_REFFERAL());
+			parentElements.add(mDocument.getPATIENT().getREASON_FOR_VISIT());
 			parentElements.add(mDocument.getSUMMARY_TITLE());
 			parentElements.add(mDocument.getAUTHOR());
 			parentElements.add(mDocument.getDATA_ENTERER());
@@ -232,7 +232,7 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 		        ViewGroup parent) {
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.medication_list_child_view, null);
+				convertView = mInflater.inflate(R.layout.document_overview_list_item_layout, null);
 			}
 
 			TextView mTitleText = (TextView) convertView.findViewById(R.id.nt_text);
@@ -297,6 +297,9 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 					break;
 				}
 			}
+			
+//			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//			((RelativeLayout) convertView.findViewById(R.id.rl_container)).setLayoutParams(params);
 
 			return convertView;
 		}
