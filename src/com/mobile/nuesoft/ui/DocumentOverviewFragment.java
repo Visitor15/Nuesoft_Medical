@@ -121,23 +121,20 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 	public void hideNoDataView(final View v) {
 		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
-		ExpandableListView addedView = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout,
-		        null);
-		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(addedView);
-		// ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)
-		// addedView.getLayoutParams();
-		//
-		// int mMargin = Util.convertDpToPixel(4f, getActivity());
-		// mlp.setMargins(mMargin, 0, mMargin, 0);
-		//
-		// expandableList.setLayoutParams(mlp);
+		expandableList = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout, null);
+		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(expandableList);
+		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) expandableList.getLayoutParams();
+
+		int mMargin = Util.convertDpToPixel(4f, getActivity());
+		mlp.setMargins(mMargin, 0, mMargin, 0);
+
+		expandableList.setLayoutParams(mlp);
 
 		initDocumentOverView(v);
 	}
 
 	private void initDocumentOverView(final View v) {
 		titleText.setText(Nuesoft.getCurrentCDADocument().getDISPLAY_TITLE());
-		expandableList = (ExpandableListView) v.findViewById(R.id.expandable_list);
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentCDADocument());
 		expandableList.setAdapter(mAdapter);
 		mAdapter.init();

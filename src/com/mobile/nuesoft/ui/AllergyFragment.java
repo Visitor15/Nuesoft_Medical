@@ -21,113 +21,109 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.util.Util;
 
 public class AllergyFragment extends NuesoftFragment {
-	
+
 	LayoutInflater mInflater;
 
 	View rootView;
-	
+
 	ListView listView;
-	
+
 	ListViewAdapter mAdapter;
-	
+
 	public AllergyFragment() {
 		TAG = "AllergyFragment";
 	}
 
 	@Override
-    public void onFragmentCreate(Bundle savedInstanceState) {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onFragmentCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onFragmentPaused() {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onFragmentPaused() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onFragmentResume() {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onFragmentResume() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onSave(Bundle outState) {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onSave(Bundle outState) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onFragmentStart() {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onFragmentStart() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onFragmentStop() {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void onFragmentStop() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mInflater = inflater;
-		
+
 		rootView = mInflater.inflate(R.layout.allergy_fragment_layout, container, false);
-		
-		listView = (ListView) rootView.findViewById(R.id.list_view);
-		
-//		if(Nuesoft.getCurrentPatient() == null) {
-//			showNoDataView(v);
-//		}
-//		else {
-//			hideNoDataView(v);
-//		}
-		
-		initAllergiesView(rootView);
-		
+
+		if (Nuesoft.getCurrentPatient() == null) {
+			showNoDataView(rootView);
+		} else {
+			hideNoDataView(rootView);
+		}
+
 		return rootView;
-    }
+	}
 
 	@Override
-    public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-	    // TODO Auto-generated method stub
-	    
-    }
-	
+	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+
+	}
+
 	public void showNoDataView(final View v) {
-//		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
-		
+		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
+
 		RelativeLayout view = (RelativeLayout) mInflater.inflate(R.layout.no_data_layout, null);
-		
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		        LayoutParams.MATCH_PARENT);
 		view.setLayoutParams(params);
-		
+
 		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(view);
 	}
-	
+
 	public void hideNoDataView(final View v) {
-		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
-		ExpandableListView addedView = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout, null);
-		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(addedView);
-		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) addedView
-		        .getLayoutParams();
-		
+		RelativeLayout mContainer = (RelativeLayout) v.findViewById(R.id.rl_container);
+		mContainer.removeAllViews();
+		listView = (ListView) mInflater.inflate(R.layout.allergy_fragment_list_layout,
+		        null);
+		mContainer.addView(listView);
+		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
 
 		int mMargin = Util.convertDpToPixel(4f, getActivity());
 		mlp.setMargins(mMargin, 0, mMargin, 0);
-		
-		initAllergiesView(v);
+
+		initAllergiesView(mContainer);
 	}
-	
+
 	private void initAllergiesView(final View v) {
 		listView = (ListView) v.findViewById(R.id.list_view);
-		
+
 		mAdapter = new ListViewAdapter(Nuesoft.getCurrentPatient());
 		listView.setAdapter(mAdapter);
 	}
-	
+
 	public class ListViewAdapter extends BaseAdapter {
 
 		private ArrayList<Allergy> dataList;
@@ -138,7 +134,7 @@ public class AllergyFragment extends NuesoftFragment {
 		}
 
 		private void init() {
-			
+
 		}
 
 		@Override
@@ -163,7 +159,7 @@ public class AllergyFragment extends NuesoftFragment {
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.allergy_item_layout, container, false);
 			}
-			
+
 			RelativeLayout mContainer = (RelativeLayout) convertView.findViewById(R.id.rl_container);
 
 			TextView textView = (TextView) convertView.findViewById(R.id.nt_text);

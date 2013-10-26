@@ -9,7 +9,6 @@
         android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dip"
         android:background="#AA282828"
         android:gravity="center"
         android:padding="4dip"
@@ -18,11 +17,10 @@
         android:textSize="24sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
-    <ListView
-        android:id="@+id/list_view"
+    <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null" >
-    </ListView>
+        android:layout_height="0dip"
+        android:layout_weight="1" />
 
 </LinearLayout>

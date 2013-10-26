@@ -3,6 +3,8 @@
     android:id="@+id/expandable_list_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="12dip"
+    android:clipToPadding="false"
     android:layout_marginLeft="4dip"
     android:layout_marginRight="4dip"
     android:divider="@null"/>
