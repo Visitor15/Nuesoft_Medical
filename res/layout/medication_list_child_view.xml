@@ -51,7 +51,7 @@
             android:layout_toRightOf="@id/divider"
             android:textColor="#AA282828"
             android:textSize="18sp"
-            custom:textStyle="fonts/Roboto-Bold.ttf" />
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
     </RelativeLayout>
 
 </RelativeLayout>

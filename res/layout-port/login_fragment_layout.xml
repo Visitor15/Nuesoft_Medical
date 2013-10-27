@@ -58,7 +58,7 @@
             android:layout_marginBottom="8dip"
             android:layout_marginLeft="12dip"
             android:layout_marginRight="12dip"
-            android:background="@color/white"
+            android:background="@color/off_white"
             android:padding="8dip" >
 
             <EditText
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@color/off_white"
         android:orientation="horizontal" >
 
         <Button
