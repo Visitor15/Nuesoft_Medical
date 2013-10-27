@@ -1,5 +1,7 @@
 package com.mobile.nuesoft.preferences;
 
+import java.util.Locale;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -48,7 +50,7 @@ public class NuesoftPreferences {
 	public boolean saveRegisteredUser(final NuesoftUser user) {
 		NuesoftUser savedUser = getNuesoftUser(user.getUserName());
 		if (savedUser == null) {
-			return mPrefs.edit().putString(user.getUserName(), user.toString()).commit();
+			return mPrefs.edit().putString(user.getUserName().toLowerCase(Locale.getDefault()), user.toString()).commit();
 		}
 
 		return false;
