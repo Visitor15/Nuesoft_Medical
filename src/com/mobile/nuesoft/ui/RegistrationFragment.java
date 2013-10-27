@@ -37,7 +37,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 	Button btnRegister;
 	Button btnCancel;
-	
+
 	OnNuesoftRegisteredEventListener registrationEventListener = new OnNuesoftRegisteredEventListener();
 
 	public RegistrationFragment() {
@@ -84,7 +84,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mInflater = inflater;
 		rootView = mInflater.inflate(R.layout.registration_fragment_layout, container, false);
-		
+
 		userNameET = (EditText) rootView.findViewById(R.id.et_username);
 		pswrd1ET = (EditText) rootView.findViewById(R.id.et_password_one);
 		pswrd2ET = (EditText) rootView.findViewById(R.id.et_password_two);
@@ -160,7 +160,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 				break;
 			}
 			case R.id.btn_cancel: {
-
+				getActivity().finish();
 				break;
 			}
 
@@ -184,10 +184,10 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 			Bundle result = intent.getExtras();
 
 			boolean mSuccess = result.getBoolean(NuesoftRegisteredUserEvent.RESULT_KEY);
-			
-			if(mSuccess) {
+
+			if (mSuccess) {
 				Toast.makeText(getActivity(), "Registration sucessful!", Toast.LENGTH_LONG).show();
-				
+
 				Bundle b = new Bundle();
 				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
 				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.LOGIN_FRAGMENT.ordinal());
