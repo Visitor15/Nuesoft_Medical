@@ -21,6 +21,7 @@ import com.mobile.nuesoft.ui.FragmentCallbackEvent;
 import com.mobile.nuesoft.ui.LoginFragment;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
+import com.mobile.nuesoft.ui.RegistrationFragment;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
@@ -119,15 +120,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		        .addToBackStack(NuesoftFragment.TAG).commit();
 	}
 
-//	private void onHandleFragmentCallback(final int actionID) {
-//		switch (actionID) {
-//
-//			default: {
-//				Toast.makeText(getApplicationContext(), "ID is: " + actionID, Toast.LENGTH_LONG).show();
-//			}
-//		}
-//	}
-
 	private void onHandleFragmentCallback(final Bundle b) {
 		int mActionID = b.getInt(FragmentCallbackEvent.ACTION_KEY);
 
@@ -141,8 +133,20 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 				// Patient fragment
 					case 0: {
 						unlockDrawer();
-						Uri mUri = Uri.parse(b.getString(FragmentCallbackEvent.DATA));
 						replaceMainContent(new PatientFragment());
+						break;
+					}
+					
+					// Registration fragment
+					case 1: {
+						this.closeAndLockDrawer();
+						replaceMainContent(new RegistrationFragment());
+						break;
+					}
+					// Login fragment
+					case 2: {
+						this.closeAndLockDrawer();
+						replaceMainContent(new LoginFragment());
 						break;
 					}
 				}
@@ -177,8 +181,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		public void onReceive(Context context, Intent intent) {
 			Log.d(TAG, "onReceive HIT");
 			onHandleFragmentCallback(intent.getExtras());
-			// onHandleFragmentCallback(intent.getIntExtra(FragmentCallbackEvent.ACTION_KEY,
-			// -1));
 		}
 	}
 }

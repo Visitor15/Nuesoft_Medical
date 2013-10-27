@@ -36,6 +36,7 @@
                 android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:layout_margin="8dip"
                 android:ems="10" />
         </RelativeLayout>
@@ -61,7 +62,7 @@
             android:padding="8dip" >
 
             <EditText
-                android:id="@+id/et_username"
+                android:id="@+id/et_password_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
@@ -90,7 +91,7 @@
             android:padding="8dip" >
 
             <EditText
-                android:id="@+id/et_pswrd"
+                android:id="@+id/et_password_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
@@ -122,12 +123,12 @@
             android:background="#AA282828" />
 
         <Button
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_register"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_background_clickable_item"
-            android:text="Next"
+            android:text="Register"
             android:textColor="#AA282828" />
     </LinearLayout>
 

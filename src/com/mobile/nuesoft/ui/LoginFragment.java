@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
@@ -35,11 +36,13 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 	EditText userName;
 	EditText password;
 
+	private Button btnCancel;
+
 	Button btnLogin;
+
 	TextView btnRegister;
 
 	OnLoginEventListener loginEventListener = new OnLoginEventListener();
-	OnNuesoftRegisteredEventListener registeredEventListener = new OnNuesoftRegisteredEventListener();
 
 	public LoginFragment() {
 		super();
@@ -53,13 +56,11 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 	@Override
 	public void onFragmentPaused() {
 		loginEventListener.unregister();
-		registeredEventListener.unregister();
 	}
 
 	@Override
 	public void onFragmentResume() {
 		loginEventListener.register();
-		registeredEventListener.register();
 	}
 
 	@Override
@@ -86,12 +87,14 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
 		userName = (EditText) rootView.findViewById(R.id.et_username);
 		password = (EditText) rootView.findViewById(R.id.et_password);
+		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 		btnLogin = (Button) rootView.findViewById(R.id.btn_login);
 		btnRegister = (TextView) rootView.findViewById(R.id.btn_register);
 
+		btnCancel.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-		
+
 		((MainActivity) getActivity()).closeAndLockDrawer();
 
 		return rootView;
@@ -131,25 +134,16 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 			}
 			case R.id.btn_register: {
 
-				NuesoftUser mUser = new NuesoftUser();
-				mUser.setUserName(userName.getText().toString());
+				Bundle b = new Bundle();
+				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+				b.putInt(FragmentCallbackEvent.FRAGMENT,
+				        FragmentCallbackEvent.FRAGMENTS.REGISTRATION_FRAGMENT.ordinal());
+				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
 
-				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-				ObjectOutputStream objOutStream;
-
-				try {
-					objOutStream = new ObjectOutputStream(outStream);
-					objOutStream.writeUTF(password.getText().toString());
-					objOutStream.flush();
-
-					mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
-
-					RegisterUserJob registerJob = new RegisterUserJob();
-					registerJob.execute(mUser);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
+				break;
+			}
+			case R.id.btn_cancel: {
+				getActivity().finish();
 				break;
 			}
 		}
@@ -170,32 +164,16 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 			Log.d(TAG, "onReceive HIT");
 
 			Bundle result = intent.getExtras();
-
 			boolean mSuccess = result.getBoolean(NuesoftUserLoginEvent.RESULT_KEY);
 
-			Log.d(TAG, "LOGIN IN SUCCESS? : " + mSuccess);
-		}
-	}
-
-	public class OnNuesoftRegisteredEventListener extends NuesoftBroadcastReceiver {
-		void register() {
-			final IntentFilter filter = NuesoftRegisteredUserEvent.createFilter();
-			registerLocalReceiver(Nuesoft.getReference(), this, filter);
-		}
-
-		void unregister() {
-			unregisterLocalReciever(Nuesoft.getReference(), this);
-		}
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
-
-			Bundle result = intent.getExtras();
-
-			boolean mSuccess = result.getBoolean(NuesoftRegisteredUserEvent.RESULT_KEY);
-
-			Log.d(TAG, "REGISTER SUCCESS? : " + mSuccess);
+			if (mSuccess) {
+				Bundle b = new Bundle();
+				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
+				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+			} else {
+				Toast.makeText(getActivity(), "Error logging in", Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 }

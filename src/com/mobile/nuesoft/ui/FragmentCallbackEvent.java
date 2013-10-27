@@ -12,7 +12,9 @@ public class FragmentCallbackEvent {
 	public static final String FRAGMENT = "com.mobile.nuesoft.FRAGMENT";
 	
 	public static enum FRAGMENTS {
-		PATIENT_FRAGMENT
+		PATIENT_FRAGMENT,
+		REGISTRATION_FRAGMENT,
+		LOGIN_FRAGMENT
 	};
 	
 	public static enum ACTIONS {
