@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
@@ -142,7 +141,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 				dataList.add(new MedicationFragment());
 				dataList.add(new PatientVitalsFragment());
 				dataList.add(new ScreenSlidePageFragment("Immunizations"));
-				dataList.add(new ScreenSlidePageFragment("Family History"));
+				dataList.add(new FamilyHistoryFragment());
 			}
 		}
 

@@ -39,6 +39,7 @@ import com.mobile.nuesoft.patient.Allergy.STATUS;
 import com.mobile.nuesoft.patient.AllergyReaction;
 import com.mobile.nuesoft.patient.AllergyType;
 import com.mobile.nuesoft.patient.Drug;
+import com.mobile.nuesoft.patient.FamilyHistory;
 import com.mobile.nuesoft.patient.Gender;
 import com.mobile.nuesoft.patient.IdentifierBuilder;
 import com.mobile.nuesoft.patient.Language;
@@ -876,8 +877,19 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientFamilyHistoryFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		
+		String val;
+		Node tempNode;
+		for(int i = 0; i < dataNode.getChildNodes().getLength(); i++) {
+			tempNode = dataNode.getChildNodes().item(i);
+			
+			if(tempNode.getNodeName().equalsIgnoreCase("paragraph")) {
+				val = XMLParserUtil.getNodeValue(tempNode);
+				FamilyHistory famHistory = new FamilyHistory(val);
+				patBuilder.addFamilyHistoryItem(famHistory);
+			}
+		}
 	}
 
 	private void parsePatientAdvancedDirectivesFromNode(final Node sectionNode, final PatientBuilder patBuilder) {

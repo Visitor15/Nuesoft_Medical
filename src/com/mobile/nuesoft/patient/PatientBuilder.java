@@ -23,6 +23,7 @@ public class PatientBuilder {
 	private ArrayList<Medication> medicationPrevious = new ArrayList<Medication>();
 	private ArrayList<Encounter> medicalEncounters = new ArrayList<Encounter>();
 	private ArrayList<Allergy> allergies = new ArrayList<Allergy>();
+	private ArrayList<FamilyHistory> familyHistory = new ArrayList<FamilyHistory>();
 
 	private ArrayList<PatientTest> tests = new ArrayList<PatientTest>();
 
@@ -63,6 +64,18 @@ public class PatientBuilder {
 
 	public void setAllergies(ArrayList<Allergy> allergies) {
 		this.allergies = allergies;
+	}
+	
+	public void addFamilyHistoryItem(final FamilyHistory famHistory) {
+		this.familyHistory.add(famHistory);
+	}
+	
+	public void setFamilyHistory(final ArrayList<FamilyHistory> familyHistory) {
+		this.familyHistory = familyHistory;
+	}
+	
+	public ArrayList<FamilyHistory> getFamilyHistory() {
+		return this.familyHistory;
 	}
 	
 	public ArrayList<VitalSign> getVitalSigns() {
@@ -183,7 +196,7 @@ public class PatientBuilder {
 
 	public PatientObj build() {
 		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
-		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus);
+		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory);
 	}
 
 	public class PatientObj implements Serializable {
@@ -210,13 +223,14 @@ public class PatientBuilder {
 		private ArrayList<Medication> MEDICATION_PREVIOUS;
 		private ArrayList<Encounter> MEDICAL_ENCOUNTERS;
 		private ArrayList<PatientTest> TESTS;
+		private ArrayList<FamilyHistory> FAMILY_HISTORY;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
 		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
 		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
-		        final Marital.STATUS MARITAL_STATUS) {
+		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY) {
 
 			this.IDENTIFIER = IDENTIFIER;
 			this.BIRTH_TIME = BIRTH_TIME;
@@ -234,6 +248,7 @@ public class PatientBuilder {
 			this.MEDICAL_ENCOUNTERS = MEDICATION_ENCOUNTERS;
 			this.TESTS = TESTS;
 			this.MARITAL = MARITAL_STATUS;
+			this.FAMILY_HISTORY = FAMILY_HISTORY;
 		}
 
 		public PatientIdentifier getIDENTIFIER() {
@@ -253,11 +268,15 @@ public class PatientBuilder {
 		}
 
 		public ArrayList<Allergy> getALLERGIES() {
-			return ALLERGIES;
+			return (ArrayList<Allergy>) ALLERGIES.clone();
 		}
 
 		public void setALLERGIES(ArrayList<Allergy> aLLERGIES) {
 			ALLERGIES = aLLERGIES;
+		}
+		
+		public ArrayList<FamilyHistory> getFAMILY_HISTORY() {
+			return (ArrayList<FamilyHistory>) FAMILY_HISTORY.clone();
 		}
 		
 		public void setVITAL_SIGNS(ArrayList<VitalSign> vITAL_SIGNS) {
@@ -265,7 +284,7 @@ public class PatientBuilder {
 		}
 		
 		public ArrayList<VitalSign> getVITAL_SIGNS() {
-			return VITAL_SIGNS;
+			return (ArrayList<VitalSign>) VITAL_SIGNS.clone();
 		}
 
 		public ArrayList<Medication> getMEDICATION_CURRENT() {
