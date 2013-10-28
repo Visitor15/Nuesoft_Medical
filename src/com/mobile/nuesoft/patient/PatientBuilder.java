@@ -17,6 +17,7 @@ public class PatientBuilder {
 	private String reasonForReferral;
 	private String reasonForVisit;
 	private Marital.STATUS maritalStatus;
+	private ArrayList<VitalSign> vitalSigns = new ArrayList<VitalSign>();
 	private ArrayList<Language> languages = new ArrayList<Language>();
 	private ArrayList<Medication> medicationCurrent = new ArrayList<Medication>();
 	private ArrayList<Medication> medicationPrevious = new ArrayList<Medication>();
@@ -62,6 +63,18 @@ public class PatientBuilder {
 
 	public void setAllergies(ArrayList<Allergy> allergies) {
 		this.allergies = allergies;
+	}
+	
+	public ArrayList<VitalSign> getVitalSigns() {
+		return vitalSigns;
+	}
+	
+	public void addVitalSign(final VitalSign vitalSign) {
+		this.vitalSigns.add(vitalSign);
+	}
+	
+	public void setVitalSigns(final ArrayList<VitalSign> vitalSigns) {
+		this.vitalSigns = vitalSigns;
 	}
 
 	public List<Medication> getMedicationCurrent() {
@@ -169,7 +182,7 @@ public class PatientBuilder {
 	}
 
 	public PatientObj build() {
-		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, allergies,
+		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
 		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus);
 	}
 
@@ -191,6 +204,7 @@ public class PatientBuilder {
 		private final Marital.STATUS MARITAL;
 
 		private ArrayList<Language> LANGUAGES;
+		private ArrayList<VitalSign> VITAL_SIGNS;
 		private ArrayList<Allergy> ALLERGIES;
 		private ArrayList<Medication> MEDICATION_CURRENT;
 		private ArrayList<Medication> MEDICATION_PREVIOUS;
@@ -199,7 +213,7 @@ public class PatientBuilder {
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
 		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
-		        final ArrayList<Language> LANGUAGES, final ArrayList<Allergy> ALLERGIES,
+		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
 		        final Marital.STATUS MARITAL_STATUS) {
@@ -213,6 +227,7 @@ public class PatientBuilder {
 			this.RELIGION = RELIGION;
 			this.ETHNIC_GROUP = ETHNIC_GROUP;
 			this.LANGUAGES = LANGUAGES;
+			this.VITAL_SIGNS = VITAL_SIGNS;
 			this.ALLERGIES = ALLERGIES;
 			this.MEDICATION_CURRENT = MEDICATION_CURRENT;
 			this.MEDICATION_PREVIOUS = MEDICATION_PREVIOUS;
@@ -245,7 +260,13 @@ public class PatientBuilder {
 			ALLERGIES = aLLERGIES;
 		}
 		
+		public void setVITAL_SIGNS(ArrayList<VitalSign> vITAL_SIGNS) {
+			VITAL_SIGNS = vITAL_SIGNS;
+		}
 		
+		public ArrayList<VitalSign> getVITAL_SIGNS() {
+			return VITAL_SIGNS;
+		}
 
 		public ArrayList<Medication> getMEDICATION_CURRENT() {
 			return (ArrayList<Medication>) MEDICATION_CURRENT.clone();

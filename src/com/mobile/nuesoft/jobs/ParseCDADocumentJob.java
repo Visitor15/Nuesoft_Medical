@@ -48,6 +48,7 @@ import com.mobile.nuesoft.patient.PatientBuilder;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.patient.Severity;
 import com.mobile.nuesoft.patient.Telephone;
+import com.mobile.nuesoft.patient.VitalSign;
 import com.mobile.nuesoft.util.XMLParserUtil;
 
 public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocument> {
@@ -79,11 +80,11 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		super.onPostExecute(result);
 
 		if (result != null) {
-			
+
 			Log.d(TAG, "DOCUMENT: " + result.toString());
-			
+
 			Log.d(TAG, "PATIENT: " + result.getPATIENT().toString());
-			
+
 			updateBundle = new Bundle();
 			updateBundle.putBoolean(ParseCDADocumentJob.IS_FINISHED_KEY, true);
 			updateBundle.putSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY, result.getPATIENT());
@@ -115,7 +116,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		updateBundle.putBoolean(ParseCDADocumentJob.IS_FINISHED_KEY, false);
 		updateBundle.putSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY, updatedPatient);
 
-//		Nuesoft.getReference().setPatientToCurrent(updatedPatient);
+		// Nuesoft.getReference().setPatientToCurrent(updatedPatient);
 
 		PatientUpdateEvent.broadcast(Nuesoft.getReference(), updateBundle);
 	}
@@ -128,7 +129,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			docFile = new File(docPath[0]);
 
 			Log.d(TAG, "Attempting to parse: " + docFile.getAbsolutePath());
-			
+
 			dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(docFile);
@@ -178,7 +179,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		ArrayList<Node> nodeList;
 
 		mID = XMLParserUtil.getNodeAttr("extension", XMLParserUtil.getNode("id", node.getChildNodes()));
-//		Log.d(TAG, "GOT DOC ID: " + mID);
+		// Log.d(TAG, "GOT DOC ID: " + mID);
 
 		dataNode = XMLParserUtil.getNode("code", node.getChildNodes());
 		mCode = XMLParserUtil.getNodeAttr("code", dataNode);
@@ -187,7 +188,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		mSummaryTitle = XMLParserUtil.getNodeAttr("displayName", dataNode);
 
 		mDisplayTitle = XMLParserUtil.getNodeValue(XMLParserUtil.getNode("title", node.getChildNodes()));
-//		Log.d(TAG, "GOT DOC TITLE: " + mDisplayTitle);
+		// Log.d(TAG, "GOT DOC TITLE: " + mDisplayTitle);
 
 		dataNode = XMLParserUtil.getNode("author", node.getChildNodes());
 		nodeList = XMLParserUtil.getNamedNodes("author", node);
@@ -399,9 +400,9 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		Node dataNode;
 		for (int i = 0; i < nodeList.size(); i++) {
 			root = nodeList.get(i);
-			
-			authenticationTime = XMLParserUtil.getNodeAttr("value",
-			        XMLParserUtil.getNode("time", root.getChildNodes()));
+
+			authenticationTime = XMLParserUtil
+			        .getNodeAttr("value", XMLParserUtil.getNode("time", root.getChildNodes()));
 			signatureCode = XMLParserUtil.getNodeAttr("code",
 			        XMLParserUtil.getNode("signatureCode", root.getChildNodes()));
 
@@ -637,12 +638,12 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			rootNode = nodeList.get(i);
 			dataNode = XMLParserUtil.getNode("time", rootNode.getChildNodes());
 			timeAuthored = XMLParserUtil.getNodeAttr("value", dataNode);
-//			Log.d(TAG, "GOT TIME AUTHORED: " + timeAuthored);
+			// Log.d(TAG, "GOT TIME AUTHORED: " + timeAuthored);
 
 			dataNode = XMLParserUtil.getNode("assignedAuthor", rootNode.getChildNodes());
 			dataNode = XMLParserUtil.getNode("id", dataNode.getChildNodes());
 			authorID = XMLParserUtil.getNodeAttr("extension", dataNode);
-//			Log.d(TAG, "GOT AUTHOR ID: " + authorID);
+			// Log.d(TAG, "GOT AUTHOR ID: " + authorID);
 
 			dataNode = XMLParserUtil.getNode("assignedAuthor", rootNode.getChildNodes());
 			dataNode = XMLParserUtil.getNode("code", dataNode.getChildNodes());
@@ -650,10 +651,10 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			orgDepartment = XMLParserUtil.getNodeAttr("displayName", dataNode);
 			codeSystem = XMLParserUtil.getNodeAttr("codeSystem", dataNode);
 			codeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", dataNode);
-//			Log.d(TAG, "GOT ORG TYPE CODE: " + orgCode);
-//			Log.d(TAG, "GOT ORG DEPARTMENT: " + orgDepartment);
-//			Log.d(TAG, "GOT ORG CODE SYSTEM: " + codeSystem);
-//			Log.d(TAG, "GOT ORG CODE SYSTEM NAME: " + codeSystemName);
+			// Log.d(TAG, "GOT ORG TYPE CODE: " + orgCode);
+			// Log.d(TAG, "GOT ORG DEPARTMENT: " + orgDepartment);
+			// Log.d(TAG, "GOT ORG CODE SYSTEM: " + codeSystem);
+			// Log.d(TAG, "GOT ORG CODE SYSTEM NAME: " + codeSystemName);
 
 			dataNode = XMLParserUtil.getNode("assignedAuthor", rootNode.getChildNodes());
 			dataNode = XMLParserUtil.getNode("addr", dataNode.getChildNodes());
@@ -802,8 +803,20 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientVitalSignsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		dataNode = XMLParserUtil.getNode("list", dataNode.getChildNodes());
+		
+		String val;
+		Node tempNode;
+		for (int i = 0; i < dataNode.getChildNodes().getLength(); i++) {
+			tempNode = dataNode.getChildNodes().item(i);
+			if (tempNode.getNodeName().equalsIgnoreCase("item")) {
+				tempNode = XMLParserUtil.getNode("content", tempNode.getChildNodes());
+				val = XMLParserUtil.getNodeValue(tempNode);
+				VitalSign vital = new VitalSign(val);
+				patBuilder.addVitalSign(vital);
+			}
+		}
 	}
 
 	private void parsePatientTestResultsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
@@ -820,7 +833,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
 		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
 		String val = XMLParserUtil.getNodeValue(dataNode);
-		
+
 		patBuilder.setReasonForVisit(val);
 	}
 
@@ -828,7 +841,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
 		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
 		String val = XMLParserUtil.getNodeValue(dataNode);
-		
+
 		patBuilder.setReasonForReferral(val);
 	}
 
@@ -1070,14 +1083,15 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 		Node dataNode = XMLParserUtil.getNode("code", root.getChildNodes());
 		String code = XMLParserUtil.getNodeAttr("code", dataNode);
-//		Log.d(TAG, "GOT MEDICATION CODE: " + code);
+		// Log.d(TAG, "GOT MEDICATION CODE: " + code);
 
 		ArrayList<String> medicationNarrativeName = new ArrayList<String>();
 		dataNode = XMLParserUtil.getNode("text", root.getChildNodes());
 		dataNode = XMLParserUtil.getNode("list", dataNode.getChildNodes());
 		itemList = XMLParserUtil.getNamedNodes("item", dataNode);
 
-//		Log.d(TAG, "# OF MEDICATIONS IN PATIENT HISTORY: " + itemList.size());
+		// Log.d(TAG, "# OF MEDICATIONS IN PATIENT HISTORY: " +
+		// itemList.size());
 
 		Node tempNode;
 		for (Node n : itemList) {
@@ -1086,7 +1100,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		}
 
 		entryList = XMLParserUtil.getNamedNodes("entry", root);
-//		Log.d(TAG, "# OF MEDICATION ENTRIES: " + entryList.size());
+		// Log.d(TAG, "# OF MEDICATION ENTRIES: " + entryList.size());
 
 		for (int i = 0; i < entryList.size(); i++) {
 			mTitle = "";
@@ -1101,12 +1115,12 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			mAdministeredMethod = "";
 			mAdministeredFreq = "";
 			mDosageQuantity = "";
-			
+
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 
 			tempNode = XMLParserUtil.getNode("statusCode", tempNode.getChildNodes());
 			mStatus = XMLParserUtil.getNodeAttr("code", tempNode);
-//			Log.d(TAG, "MEDICATION STATUS: " + mStatus);
+			// Log.d(TAG, "MEDICATION STATUS: " + mStatus);
 
 			tempNode = entryList.get(i);
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
@@ -1130,24 +1144,25 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 				}
 			}
 
-//			Log.d(TAG, "MEDICATION DATE LOW: " + mDateLow);
-//			Log.d(TAG, "MEDICATION DATE HIGH: " + mDateHigh);
+			// Log.d(TAG, "MEDICATION DATE LOW: " + mDateLow);
+			// Log.d(TAG, "MEDICATION DATE HIGH: " + mDateHigh);
 
 			tempNode = entryList.get(i);
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 			tempNode = XMLParserUtil.getNode("routeCode", tempNode.getChildNodes());
 			mAdministeredMethod = XMLParserUtil.getNodeAttr("displayName", tempNode);
-//			Log.d(TAG, "MEDICATION ADMINISTERED METHOD: " + mAdministeredMethod);
+			// Log.d(TAG, "MEDICATION ADMINISTERED METHOD: " +
+			// mAdministeredMethod);
 
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 			tempNode = XMLParserUtil.getNode("doseQuantity", tempNode.getChildNodes());
 			mDosageQuantity = XMLParserUtil.getNodeAttr("value", tempNode);
-//			Log.d(TAG, "MEDICATION DOSAGE QUANTITY: " + mDosageQuantity);
+			// Log.d(TAG, "MEDICATION DOSAGE QUANTITY: " + mDosageQuantity);
 
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 			tempNode = XMLParserUtil.getNode("administrationUnitCode", tempNode.getChildNodes());
 			mAdministeredType = XMLParserUtil.getNodeAttr("displayName", tempNode);
-//			Log.d(TAG, "MEDICATION TYPE: " + mAdministeredType);
+			// Log.d(TAG, "MEDICATION TYPE: " + mAdministeredType);
 
 			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
 			tempNode = XMLParserUtil.getNode("consumable", tempNode.getChildNodes());
@@ -1162,7 +1177,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			mInstructions = medicationNarrativeName.get(i);
 
 			Log.d(TAG, "NCC - M_DATE_HIGH" + mDateHigh + " M_LOW_DATE: " + mDateLow + " For: " + mTitle);
-			
+
 			if (mDateHigh.trim().length() > 0) {
 				patient.addMedicationPrevious(new Medication(mTitle, mInstructions, mDateLow, mDateHigh, mStatus,
 				        mManufacturerCode, mManufacturerCodeSystem, mManufacturerCodeSystemName, mAdministeredType,
