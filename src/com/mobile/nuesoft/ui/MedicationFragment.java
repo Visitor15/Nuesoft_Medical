@@ -121,7 +121,7 @@ public class MedicationFragment extends NuesoftFragment {
 		        .getLayoutParams();
 		
 
-		int mMargin = Util.convertDpToPixel(4f, getActivity());
+		int mMargin = Util.convertDpToPixel(8f, getActivity());
 		mlp.setMargins(mMargin, 0, mMargin, 0);
 		
 		initMedsView(v);

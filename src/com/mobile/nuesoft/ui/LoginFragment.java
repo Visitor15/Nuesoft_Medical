@@ -61,6 +61,7 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 	@Override
 	public void onFragmentResume() {
 		loginEventListener.register();
+		Nuesoft.getReference().setCurrentCDADocument(null);
 	}
 
 	@Override

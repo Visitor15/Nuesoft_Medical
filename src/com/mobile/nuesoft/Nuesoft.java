@@ -29,7 +29,12 @@ public class Nuesoft  extends Application  {
 	
 	public void setCurrentCDADocument(final CDADocument document) {
 		Nuesoft.currentCDADocument = document;
+		
+		if(document != null) {
 		Nuesoft.currentPatient = document.getPATIENT();
+		} else {
+			Nuesoft.currentPatient = null;
+		}
     }
 	
 	public static NuesoftUser getCurrentUser() {

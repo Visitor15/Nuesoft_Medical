@@ -148,6 +148,8 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 						mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
 
+						Log.d(TAG, "NCC - STUFF: " + mUser.getString64PSWRD() + " AND " + mUser.getUserName());
+						
 						RegisterUserJob registerJob = new RegisterUserJob();
 						registerJob.execute(mUser);
 					} catch (IOException e) {

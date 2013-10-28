@@ -125,7 +125,7 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(expandableList);
 		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) expandableList.getLayoutParams();
 
-		int mMargin = Util.convertDpToPixel(4f, getActivity());
+		int mMargin = Util.convertDpToPixel(8f, getActivity());
 		mlp.setMargins(mMargin, 0, mMargin, 0);
 
 		expandableList.setLayoutParams(mlp);

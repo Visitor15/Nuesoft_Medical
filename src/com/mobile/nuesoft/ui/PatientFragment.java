@@ -36,7 +36,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	private ScreenSlidePagerAdapter mPagerAdapter;
 
 	private TextView mPatientTitleName;
-	
+
 	private ProfilePicImageView profileIcon;
 
 	private PatientObj mPatient;
@@ -52,6 +52,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	private LinearLayout activeReferralContainer;
 
 	private OnPatientUpdatedListener onPatientUpdatedListener = new OnPatientUpdatedListener();
+	private OnFragmentCallbackListener onFragmentCallbackListener = new OnFragmentCallbackListener();
 
 	public PatientFragment() {
 		TAG = "PatientFragment";
@@ -64,11 +65,13 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	@Override
 	public void onFragmentPaused() {
 		onPatientUpdatedListener.unregister();
+		onFragmentCallbackListener.unregister();
 	}
 
 	@Override
 	public void onFragmentResume() {
 		onPatientUpdatedListener.register();
+		onFragmentCallbackListener.register();
 	}
 
 	@Override
@@ -79,19 +82,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentStart() {
-//		if (docParseJob == null || shouldParse) {
-//			docParseJob = new ParseCDADocumentJob();
-//
-//			if (parseUri != null) {
-//				docParseJob.execute(parseUri.getPath());
-//			} else if (docPath != null || docPath.trim().length() > 0) {
-//				docParseJob.execute(docPath);
-//				
-//				shouldParse = false;
-//			} else {
-//				Toast.makeText(getActivity(), "A parse error has occurred: No file found", Toast.LENGTH_LONG).show();
-//			}
-//		}
+		
 	}
 
 	@Override
@@ -102,15 +93,16 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	@Override
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_frag_layout, null);
-		
+
 		mPatientTitleName = (TextView) v.findViewById(R.id.nt_name);
 		profileIcon = (ProfilePicImageView) v.findViewById(R.id.nt_profile_pic);
-		
+
 		// Instantiate a ViewPager and a PagerAdapter.
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
+		mPagerAdapter.init();
 		mPager.setAdapter(mPagerAdapter);
-		
+
 		return v;
 	}
 
@@ -137,13 +129,20 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 			for (String s : tempList) {
 				categoryList.add(s);
 			}
+		}
+
+		private void init() {
+			dataList.clear();
 
 			dataList.add(new DocumentListFragment());
 			dataList.add(new DocumentOverviewFragment());
-			dataList.add(new AllergyFragment());
-			dataList.add(new MedicationFragment());
-			dataList.add(new ScreenSlidePageFragment("Family History"));
-			dataList.add(new ScreenSlidePageFragment("Patient History"));
+
+			if (Nuesoft.getCurrentCDADocument() != null) {
+				dataList.add(new AllergyFragment());
+				dataList.add(new MedicationFragment());
+				dataList.add(new ScreenSlidePageFragment("Immunizations"));
+				dataList.add(new ScreenSlidePageFragment("Family History"));
+			}
 		}
 
 		@Override
@@ -175,6 +174,51 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		}
 	}
 
+	@Override
+	public void onPatientObjUpdated(Bundle b) {
+		if (b != null) {
+			if (b.containsKey(PatientUpdateEvent.PATIENT_OBJ_KEY)) {
+				mPatient = (PatientObj) b.getSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY);
+
+				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
+					if ((b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY))) {
+
+						mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
+						        + mPatient.getIDENTIFIER().getLAST_NAME());
+
+						mPagerAdapter.init();
+						mPagerAdapter.notifyDataSetChanged();
+
+						return;
+					}
+				}
+				Log.d(TAG, "JOB FINISHED");
+			}
+		}
+	}
+	
+	public void onHandleFragmentCallback(Bundle b) {
+		if(b != null) {
+			if(b.containsKey(FragmentCallbackEvent.ACTION_KEY)) {
+				int mAction = b.getInt(FragmentCallbackEvent.ACTION_KEY);
+				
+				switch(mAction) {
+					case 1: {
+						if(b.containsKey(FragmentCallbackEvent.FRAGMENT)) {
+							int mFragIndex = b.getInt(FragmentCallbackEvent.FRAGMENT);
+							
+							if(mPager != null) {
+								mPager.setCurrentItem(mFragIndex, true);
+							}
+						}
+						
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {
 		void register() {
 			final IntentFilter filter = PatientUpdateEvent.createFilter();
@@ -191,26 +235,20 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		}
 	}
 
-	@Override
-	public void onPatientObjUpdated(Bundle b) {
-		if (b != null) {
-			if (b.containsKey(PatientUpdateEvent.PATIENT_OBJ_KEY)) {
-				mPatient = (PatientObj) b.getSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY);
+	public class OnFragmentCallbackListener extends NuesoftBroadcastReceiver {
+		void register() {
+			final IntentFilter filter = FragmentCallbackEvent.createFilter();
+			registerLocalReceiver(Nuesoft.getReference(), this, filter);
+		}
 
-				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
-					if ((b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY))) {
+		void unregister() {
+			unregisterLocalReciever(Nuesoft.getReference(), this);
+		}
 
-						mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
-						        + mPatient.getIDENTIFIER().getLAST_NAME());
-
-						// Log.d(TAG, "PATIENTE UPDATED: " +
-						// mPatient.toString());
-
-						return;
-					}
-				}
-				Log.d(TAG, "JOB FINISHED");
-			}
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.d(TAG, "onReceive HIT");
+			onHandleFragmentCallback(intent.getExtras());
 		}
 	}
 }

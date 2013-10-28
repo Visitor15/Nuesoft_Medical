@@ -4,10 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +23,7 @@ import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
+import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 
 public class DocumentListFragment extends NuesoftFragment implements OnClickListener {
 
@@ -29,6 +32,8 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 	private ListView listView;
 
 	private ListViewAdapter mAdapter;
+	
+	private OnPatientUpdatedListener patientEventListener = new OnPatientUpdatedListener();
 
 	public DocumentListFragment() {
 
@@ -41,8 +46,7 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 	@Override
 	public void onFragmentPaused() {
-		// TODO Auto-generated method stub
-
+		patientEventListener.unregister();
 	}
 
 	@Override
@@ -75,8 +79,8 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setBackgroundResource(R.color.light_grey);
-
-		mAdapter = new ListViewAdapter(Nuesoft.getReference(), Uri.parse("storage/sdcard0/Download"));
+		
+		mAdapter = new ListViewAdapter();
 
 		return rootView;
 	}
@@ -91,21 +95,21 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 		private LayoutInflater mInflater;
 
-		private Uri rootUri;
-
 		private ArrayList<DocFile> dataList = new ArrayList<DocFile>();
+		
+		private File mFile;
 
-		public ListViewAdapter(final Context c, final Uri rootUri) {
-			mInflater = LayoutInflater.from(c);
-			this.rootUri = rootUri;
+		public ListViewAdapter() {
+			mInflater = LayoutInflater.from(Nuesoft.getReference());
 			init();
 		}
 
 		private void init() {
-			File f = new File(rootUri.getPath());
-
-			if (f.exists()) {
-				File[] children = f.listFiles();
+			mFile = Environment.getExternalStoragePublicDirectory(
+		            Environment.DIRECTORY_DOWNLOADS);
+			
+			if (mFile.exists()) {
+				File[] children = mFile.listFiles();
 
 				for (int i = 0; i < children.length; i++) {
 					File tempFile = children[i];
@@ -184,10 +188,37 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 //	    
 //	    Log.d(TAG, "CLICKED URI: " + mUri);
 //	    
-	    Bundle b = new Bundle();
-		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
-		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
-		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+//	    Bundle b = new Bundle();
+//		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());
+//		b.putInt(FragmentCallbackEvent.FRAGMENT, 1);
+//		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+	    patientEventListener.register();
     }
+	
+	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {
+		void register() {
+			final IntentFilter filter = PatientUpdateEvent.createFilter();
+			registerLocalReceiver(Nuesoft.getReference(), this, filter);
+		}
+
+		void unregister() {
+			unregisterLocalReciever(Nuesoft.getReference(), this);
+		}
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Bundle b = intent.getExtras();
+			if(b != null) {
+				if(b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
+					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
+					if(isFinished) {
+					    b = new Bundle();
+						b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());
+						b.putInt(FragmentCallbackEvent.FRAGMENT, 1);
+						FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+					}
+				}
+			}
+		}
+	}
 }

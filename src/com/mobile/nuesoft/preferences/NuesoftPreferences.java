@@ -48,7 +48,7 @@ public class NuesoftPreferences {
 	}
 
 	public boolean saveRegisteredUser(final NuesoftUser user) {
-		NuesoftUser savedUser = getNuesoftUser(user.getUserName());
+		NuesoftUser savedUser = getNuesoftUser(user.getUserName().toLowerCase(Locale.getDefault()));
 		if (savedUser == null) {
 			return mPrefs.edit().putString(user.getUserName().toLowerCase(Locale.getDefault()), user.toString()).commit();
 		}
