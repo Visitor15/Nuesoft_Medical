@@ -26,11 +26,12 @@
             android:id="@+id/expandable_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:paddingTop="12dip"
-            android:clipToPadding="false"
             android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip" >
+            android:layout_marginRight="8dip"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:paddingBottom="@dimen/footer_height"
+            android:paddingTop="12dip" >
         </ExpandableListView>
     </RelativeLayout>
 

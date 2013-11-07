@@ -23,7 +23,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:divider="@null"
-        android:paddingTop="12dip" >
+        android:paddingTop="12dip"
+        android:paddingBottom="@dimen/footer_height" >
     </ListView>
 
 </LinearLayout>

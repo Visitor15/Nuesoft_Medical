@@ -3,20 +3,17 @@ package com.mobile.nuesoft;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.mobile.nuesoft.ui.FooterFragment;
 import com.mobile.nuesoft.ui.FragmentCallbackEvent;
 import com.mobile.nuesoft.ui.LoginFragment;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
@@ -28,10 +25,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public static final String TAG = "MainActivity";
 
 	private RelativeLayout mainContainer;
-
-	private DrawerLayout navDrawer;
 	
-	private ImageView navHandle;
+	private LinearLayout mFooterContainer;
+	
+	private FooterFragment mFooter = new FooterFragment();
+
+//	private DrawerLayout navDrawer;
+	
+//	private ImageView navHandle;
 
 	private OnFragmentCallbackListener fragCallbackListener = new OnFragmentCallbackListener();
 
@@ -40,9 +41,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		navDrawer = (DrawerLayout) findViewById(R.id.nav_drawer);
-		navHandle = (ImageView) findViewById(R.id.nav_handle);
+//		navDrawer = (DrawerLayout) findViewById(R.id.nav_drawer);
+//		navHandle = (ImageView) findViewById(R.id.nav_handle);
 		mainContainer = (RelativeLayout) findViewById(R.id.content_frame);
+		mFooterContainer = (LinearLayout) findViewById(R.id.ll_footer_container);
 
 		init();
 	}
@@ -88,8 +90,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	}
 
 	private void init() {
-		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
-		navHandle.setOnClickListener(this);
+//		navDrawer.setScrimColor(Color.parseColor("#AA282828"));
+//		navHandle.setOnClickListener(this);
+		
+		this.getSupportFragmentManager().beginTransaction().add(R.id.ll_footer_container, mFooter, LoginFragment.TAG)
+        .commit();
 		
 		Fragment frag = new LoginFragment();
 		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, LoginFragment.TAG)
@@ -105,14 +110,21 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	}
 	
 	public void closeAndLockDrawer() {
-		navDrawer.closeDrawers();
-		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-		navHandle.setVisibility(View.GONE);
+		
+		mFooterContainer.setVisibility(View.GONE);
+		
+//		navDrawer.closeDrawers();
+//		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//		navHandle.setVisibility(View.GONE);
 	}
 	
 	public void unlockDrawer() {
-		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-		navHandle.setVisibility(View.VISIBLE);
+		
+		mFooterContainer.setVisibility(View.VISIBLE);
+		
+		
+//		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//		navHandle.setVisibility(View.VISIBLE);
 	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
@@ -158,12 +170,12 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	@Override
     public void onClick(View v) {
 		switch(v.getId()) {
-			case R.id.nav_handle: {
-				
-				navDrawer.openDrawer(Gravity.LEFT);
-				
-				break;
-			}
+//			case R.id.nav_handle: {
+//				
+//				navDrawer.openDrawer(Gravity.LEFT);
+//				
+//				break;
+//			}
 		}
     }
 
