@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
@@ -297,9 +298,12 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 					break;
 				}
 			}
-			
-//			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//			((RelativeLayout) convertView.findViewById(R.id.rl_container)).setLayoutParams(params);
+
+			// RelativeLayout.LayoutParams params = new
+			// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+			// RelativeLayout.LayoutParams.WRAP_CONTENT);
+			// ((RelativeLayout)
+			// convertView.findViewById(R.id.rl_container)).setLayoutParams(params);
 
 			return convertView;
 		}
@@ -459,7 +463,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 			// TODO Auto-generated method stub
 			return false;
 		}
-
 	}
 
 	public class OnCDADocumentUpdateEventListener extends NuesoftBroadcastReceiver {
@@ -481,6 +484,8 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 					showNoDataView(rootView);
 				} else {
 					hideNoDataView(rootView);
+					((MainActivity) getActivity()).getFooter().setTitleText(
+					        Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
 				}
 
 				if (mAdapter != null) {

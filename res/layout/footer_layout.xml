@@ -21,7 +21,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/btn_cancel"
             android:layout_width="@dimen/footer_height"
             android:layout_height="match_parent"
             android:background="@drawable/btn_background_basic"
@@ -30,6 +30,7 @@
             android:src="@drawable/ic_action_cancel" />
 
         <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,11 +38,11 @@
             android:gravity="center"
             android:text="FOOTER"
             android:textColor="#282828"
-            android:textSize="24sp"
-            custom:textStyle="fonts/Roboto-Thin.ttf" />
+            android:textSize="18sp"
+            custom:textStyle="fonts/Roboto-Regular.ttf" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/btn_send_now"
             android:layout_width="@dimen/footer_height"
             android:layout_height="match_parent"
             android:background="@drawable/btn_background_basic"

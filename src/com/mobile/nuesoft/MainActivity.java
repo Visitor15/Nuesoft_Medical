@@ -126,6 +126,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 //		navDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 //		navHandle.setVisibility(View.VISIBLE);
 	}
+	
+	public FooterFragment getFooter() {
+		return mFooter;
+	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
 		this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag, NuesoftFragment.TAG)
