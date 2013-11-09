@@ -91,25 +91,79 @@
                     android:inputType="textPassword" />
             </RelativeLayout>
 
-            <com.mobile.nuesoft.ui.NuesoftTextView
-                android:id="@+id/btn_register"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dip"
                 android:layout_marginTop="12dip"
-                android:background="@drawable/btn_background_clickable_transparent"
-                android:padding="8dip"
-                android:text="Register Account"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                custom:textStyle="fonts/Roboto-Thin.ttf" />
+                android:gravity="center_horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/btn_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dip"
+                    android:background="@drawable/btn_background_clickable_transparent"
+                    android:clickable="true"
+                    android:padding="8dip" >
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="32dip"
+                        android:layout_height="32dip"
+                        android:src="@drawable/ic_action_new" />
+
+                    <com.mobile.nuesoft.ui.NuesoftTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="4dip"
+                        android:text="Register Account"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        custom:textStyle="fonts/Roboto-Thin.ttf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_unlock_doc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_register"
+                    android:background="@drawable/btn_background_clickable_transparent"
+                    android:clickable="true"
+                    android:padding="8dip" >
+
+                    <ImageView
+                        android:id="@+id/iv_unlock_btn"
+                        android:layout_width="32dip"
+                        android:layout_height="32dip"
+                        android:clickable="true"
+                        android:padding="4dip"
+                        android:src="@drawable/unlock_icon" />
+
+                    <com.mobile.nuesoft.ui.NuesoftTextView
+                        android:id="@+id/nt_unlock_doc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="4dip"
+                        android:text="Unlock Document"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        custom:textStyle="fonts/Roboto-Thin.ttf" />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#AAC2C2C2" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        android:layout_alignParentBottom="true"
         android:background="@color/off_white"
         android:orientation="horizontal" >
 
@@ -126,7 +180,7 @@
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dip"
-            android:background="#AA282828" />
+            android:background="#AAC2C2C2" />
 
         <Button
             android:id="@+id/btn_login"

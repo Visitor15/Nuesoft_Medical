@@ -121,10 +121,14 @@
         </LinearLayout>
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#AAC2C2C2" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal" >
 
@@ -141,7 +145,7 @@
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dip"
-            android:background="#AA282828" />
+            android:background="#AAC2C2C2" />
 
         <Button
             android:id="@+id/btn_register"

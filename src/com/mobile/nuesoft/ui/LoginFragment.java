@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.mobile.nuesoft.MainActivity;
@@ -24,9 +24,7 @@ import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.NuesoftUser;
 import com.mobile.nuesoft.R;
-import com.mobile.nuesoft.jobs.NuesoftRegisteredUserEvent;
 import com.mobile.nuesoft.jobs.NuesoftUserLoginEvent;
-import com.mobile.nuesoft.jobs.RegisterUserJob;
 import com.mobile.nuesoft.jobs.UserLoginJob;
 
 public class LoginFragment extends NuesoftFragment implements OnClickListener {
@@ -40,7 +38,7 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
 	Button btnLogin;
 
-	TextView btnRegister;
+	LinearLayout btnRegister;
 
 	OnLoginEventListener loginEventListener = new OnLoginEventListener();
 
@@ -90,12 +88,12 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 		password = (EditText) rootView.findViewById(R.id.et_password);
 		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 		btnLogin = (Button) rootView.findViewById(R.id.btn_login);
-		btnRegister = (TextView) rootView.findViewById(R.id.btn_register);
+		btnRegister = (LinearLayout) rootView.findViewById(R.id.btn_register);
 
 		btnCancel.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-		
+
 		((MainActivity) getActivity()).closeAndLockDrawer();
 
 		return rootView;

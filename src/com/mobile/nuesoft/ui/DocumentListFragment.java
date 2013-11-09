@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,8 @@ import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
+import com.mobile.nuesoft.jobs.DecryptionJob;
+import com.mobile.nuesoft.jobs.EncryptionJob;
 import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
 import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 
@@ -123,7 +126,7 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 					if (!tempFile.isDirectory()) {
 						String fileName = tempFile.getName();
 						String exten = fileName.substring(fileName.length() - 3);
-						if (exten.equalsIgnoreCase("xml")) {
+						if (exten.equalsIgnoreCase("xml") || exten.equalsIgnoreCase("ncc")) {
 							dataList.add(new DocFile(fileName, Uri.fromFile(tempFile)));
 						}
 					}
@@ -188,8 +191,19 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 	public void onClick(View v) {
 		Uri mUri = Uri.parse((String) v.getTag());
 
-		ParseCDADocumentJob job = new ParseCDADocumentJob();
-		job.execute(mUri.getPath());
+		String extension = mUri.getLastPathSegment().substring(mUri.getLastPathSegment().length() - 3);
+		if (extension.equalsIgnoreCase("ncc")) {
+			Log.d(TAG, "NCC - GOT PATH: " + mUri.getPath());
+			DecryptionJob job = new DecryptionJob();
+			job.execute(new String[] { mUri.getPath(), "11111111" });
+		} else {
+//			EncryptionJob job = new EncryptionJob();
+//			job.execute(new String[] { mUri.getPath(), "11111111" });
+			ParseCDADocumentJob job = new ParseCDADocumentJob();
+			 job.execute(mUri.getPath());
+		}
+
+		 
 		//
 		//
 		// Log.d(TAG, "CLICKED URI: " + mUri);
