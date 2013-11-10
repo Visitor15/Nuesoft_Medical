@@ -141,7 +141,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 				dataList.add(new AllergyFragment());
 				dataList.add(new MedicationFragment());
 				dataList.add(new PatientVitalsFragment());
-				dataList.add(new ScreenSlidePageFragment("Immunizations"));
+				dataList.add(new ImmunizationFragment());
 				dataList.add(new FamilyHistoryFragment());
 			}
 		}

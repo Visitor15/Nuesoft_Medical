@@ -75,6 +75,10 @@ public class PatientBuilder {
 		this.familyHistory = familyHistory;
 	}
 	
+	public ArrayList<Immunization> getImmunizations(){
+		return this.immunizations;
+	}
+	
 	public void addImmunizations(final Immunization immunizations){
 		this.immunizations.add(immunizations);
 	}
@@ -205,7 +209,7 @@ public class PatientBuilder {
 
 	public PatientObj build() {
 		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
-		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory);
+		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, immunizations);
 	}
 
 	public class PatientObj implements Serializable {
@@ -233,13 +237,14 @@ public class PatientBuilder {
 		private ArrayList<Encounter> MEDICAL_ENCOUNTERS;
 		private ArrayList<PatientTest> TESTS;
 		private ArrayList<FamilyHistory> FAMILY_HISTORY;
+		private ArrayList<Immunization> IMMUNIZATIONS;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
 		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
 		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
-		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY) {
+		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY, final ArrayList<Immunization> IMMUNIZATIONS) {
 
 			this.IDENTIFIER = IDENTIFIER;
 			this.BIRTH_TIME = BIRTH_TIME;
@@ -258,6 +263,7 @@ public class PatientBuilder {
 			this.TESTS = TESTS;
 			this.MARITAL = MARITAL_STATUS;
 			this.FAMILY_HISTORY = FAMILY_HISTORY;
+			this.IMMUNIZATIONS = IMMUNIZATIONS;
 		}
 
 		public PatientIdentifier getIDENTIFIER() {
@@ -274,6 +280,10 @@ public class PatientBuilder {
 
 		public String getBIRTH_TIME() {
 			return BIRTH_TIME;
+		}
+		
+		public ArrayList<Immunization> getIMMUNIZATIONS(){
+			return (ArrayList<Immunization>) IMMUNIZATIONS.clone();
 		}
 
 		public ArrayList<Allergy> getALLERGIES() {

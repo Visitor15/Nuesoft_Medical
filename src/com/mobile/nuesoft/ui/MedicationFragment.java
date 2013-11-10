@@ -23,12 +23,9 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.util.Util;
 
 public class MedicationFragment extends NuesoftFragment {
-	
 	private LayoutInflater mInflater;
 	private ExpandableAdapter mAdapter;
-	
 	private ExpandableListView listView;
-
 	private TextView titleText;
 	
 	public MedicationFragment() {
@@ -131,8 +128,6 @@ public class MedicationFragment extends NuesoftFragment {
 		listView = (ExpandableListView) v.findViewById(R.id.expandable_list_view);
 		
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentPatient());
-		listView.setAdapter(mAdapter);
-		
 		listView.setAdapter(mAdapter);
 		mAdapter.init();
 	}
