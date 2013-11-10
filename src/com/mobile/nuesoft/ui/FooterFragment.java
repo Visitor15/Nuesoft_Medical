@@ -99,27 +99,6 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 		this.mTitleText.setText(str);
 	}
 
-	private String encodeBase64String(final String str) {
-		String encodedVal = "";
-
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		ObjectOutputStream objOutStream;
-
-		try {
-			objOutStream = new ObjectOutputStream(outStream);
-
-			objOutStream.writeUTF(str);
-
-			objOutStream.flush();
-
-			encodedVal = Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return encodedVal;
-	}
-
 	private void handleFooter() {
 		Animation outAnim;
 		if (Nuesoft.getCurrentCDADocument() == null) {
@@ -189,11 +168,6 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 			}
 
 			case R.id.btn_send_now: {
-
-//				Bundle b = new Bundle();
-//				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-//				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.SEND_DOC_FRAGMENT.ordinal());
-//				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
 				
 				SendDocFragment dialogFrag = new SendDocFragment();
 				dialogFrag.show(getActivity().getSupportFragmentManager(), SendDocFragment.TAG);
