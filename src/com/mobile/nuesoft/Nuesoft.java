@@ -54,6 +54,4 @@ public class Nuesoft  extends Application  {
 	    Nuesoft.singleton = this;
 	    super.onCreate();
 	}
-
-
 }

@@ -25,7 +25,6 @@ import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.DecryptionJob;
-import com.mobile.nuesoft.jobs.EncryptionJob;
 import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
 import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 
@@ -55,8 +54,9 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 	@Override
 	public void onFragmentResume() {
-		// TODO Auto-generated method stub
-
+//		if (Nuesoft.getCurrentCDADocument() == null) {
+//			((MainActivity) getActivity()).getFooter().setTitleText("No document loaded");
+//		}
 	}
 
 	@Override
@@ -85,13 +85,7 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 		listView.setBackgroundResource(R.color.light_grey);
 
 		mAdapter = new ListViewAdapter();
-
-		((MainActivity) getActivity()).unlockDrawer();
-
-		if (Nuesoft.getCurrentCDADocument() == null) {
-			((MainActivity) getActivity()).getFooter().setTitleText("No document loaded");
-		}
-
+		
 		return rootView;
 	}
 
@@ -100,6 +94,8 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 		// TODO Auto-generated method stub
 		listView.setAdapter(mAdapter);
 	}
+
+
 
 	public class ListViewAdapter extends BaseAdapter {
 
@@ -197,13 +193,12 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 			DecryptionJob job = new DecryptionJob();
 			job.execute(new String[] { mUri.getPath(), "11111111" });
 		} else {
-//			EncryptionJob job = new EncryptionJob();
-//			job.execute(new String[] { mUri.getPath(), "11111111" });
+			// EncryptionJob job = new EncryptionJob();
+			// job.execute(new String[] { mUri.getPath(), "11111111" });
 			ParseCDADocumentJob job = new ParseCDADocumentJob();
-			 job.execute(mUri.getPath());
+			job.execute(mUri.getPath());
 		}
 
-		 
 		//
 		//
 		// Log.d(TAG, "CLICKED URI: " + mUri);
@@ -233,6 +228,8 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
 					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
 					if (isFinished) {
+						((MainActivity) getActivity()).showFooter();
+						
 						b = new Bundle();
 						b.putInt(FragmentCallbackEvent.ACTION_KEY,
 						        FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());

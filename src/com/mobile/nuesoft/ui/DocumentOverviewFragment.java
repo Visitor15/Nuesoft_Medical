@@ -135,10 +135,10 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 	}
 
 	private void initDocumentOverView(final View v) {
-		titleText.setText(Nuesoft.getCurrentCDADocument().getDISPLAY_TITLE());
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentCDADocument());
 		expandableList.setAdapter(mAdapter);
 		mAdapter.init();
+		expandableList.expandGroup(ExpandableAdapter.DOC_ELEMENT_REASON_FOR_REFERRAL);
 	}
 
 	private class ExpandableAdapter extends BaseExpandableListAdapter {

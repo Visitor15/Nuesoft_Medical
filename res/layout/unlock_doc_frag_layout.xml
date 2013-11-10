@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/charcoal"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <com.mobile.nuesoft.ui.NuesoftTextView
+                android:id="@+id/nt_decoded_pswrd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dip"
+                android:layout_marginTop="24dip"
+                android:gravity="center"
+                android:text="0000"
+                android:textColor="@color/white"
+                android:textSize="64dip"
+                custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dip"
+                    android:background="@color/off_white"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:text="Enter code"
+                    android:textColor="#AA282828"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+                <EditText
+                    android:id="@+id/et_encoded_pswrd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dip"
+                    android:layout_marginRight="12dip"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:padding="12dip"
+                    android:singleLine="true"
+                    android:textSize="32sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#AAC2C2C2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_background_clickable_item"
+            android:text="Cancel"
+            android:textColor="#AA282828" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dip"
+            android:background="#AAC2C2C2" />
+
+        <Button
+            android:id="@+id/btn_decode"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_background_clickable_item"
+            android:text="Decrypt"
+            android:textColor="#AA282828" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -81,7 +81,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentStart() {
-		
+
 	}
 
 	@Override
@@ -107,7 +107,8 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(profileIcon.getDrawable());
+		((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(
+		        new ProfilePicImageView(getActivity()).getDrawable());
 	}
 
 	/**
@@ -156,11 +157,14 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		}
 	}
 
-	public class ScreenSlidePageFragment extends Fragment {
+	public static class ScreenSlidePageFragment extends Fragment {
 
 		private String mTitle = "";
 
-		ScreenSlidePageFragment(final String title) {
+		public ScreenSlidePageFragment() {
+		}
+
+		public ScreenSlidePageFragment(final String title) {
 			this.mTitle = title;
 		}
 
@@ -183,8 +187,14 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
 					if ((b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY))) {
 
-						mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
-						        + mPatient.getIDENTIFIER().getLAST_NAME());
+						if (mPatientTitleName != null) {
+							mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
+							        + mPatient.getIDENTIFIER().getLAST_NAME());
+						} else {
+							((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(
+							        mPatient.getIDENTIFIER().getFIRST_NAME() + " "
+							                + mPatient.getIDENTIFIER().getLAST_NAME());
+						}
 
 						mPagerAdapter.init();
 						mPagerAdapter.notifyDataSetChanged();
@@ -196,22 +206,22 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 			}
 		}
 	}
-	
+
 	public void onHandleFragmentCallback(Bundle b) {
-		if(b != null) {
-			if(b.containsKey(FragmentCallbackEvent.ACTION_KEY)) {
+		if (b != null) {
+			if (b.containsKey(FragmentCallbackEvent.ACTION_KEY)) {
 				int mAction = b.getInt(FragmentCallbackEvent.ACTION_KEY);
-				
-				switch(mAction) {
+
+				switch (mAction) {
 					case 1: {
-						if(b.containsKey(FragmentCallbackEvent.FRAGMENT)) {
+						if (b.containsKey(FragmentCallbackEvent.FRAGMENT)) {
 							int mFragIndex = b.getInt(FragmentCallbackEvent.FRAGMENT);
-							
-							if(mPager != null) {
+
+							if (mPager != null) {
 								mPager.setCurrentItem(mFragIndex, true);
 							}
 						}
-						
+
 						break;
 					}
 				}

@@ -16,12 +16,17 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+
+import com.mobile.nuesoft.Nuesoft;
 
 public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 
 	private static final String TAG = "EncryptionJob";
+	
+	public static final String IS_FINISHED_KEY = "is_finished_bool";
 
 	private static final String ALGORITHM = "DES";
 	private static final String FULL_ALGORITHM = "DES/ECB/PKCS5Padding";
@@ -31,6 +36,8 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 	private CipherOutputStream ciphStream;
 	private Cipher mEncrypt;
 	private SecretKeySpec mKeySpec;
+	
+	private Bundle updateBundle;
 
 	private byte[] mBuf;
 
@@ -50,6 +57,10 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 		super.onPostExecute(result);
 
 		Log.d(TAG, "ENCRYPTION: " + result);
+		
+		updateBundle = new Bundle();
+		updateBundle.putBoolean(EncryptionJob.IS_FINISHED_KEY, result);
+		EncryptionJobEvent.broadcast(Nuesoft.getReference(), updateBundle);
 	}
 
 	@Override
@@ -65,9 +76,11 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 				objOutStream.writeUTF(param[1]);
 				objOutStream.flush();
 
-				mPswrd = Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT);
+				Log.d(TAG, "NCC - GOT PASSWORD: " + param[1]);
+				
+//				mPswrd = Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT);
 
-				byte[] seedKey = mPswrd.getBytes();
+				byte[] seedKey = param[1].getBytes();
 				in = new FileInputStream(mFile);
 				mFile = new File(mFile.getAbsolutePath().concat(".ncc"));
 				out = new FileOutputStream(mFile);

@@ -14,7 +14,9 @@ public class FragmentCallbackEvent {
 	public static enum FRAGMENTS {
 		PATIENT_FRAGMENT,
 		REGISTRATION_FRAGMENT,
-		LOGIN_FRAGMENT
+		LOGIN_FRAGMENT,
+		UNLOCK_DOC_FRAGMENT,
+		SEND_DOC_FRAGMENT
 	};
 	
 	public static enum ACTIONS {

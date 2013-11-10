@@ -95,7 +95,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 		btnRegister.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
 
-		((MainActivity) getActivity()).closeAndLockDrawer();
+		((MainActivity) getActivity()).hideFooter();
 
 		return rootView;
 	}
