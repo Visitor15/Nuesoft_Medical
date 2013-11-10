@@ -129,8 +129,6 @@ public class MedicationFragment extends NuesoftFragment {
 		
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentPatient());
 		listView.setAdapter(mAdapter);
-		
-		listView.setAdapter(mAdapter);
 		mAdapter.init();
 	}
 	

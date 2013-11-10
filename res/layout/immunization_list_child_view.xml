@@ -1,8 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@null"
+    android:clickable="false"
+    android:focusable="false"
+    android:gravity="center" >
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:layout_marginBottom="4dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="4dip"
+        android:background="@drawable/btn_background_dark_clickable_item"
+        android:clickable="true" >
+
+        <FrameLayout
+            android:id="@+id/iv_icon"
+            android:layout_width="12dip"
+            android:layout_height="match_parent"
+            android:background="#9933CC" />
+
+        <ImageView
+            android:id="@+id/more"
+            android:layout_width="24dip"
+            android:layout_height="32dip"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/menu_overflow" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_margin="4dip"
+            android:layout_toRightOf="@id/iv_icon"
+            android:background="@color/light_grey" />
+
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dip"
+            android:layout_toLeftOf="@id/more"
+            android:layout_toRightOf="@id/divider"
+            android:textColor="#AA282828"
+            android:textSize="18sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        
+        <LinearLayout
+            android:id="@+id/ll_details_container"
+            android:layout_marginBottom="4dip"
+	        android:layout_marginLeft="8dip"
+	        android:layout_marginRight="8dip"
+	        android:layout_marginTop="4dip"
+	        android:background="@drawable/btn_background_dark_clickable_item" >
+            
+            <com.mobile.nuesoft.ui.NueSoftTextView
+                android:id="@+id/med_date_low"
+                android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="8dip"
+	            android:textColor="#AA282828"
+	            android:textSize="18sp"
+	            custom:textStyle="fonts/Roboto-Thin.ttf" />
+            
+            <com.mobile.nuesoft.ui.NueSoftTextView
+                android:id="@+id/med_date_high"
+                android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="8dip"
+	            android:textColor="#AA282828"
+	            android:textSize="18sp"
+	            custom:textStyle="fonts/Roboto-Thin.ttf" />
+            
+            <com.mobile.nuesoft.ui.NueSoftTextView
+                android:id="@+id/med_instructions"
+                android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="8dip"
+	            android:textColor="#AA282828"
+	            android:textSize="18sp"
+	            custom:textStyle="fonts/Roboto-Thin.ttf" />
+            
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
