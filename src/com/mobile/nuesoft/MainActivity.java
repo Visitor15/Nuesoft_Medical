@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -22,7 +22,6 @@ import com.mobile.nuesoft.ui.LoginFragment;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
 import com.mobile.nuesoft.ui.RegistrationFragment;
-import com.mobile.nuesoft.ui.SendDocFragment;
 import com.mobile.nuesoft.ui.UnlockCDADocFragment;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {

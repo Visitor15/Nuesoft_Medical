@@ -55,8 +55,8 @@
         
         <LinearLayout
             android:id="@+id/ll_details_container"
-            android:layout_width="wrap_parents"
-            android:layout_height="wrap_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dip"
 	        android:layout_marginLeft="8dip"
 	        android:layout_marginRight="8dip"
