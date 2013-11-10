@@ -223,7 +223,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					case 4: {
 						// Send CDA Document fragment
 						// this.closeAndLockDrawer();
-						replaceMainContent(new SendDocFragment());
+//						replaceMainContent(new SendDocFragment());
 						break;
 					}
 				}
