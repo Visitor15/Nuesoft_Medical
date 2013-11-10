@@ -16,6 +16,7 @@ public class Personnel {
 	private String PERSONNEL_DEPARTMENT = "";
 	private String CODE_SYSTEM = "";
 	private String CODE_SYSTEM_NAME = "";
+	private String EMAIL = "";
 	private Address PERSONNEL_ADDRESS = null;
 	private Telephone TELEPHONE = null;
 	private Organization PERSONNEL_ORGANIZATION = null;
@@ -36,6 +37,18 @@ public class Personnel {
 
 	public String getSUFFIX() {
 		return SUFFIX;
+	}
+	
+	public String getPRINTABLE_NAME() {
+		return FAMILY_NAME + ", " + GIVEN_NAME;
+	}
+	
+	public String getEMAIL() {
+		return EMAIL;
+	}
+	
+	public void setEMAIL(final String email) {
+		this.EMAIL = email;
 	}
 
 	public String getPERSONNEL_TYPE() {

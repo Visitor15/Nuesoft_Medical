@@ -6,19 +6,35 @@
     android:orientation="vertical" >
 
     <com.mobile.nuesoft.ui.NuesoftTextView
-        android:id="@+id/nt_name"
+        android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#AA282828"
         android:gravity="center"
-        android:text="Document Title"
-        android:textColor="#AA282828"
+        android:padding="4dip"
+        android:singleLine="true"
+        android:text="Overview"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        custom:textStyle="fonts/Roboto-Bold.ttf" />
+        custom:textStyle="fonts/Roboto-Thin.ttf" />
 
-    <ExpandableListView
-        android:id="@+id/expandable_list"
+    <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ExpandableListView>
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <ExpandableListView
+            android:id="@+id/expandable_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:paddingBottom="@dimen/footer_height"
+            android:paddingTop="12dip" >
+        </ExpandableListView>
+    </RelativeLayout>
 
 </LinearLayout>

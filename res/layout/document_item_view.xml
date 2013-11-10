@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="match_parent"
-        android:layout_height="48dip"
+        android:layout_height="54dip"
         android:layout_marginBottom="4dip"
         android:layout_marginLeft="8dip"
         android:layout_marginRight="8dip"
@@ -20,12 +20,11 @@
         android:background="@drawable/btn_background_clickable_item"
         android:clickable="true" >
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/iv_icon"
-            android:layout_width="48dip"
-            android:layout_height="48dip"
-            android:padding="4dip"
-            android:src="@drawable/place_holder_icon" />
+            android:layout_width="12dip"
+            android:layout_height="match_parent"
+            android:background="#0099CC" />
 
         <ImageView
             android:id="@+id/more"
@@ -50,9 +49,32 @@
             android:layout_marginLeft="8dip"
             android:layout_toLeftOf="@id/more"
             android:layout_toRightOf="@id/divider"
-            android:padding="4dip"
-            android:textColor="#282828"
+            android:textColor="#AA282828"
+            android:textSize="18sp"
             custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/nt_text"
+            android:layout_below="@id/nt_text"
+            android:text="Date added:"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/nt_date_title"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="4dip"
+            android:layout_toRightOf="@id/nt_date_title"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
     </RelativeLayout>
 
 </RelativeLayout>

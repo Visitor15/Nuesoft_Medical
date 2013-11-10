@@ -11,13 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
@@ -28,19 +28,15 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 
 public class PatientFragment extends NuesoftFragment implements OnPatientObjUpdated {
 
-	public static final String TAG = "PatientFragment";
-
 	public static final int NUM_OF_CARDS = 5;
 
 	private ViewPager mPager;
 
 	private ScreenSlidePagerAdapter mPagerAdapter;
 
-	// private SlidingDrawer mDrawer;
-	//
-	// private GridView mDrawerGridView;
-
 	private TextView mPatientTitleName;
+
+	private ProfilePicImageView profileIcon;
 
 	private PatientObj mPatient;
 
@@ -55,12 +51,10 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	private LinearLayout activeReferralContainer;
 
 	private OnPatientUpdatedListener onPatientUpdatedListener = new OnPatientUpdatedListener();
+	private OnFragmentCallbackListener onFragmentCallbackListener = new OnFragmentCallbackListener();
 
 	public PatientFragment() {
-	}
-
-	public PatientFragment(final Uri parseUri) {
-		this.parseUri = parseUri;
+		TAG = "PatientFragment";
 	}
 
 	@Override
@@ -70,11 +64,13 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	@Override
 	public void onFragmentPaused() {
 		onPatientUpdatedListener.unregister();
+		onFragmentCallbackListener.unregister();
 	}
 
 	@Override
 	public void onFragmentResume() {
 		onPatientUpdatedListener.register();
+		onFragmentCallbackListener.register();
 	}
 
 	@Override
@@ -85,19 +81,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentStart() {
-		if (docParseJob == null || shouldParse) {
-			docParseJob = new ParseCDADocumentJob();
 
-			if (parseUri != null) {
-				docParseJob.execute(parseUri.getPath());
-			} else if (docPath != null || docPath.trim().length() > 0) {
-				docParseJob.execute(docPath);
-				
-				shouldParse = false;
-			} else {
-				Toast.makeText(getActivity(), "A parse error has occurred: No file found", Toast.LENGTH_LONG).show();
-			}
-		}
 	}
 
 	@Override
@@ -109,33 +93,23 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_frag_layout, null);
 
-//		activeReferralContainer = (LinearLayout) v.findViewById(R.id.ll_active_referrals_container);
 		mPatientTitleName = (TextView) v.findViewById(R.id.nt_name);
+		profileIcon = (ProfilePicImageView) v.findViewById(R.id.nt_profile_pic);
 
 		// Instantiate a ViewPager and a PagerAdapter.
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
+		mPagerAdapter.init();
 		mPager.setAdapter(mPagerAdapter);
-
-//		initActiveReferralFragment();
 
 		return v;
 	}
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-
+		((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(
+		        new ProfilePicImageView(getActivity()).getDrawable());
 	}
-
-//	private void initActiveReferralFragment() {
-//		this.getChildFragmentManager().beginTransaction()
-//		        .replace(R.id.ll_active_referrals_container, new ActiveReferralsFragment()).commit();
-//	}
-
-	// private void initDrawer() {
-	// mDrawerGridView.setAdapter(new
-	// GridViewAdapter(getActivity().getApplicationContext()));
-	// }
 
 	/**
 	 * A simple pager adapter that represents 5 ScreenSlidePageFragment objects,
@@ -155,12 +129,21 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 			for (String s : tempList) {
 				categoryList.add(s);
 			}
+		}
 
-			dataList.add(new SummaryFragment());
-			dataList.add(new ScreenSlidePageFragment("Allergies"));
-			dataList.add(new MedicationFragment());
-			dataList.add(new ScreenSlidePageFragment("Family History"));
-			dataList.add(new ScreenSlidePageFragment("Patient History"));
+		private void init() {
+			dataList.clear();
+
+			dataList.add(new DocumentListFragment());
+			dataList.add(new DocumentOverviewFragment());
+
+			if (Nuesoft.getCurrentCDADocument() != null) {
+				dataList.add(new AllergyFragment());
+				dataList.add(new MedicationFragment());
+				dataList.add(new PatientVitalsFragment());
+				dataList.add(new ScreenSlidePageFragment("Immunizations"));
+				dataList.add(new FamilyHistoryFragment());
+			}
 		}
 
 		@Override
@@ -174,11 +157,14 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		}
 	}
 
-	public class ScreenSlidePageFragment extends Fragment {
+	public static class ScreenSlidePageFragment extends Fragment {
 
 		private String mTitle = "";
 
-		ScreenSlidePageFragment(final String title) {
+		public ScreenSlidePageFragment() {
+		}
+
+		public ScreenSlidePageFragment(final String title) {
 			this.mTitle = title;
 		}
 
@@ -189,6 +175,57 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 			((TextView) rootView.findViewById(R.id.nt_title)).setText(mTitle);
 
 			return rootView;
+		}
+	}
+
+	@Override
+	public void onPatientObjUpdated(Bundle b) {
+		if (b != null) {
+			if (b.containsKey(PatientUpdateEvent.PATIENT_OBJ_KEY)) {
+				mPatient = (PatientObj) b.getSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY);
+
+				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
+					if ((b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY))) {
+
+						if (mPatientTitleName != null) {
+							mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
+							        + mPatient.getIDENTIFIER().getLAST_NAME());
+						} else {
+							((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(
+							        mPatient.getIDENTIFIER().getFIRST_NAME() + " "
+							                + mPatient.getIDENTIFIER().getLAST_NAME());
+						}
+
+						mPagerAdapter.init();
+						mPagerAdapter.notifyDataSetChanged();
+
+						return;
+					}
+				}
+				Log.d(TAG, "JOB FINISHED");
+			}
+		}
+	}
+
+	public void onHandleFragmentCallback(Bundle b) {
+		if (b != null) {
+			if (b.containsKey(FragmentCallbackEvent.ACTION_KEY)) {
+				int mAction = b.getInt(FragmentCallbackEvent.ACTION_KEY);
+
+				switch (mAction) {
+					case 1: {
+						if (b.containsKey(FragmentCallbackEvent.FRAGMENT)) {
+							int mFragIndex = b.getInt(FragmentCallbackEvent.FRAGMENT);
+
+							if (mPager != null) {
+								mPager.setCurrentItem(mFragIndex, true);
+							}
+						}
+
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -208,26 +245,20 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		}
 	}
 
-	@Override
-	public void onPatientObjUpdated(Bundle b) {
-		if (b != null) {
-			if (b.containsKey(PatientUpdateEvent.PATIENT_OBJ_KEY)) {
-				mPatient = (PatientObj) b.getSerializable(PatientUpdateEvent.PATIENT_OBJ_KEY);
+	public class OnFragmentCallbackListener extends NuesoftBroadcastReceiver {
+		void register() {
+			final IntentFilter filter = FragmentCallbackEvent.createFilter();
+			registerLocalReceiver(Nuesoft.getReference(), this, filter);
+		}
 
-				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
-					if ((b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY))) {
+		void unregister() {
+			unregisterLocalReciever(Nuesoft.getReference(), this);
+		}
 
-						mPatientTitleName.setText(mPatient.getIDENTIFIER().getFIRST_NAME() + " "
-						        + mPatient.getIDENTIFIER().getLAST_NAME());
-
-						// Log.d(TAG, "PATIENTE UPDATED: " +
-						// mPatient.toString());
-
-						return;
-					}
-				}
-				Log.d(TAG, "JOB FINISHED");
-			}
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.d(TAG, "onReceive HIT");
+			onHandleFragmentCallback(intent.getExtras());
 		}
 	}
 }

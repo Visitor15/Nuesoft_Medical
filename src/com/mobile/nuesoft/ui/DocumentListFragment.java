@@ -4,8 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +20,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
+import com.mobile.nuesoft.jobs.DecryptionJob;
+import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
+import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 
 public class DocumentListFragment extends NuesoftFragment implements OnClickListener {
 
@@ -27,6 +35,8 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 	private ListView listView;
 
 	private ListViewAdapter mAdapter;
+
+	private OnPatientUpdatedListener patientEventListener = new OnPatientUpdatedListener();
 
 	public DocumentListFragment() {
 
@@ -39,14 +49,14 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 
 	@Override
 	public void onFragmentPaused() {
-		// TODO Auto-generated method stub
-
+		patientEventListener.unregister();
 	}
 
 	@Override
 	public void onFragmentResume() {
-		// TODO Auto-generated method stub
-
+//		if (Nuesoft.getCurrentCDADocument() == null) {
+//			((MainActivity) getActivity()).getFooter().setTitleText("No document loaded");
+//		}
 	}
 
 	@Override
@@ -72,11 +82,10 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 		rootView = inflater.inflate(R.layout.document_list_frag_layout, container, false);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
-
 		listView.setBackgroundResource(R.color.light_grey);
 
-		mAdapter = new ListViewAdapter(Nuesoft.getReference(), Uri.parse("storage/sdcard0/Download"));
-
+		mAdapter = new ListViewAdapter();
+		
 		return rootView;
 	}
 
@@ -86,25 +95,26 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 		listView.setAdapter(mAdapter);
 	}
 
+
+
 	public class ListViewAdapter extends BaseAdapter {
 
 		private LayoutInflater mInflater;
 
-		private Uri rootUri;
-
 		private ArrayList<DocFile> dataList = new ArrayList<DocFile>();
 
-		public ListViewAdapter(final Context c, final Uri rootUri) {
-			mInflater = LayoutInflater.from(c);
-			this.rootUri = rootUri;
+		private File mFile;
+
+		public ListViewAdapter() {
+			mInflater = LayoutInflater.from(Nuesoft.getReference());
 			init();
 		}
 
 		private void init() {
-			File f = new File(rootUri.getPath());
+			mFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-			if (f.exists()) {
-				File[] children = f.listFiles();
+			if (mFile.exists()) {
+				File[] children = mFile.listFiles();
 
 				for (int i = 0; i < children.length; i++) {
 					File tempFile = children[i];
@@ -112,7 +122,7 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 					if (!tempFile.isDirectory()) {
 						String fileName = tempFile.getName();
 						String exten = fileName.substring(fileName.length() - 3);
-						if (exten.equalsIgnoreCase("xml")) {
+						if (exten.equalsIgnoreCase("xml") || exten.equalsIgnoreCase("ncc")) {
 							dataList.add(new DocFile(fileName, Uri.fromFile(tempFile)));
 						}
 					}
@@ -142,13 +152,21 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.document_item_view, container, false);
 			}
-			
+
 			RelativeLayout mContainer = (RelativeLayout) convertView.findViewById(R.id.rl_container);
 			mContainer.setTag(mDocFile.mUri.toString());
 
 			TextView textView = (TextView) convertView.findViewById(R.id.nt_text);
 			textView.setText(mDocFile.name);
-			
+
+			TextView dateTextView = (TextView) convertView.findViewById(R.id.nt_date_value);
+
+			File data = new File(mDocFile.mUri.getPath());
+			if (data.exists()) {
+				CharSequence mDate = DateFormat.format("MM-dd-yyyy", data.lastModified());
+				dateTextView.setText(mDate);
+			}
+
 			mContainer.setOnClickListener(DocumentListFragment.this);
 
 			return convertView;
@@ -166,15 +184,60 @@ public class DocumentListFragment extends NuesoftFragment implements OnClickList
 	}
 
 	@Override
-    public void onClick(View v) {
-	    Uri mUri = Uri.parse((String) v.getTag());
-	    
-	    Log.d(TAG, "CLICKED URI: " + mUri);
-	    
-	    Bundle b = new Bundle();
-		b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-		b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
-		b.putString(FragmentCallbackEvent.DATA, mUri.toString());
-		FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
-    }
+	public void onClick(View v) {
+		Uri mUri = Uri.parse((String) v.getTag());
+
+		String extension = mUri.getLastPathSegment().substring(mUri.getLastPathSegment().length() - 3);
+		if (extension.equalsIgnoreCase("ncc")) {
+			Log.d(TAG, "NCC - GOT PATH: " + mUri.getPath());
+			DecryptionJob job = new DecryptionJob();
+			job.execute(new String[] { mUri.getPath(), "11111111" });
+		} else {
+			// EncryptionJob job = new EncryptionJob();
+			// job.execute(new String[] { mUri.getPath(), "11111111" });
+			ParseCDADocumentJob job = new ParseCDADocumentJob();
+			job.execute(mUri.getPath());
+		}
+
+		//
+		//
+		// Log.d(TAG, "CLICKED URI: " + mUri);
+		//
+		// Bundle b = new Bundle();
+		// b.putInt(FragmentCallbackEvent.ACTION_KEY,
+		// FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());
+		// b.putInt(FragmentCallbackEvent.FRAGMENT, 1);
+		// FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+		patientEventListener.register();
+	}
+
+	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {
+		void register() {
+			final IntentFilter filter = PatientUpdateEvent.createFilter();
+			registerLocalReceiver(Nuesoft.getReference(), this, filter);
+		}
+
+		void unregister() {
+			unregisterLocalReciever(Nuesoft.getReference(), this);
+		}
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Bundle b = intent.getExtras();
+			if (b != null) {
+				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
+					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
+					if (isFinished) {
+						((MainActivity) getActivity()).showFooter();
+						
+						b = new Bundle();
+						b.putInt(FragmentCallbackEvent.ACTION_KEY,
+						        FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());
+						b.putInt(FragmentCallbackEvent.FRAGMENT, 1);
+						FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+					}
+				}
+			}
+		}
+	}
 }

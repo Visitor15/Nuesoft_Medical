@@ -14,12 +14,16 @@ public class PatientBuilder {
 	private String race;
 	private String religion;
 	private String ethnicGroup;
+	private String reasonForReferral;
+	private String reasonForVisit;
 	private Marital.STATUS maritalStatus;
+	private ArrayList<VitalSign> vitalSigns = new ArrayList<VitalSign>();
 	private ArrayList<Language> languages = new ArrayList<Language>();
 	private ArrayList<Medication> medicationCurrent = new ArrayList<Medication>();
 	private ArrayList<Medication> medicationPrevious = new ArrayList<Medication>();
 	private ArrayList<Encounter> medicalEncounters = new ArrayList<Encounter>();
 	private ArrayList<Allergy> allergies = new ArrayList<Allergy>();
+	private ArrayList<FamilyHistory> familyHistory = new ArrayList<FamilyHistory>();
 
 	private ArrayList<PatientTest> tests = new ArrayList<PatientTest>();
 
@@ -60,6 +64,30 @@ public class PatientBuilder {
 
 	public void setAllergies(ArrayList<Allergy> allergies) {
 		this.allergies = allergies;
+	}
+	
+	public void addFamilyHistoryItem(final FamilyHistory famHistory) {
+		this.familyHistory.add(famHistory);
+	}
+	
+	public void setFamilyHistory(final ArrayList<FamilyHistory> familyHistory) {
+		this.familyHistory = familyHistory;
+	}
+	
+	public ArrayList<FamilyHistory> getFamilyHistory() {
+		return this.familyHistory;
+	}
+	
+	public ArrayList<VitalSign> getVitalSigns() {
+		return vitalSigns;
+	}
+	
+	public void addVitalSign(final VitalSign vitalSign) {
+		this.vitalSigns.add(vitalSign);
+	}
+	
+	public void setVitalSigns(final ArrayList<VitalSign> vitalSigns) {
+		this.vitalSigns = vitalSigns;
 	}
 
 	public List<Medication> getMedicationCurrent() {
@@ -141,6 +169,22 @@ public class PatientBuilder {
 	public void setEthnicGroup(String ethnicGroup) {
 		this.ethnicGroup = ethnicGroup;
 	}
+	
+	public String getReasonForReferral() {
+		return reasonForReferral;
+	}
+	
+	public void setReasonForReferral(String reasonForReferral) {
+		this.reasonForReferral = reasonForReferral;
+	}
+	
+	public String getReasonForVisit() {
+		return reasonForVisit;
+	}
+	
+	public void setReasonForVisit(String reasonForVisit) {
+		this.reasonForVisit = reasonForVisit;
+	}
 
 	public List<Language> getLanguages() {
 		return languages;
@@ -151,14 +195,14 @@ public class PatientBuilder {
 	}
 
 	public PatientObj build() {
-		return new PatientObj(id, birthTime, gender, race, religion, ethnicGroup, languages, allergies,
-		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus);
+		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
+		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory);
 	}
 
 	public class PatientObj implements Serializable {
 
 		/**
-		 * Serializing purposes
+		 *	GENERATED SERIAL ID
 		 */
 		private static final long serialVersionUID = -5213206329002435084L;
 
@@ -167,36 +211,44 @@ public class PatientBuilder {
 		private final String RACE;
 		private final String RELIGION;
 		private final String ETHNIC_GROUP;
+		private final String REASON_FOR_REFERRAL;
+		private final String REASON_FOR_VISIT;
 		private final Gender GENDER;
 		private final Marital.STATUS MARITAL;
 
 		private ArrayList<Language> LANGUAGES;
+		private ArrayList<VitalSign> VITAL_SIGNS;
 		private ArrayList<Allergy> ALLERGIES;
 		private ArrayList<Medication> MEDICATION_CURRENT;
 		private ArrayList<Medication> MEDICATION_PREVIOUS;
 		private ArrayList<Encounter> MEDICAL_ENCOUNTERS;
 		private ArrayList<PatientTest> TESTS;
+		private ArrayList<FamilyHistory> FAMILY_HISTORY;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
-		        final String RACE, final String RELIGION, final String ETHNIC_GROUP,
-		        final ArrayList<Language> LANGUAGES, final ArrayList<Allergy> ALLERGIES,
+		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
+		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
-		        final Marital.STATUS MARITAL_STATUS) {
+		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY) {
 
 			this.IDENTIFIER = IDENTIFIER;
 			this.BIRTH_TIME = BIRTH_TIME;
 			this.GENDER = GENDER;
 			this.RACE = RACE;
+			this.REASON_FOR_REFERRAL = REASON_FOR_REFERRAL;
+			this.REASON_FOR_VISIT = REASON_FOR_VISIT;
 			this.RELIGION = RELIGION;
 			this.ETHNIC_GROUP = ETHNIC_GROUP;
 			this.LANGUAGES = LANGUAGES;
+			this.VITAL_SIGNS = VITAL_SIGNS;
 			this.ALLERGIES = ALLERGIES;
 			this.MEDICATION_CURRENT = MEDICATION_CURRENT;
 			this.MEDICATION_PREVIOUS = MEDICATION_PREVIOUS;
 			this.MEDICAL_ENCOUNTERS = MEDICATION_ENCOUNTERS;
 			this.TESTS = TESTS;
 			this.MARITAL = MARITAL_STATUS;
+			this.FAMILY_HISTORY = FAMILY_HISTORY;
 		}
 
 		public PatientIdentifier getIDENTIFIER() {
@@ -216,11 +268,23 @@ public class PatientBuilder {
 		}
 
 		public ArrayList<Allergy> getALLERGIES() {
-			return ALLERGIES;
+			return (ArrayList<Allergy>) ALLERGIES.clone();
 		}
 
 		public void setALLERGIES(ArrayList<Allergy> aLLERGIES) {
 			ALLERGIES = aLLERGIES;
+		}
+		
+		public ArrayList<FamilyHistory> getFAMILY_HISTORY() {
+			return (ArrayList<FamilyHistory>) FAMILY_HISTORY.clone();
+		}
+		
+		public void setVITAL_SIGNS(ArrayList<VitalSign> vITAL_SIGNS) {
+			VITAL_SIGNS = vITAL_SIGNS;
+		}
+		
+		public ArrayList<VitalSign> getVITAL_SIGNS() {
+			return (ArrayList<VitalSign>) VITAL_SIGNS.clone();
 		}
 
 		public ArrayList<Medication> getMEDICATION_CURRENT() {
@@ -265,6 +329,14 @@ public class PatientBuilder {
 
 		public void setLANGUAGES(ArrayList<Language> lANGUAGES) {
 			LANGUAGES = lANGUAGES;
+		}
+		
+		public String getREASON_FOR_REFFERAL() {
+			return REASON_FOR_REFERRAL;
+		}
+		
+		public String getREASON_FOR_VISIT() {
+			return REASON_FOR_VISIT;
 		}
 
 		public String getRACE() {

@@ -12,11 +12,16 @@ public class FragmentCallbackEvent {
 	public static final String FRAGMENT = "com.mobile.nuesoft.FRAGMENT";
 	
 	public static enum FRAGMENTS {
-		PATIENT_FRAGMENT
+		PATIENT_FRAGMENT,
+		REGISTRATION_FRAGMENT,
+		LOGIN_FRAGMENT,
+		UNLOCK_DOC_FRAGMENT,
+		SEND_DOC_FRAGMENT
 	};
 	
 	public static enum ACTIONS {
-		REPLACE_MAIN_CONTENT
+		REPLACE_MAIN_CONTENT,
+		SHOW_FRAGMENT_IN_PAGER
 	};
 
 	public static IntentFilter createFilter() {

@@ -9,10 +9,11 @@
         android:id="@+id/nt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#AA282828"
         android:gravity="center"
-        android:padding="12dip"
-        android:text="Available referrals"
-        android:textColor="#AA282828"
+        android:padding="4dip"
+        android:text="Available Documents"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
@@ -20,7 +21,10 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null" >
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:paddingTop="12dip"
+        android:paddingBottom="@dimen/footer_height" >
     </ListView>
 
 </LinearLayout>
