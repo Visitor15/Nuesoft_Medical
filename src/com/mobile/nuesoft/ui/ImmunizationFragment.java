@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -19,7 +20,9 @@ import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.patient.Immunization;
+import com.mobile.nuesoft.patient.Medication;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
+//import com.mobile.nuesoft.ui.MedicationFragment.ExpandableAdapter;
 import com.mobile.nuesoft.util.Util;
 
 public class ImmunizationFragment extends NuesoftFragment {
@@ -65,24 +68,17 @@ public class ImmunizationFragment extends NuesoftFragment {
 	@Override
     public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    mInflater = inflater;
-	    
-	    //View v = mInflater.inflate(R.layout., container, false);
-	    
-	    //View v = mInflater.inflate(R.layout.immunization_fragment_layout, container, false);
-	    
-	    //R.layout.
+	    View rootView = mInflater.inflate(R.layout.immunization_fragment_layout, container, false);
+	    titleText = (TextView) rootView.findViewById(R.id.nt_title);
+	    titleText.setText("Immunizations");
 
-	    //View v = mInflater.inflate(R.layout.medication_fragment_layout, container, false);
-		
-		//titleText = (TextView) v.findViewById(R.id.nt_title);
-		//titleText.setText("Medications");
-		
-		//if(Nuesoft.getCurrentPatient() == null) {
-		//	showNoDataView(v);
-		//}
+	    if (Nuesoft.getCurrentPatient() == null) {
+			showNoDataView(rootView);
+		} else {
+			hideNoDataView(rootView);
+		}
 
-		
-		return null;
+		return rootView;
     }
 
 	@Override
@@ -91,18 +87,54 @@ public class ImmunizationFragment extends NuesoftFragment {
     }
 	
 	public void showNoDataView(final View v){	
+		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
+
+		RelativeLayout view = (RelativeLayout) mInflater.inflate(R.layout.no_data_layout, null);
+
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		        LayoutParams.MATCH_PARENT);
+		view.setLayoutParams(params);
+
+		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(view);
+		
 	}
 	
+	//TODO: change out to allergy layout
 	public void hideNoDataView(final View v){
+		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
+		ExpandableListView addedView = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout, null);
+		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(addedView);
+		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) addedView.getLayoutParams();
+
+		int mMargin = Util.convertDpToPixel(8f, getActivity());
+		mlp.setMargins(mMargin, 0, mMargin, 0);
+		
+		initImmunizationView(v);
 	}
 	
 	private void initImmunizationView(final View v){
+		listView = (ExpandableListView) v.findViewById(R.id.expandable_list_view);
+		
+		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentPatient());
+		listView.setAdapter(mAdapter);
+		
+		listView.setAdapter(mAdapter);
+		mAdapter.init();
 	}
 	
 	private class ExpandableAdapter extends BaseExpandableListAdapter {
+		private LayoutInflater mInflater;
+		private ArrayList<Immunization> list = new ArrayList<Immunization>();
+		//private HashMap<String, ArrayList<Immunization>> map = new HashMap<String, ArrayList<Immunization>>();
+		private final PatientObj mPatient;
 		
 		public ExpandableAdapter(final PatientObj patient) {
-			
+			mPatient = patient;
+		}
+		
+		private void init(){
+			mInflater = LayoutInflater.from(Nuesoft.getReference());
+			list = mPatient.getIMMUNIZATIONS();
 		}
 
 		@Override
