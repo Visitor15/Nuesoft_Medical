@@ -42,6 +42,7 @@ import com.mobile.nuesoft.patient.Drug;
 import com.mobile.nuesoft.patient.FamilyHistory;
 import com.mobile.nuesoft.patient.Gender;
 import com.mobile.nuesoft.patient.IdentifierBuilder;
+import com.mobile.nuesoft.patient.Immunization;
 import com.mobile.nuesoft.patient.Language;
 import com.mobile.nuesoft.patient.Marital;
 import com.mobile.nuesoft.patient.Medication;
@@ -847,7 +848,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientProceduresFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -866,8 +867,83 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 	}
 
-	private void parsePatientImmunizationsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
+	private void parsePatientImmunizationsFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
+		Immunization mImmunization = null;
+		ArrayList<Immunization> mImmunizationList = new ArrayList<Immunization>();
+		
+		String mDisplayName = "";
+		String mCodeSystem = "";
+		String mCodeSystemName = "";
+		String mEffectiveTime = "";
+		String mStatusCode = "";
+		String mManufacturedClassCode = "";
+		String mManufacturerName = "";
+		String mSubstanceAdministrationMoodCode = "";
+		String mSubstanceAdministrationClassCode = "";
+		
+		ArrayList<Node> itemList;
+		ArrayList<Node> entryList;
+
+		Node dataNode = XMLParserUtil.getNode("code", sectionNode.getChildNodes());
+		String code = XMLParserUtil.getNodeAttr("code", dataNode);
+		// Log.d(TAG, "GOT MEDICATION CODE: " + code);
+
+		ArrayList<String> medicationNarrativeName = new ArrayList<String>();
+		dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		dataNode = XMLParserUtil.getNode("list", dataNode.getChildNodes());
+		itemList = XMLParserUtil.getNamedNodes("item", dataNode);
+		
+		Node tempNode;
+		for (Node n : itemList) {
+			tempNode = XMLParserUtil.getNode("content", n.getChildNodes());
+			medicationNarrativeName.add(XMLParserUtil.getNodeValue(tempNode));
+		}
+		
+		entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
+		
+		for (int i = 0; i < entryList.size(); i++) {
+			mDisplayName = ""; //good
+			mCodeSystem = ""; //good
+			mCodeSystemName = ""; //good
+			mEffectiveTime = ""; //good
+			mStatusCode = ""; //good
+			mManufacturedClassCode = "";
+			mManufacturerName = ""; //good
+			mSubstanceAdministrationMoodCode = ""; //good
+			mSubstanceAdministrationClassCode = ""; //good
+			
+			
+			
+			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
+			mSubstanceAdministrationMoodCode = XMLParserUtil.getNodeAttr("moodCode", tempNode);
+			mSubstanceAdministrationClassCode = XMLParserUtil.getNodeAttr("classCode", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("statusCode", tempNode.getChildNodes());
+			mStatusCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("effectiveTime", tempNode.getChildNodes());
+			mEffectiveTime = XMLParserUtil.getNodeAttr("value", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("consumable", tempNode.getChildNodes());
+			mManufacturedClassCode = XMLParserUtil.getNodeAttr("classCode", tempNode);
+			tempNode = XMLParserUtil.getNode("manufacturedProduct", tempNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("manufacturedMaterial", tempNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("code", tempNode.getChildNodes());
+			mDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
+			mCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
+			mCodeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("manufacturerOrganization", tempNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("name", tempNode.getChildNodes());
+			
+			mManufacturerName = XMLParserUtil.getNodeValue(tempNode);
+			
+			mImmunization = new Immunization(mDisplayName, mCodeSystem, mEffectiveTime, mStatusCode, mCodeSystemName, mManufacturedClassCode, mManufacturerName, mSubstanceAdministrationMoodCode, mSubstanceAdministrationClassCode);
+			patientBuilder.addImmunizations(mImmunization);
+			
+		}
+		
+		
 
 	}
 

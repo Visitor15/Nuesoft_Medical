@@ -24,6 +24,7 @@ public class PatientBuilder {
 	private ArrayList<Encounter> medicalEncounters = new ArrayList<Encounter>();
 	private ArrayList<Allergy> allergies = new ArrayList<Allergy>();
 	private ArrayList<FamilyHistory> familyHistory = new ArrayList<FamilyHistory>();
+	private ArrayList<Immunization> immunizations = new ArrayList<Immunization>();
 
 	private ArrayList<PatientTest> tests = new ArrayList<PatientTest>();
 
@@ -72,6 +73,14 @@ public class PatientBuilder {
 	
 	public void setFamilyHistory(final ArrayList<FamilyHistory> familyHistory) {
 		this.familyHistory = familyHistory;
+	}
+	
+	public void addImmunizations(final Immunization immunizations){
+		this.immunizations.add(immunizations);
+	}
+	
+	public void setImmunizations(final ArrayList<Immunization> immunizations){
+		this.immunizations = immunizations;
 	}
 	
 	public ArrayList<FamilyHistory> getFamilyHistory() {
