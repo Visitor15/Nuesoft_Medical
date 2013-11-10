@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_ui_selectable_background"
+    android:orientation="vertical" >
+    
+    <com.mobile.nuesoft.ui.NuesoftTextView
+        android:id="@+id/nt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AA282828"
+        android:gravity="center"
+        android:padding="4dip"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        custom:textStyle="fonts/Roboto-Thin.ttf" />
+    
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <ExpandableListView
+            android:id="@+id/expandable_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dip"
+            android:clipToPadding="false"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:divider="@null" />
+    </RelativeLayout>
+
+</LinearLayout>
