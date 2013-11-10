@@ -23,12 +23,9 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.util.Util;
 
 public class MedicationFragment extends NuesoftFragment {
-	
 	private LayoutInflater mInflater;
 	private ExpandableAdapter mAdapter;
-	
 	private ExpandableListView listView;
-
 	private TextView titleText;
 	
 	public MedicationFragment() {
