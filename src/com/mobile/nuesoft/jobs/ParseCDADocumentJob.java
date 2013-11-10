@@ -49,6 +49,7 @@ import com.mobile.nuesoft.patient.Medication;
 import com.mobile.nuesoft.patient.PatientBuilder;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.patient.Severity;
+import com.mobile.nuesoft.patient.SocialHistory;
 import com.mobile.nuesoft.patient.Telephone;
 import com.mobile.nuesoft.patient.VitalSign;
 import com.mobile.nuesoft.util.XMLParserUtil;
@@ -826,9 +827,98 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 	}
 
-	private void parsePatientSocialHistoryFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+	private void parsePatientSocialHistoryFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
+		/*Notes: code 8517006 = former smoker
+		 * 
+		 * 
+		 * 
+		 */
+		
+		
+		String templateCode = "";
+		String templateDisplayName = "";
+		
+		String observationClassCode = "";
+		String observationMoodCode = "";
+		String codeCode = "";
+		String codeCodeSystem = "";
+		String statusCode = "";
+		String effectiveDateLow = "";
+		String effectiveDateHigh = "";
+		String observationValueType = "";
+		String observationValueCode = "";
+		String observationDisplayName = "";
+		String observationCodeSystem = "";
+		String observationCodeSystemName = "";
+		
+		
+		ArrayList<SocialHistory> socialHistoryList = new ArrayList<SocialHistory>();
+		ArrayList<Node> itemList;
+		ArrayList<Node> entryList;
+		
+		Node dataNode = XMLParserUtil.getNode("code", sectionNode.getChildNodes());
+		templateCode = XMLParserUtil.getNodeAttr("code", dataNode);
+		templateDisplayName = XMLParserUtil.getNodeAttr("displayName", dataNode);
+		
+		
+		entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
+		
+		Node content;
+		Node rootNode;
+		Node tempNode;
+		
+		for (int i = 0; i < entryList.size(); i++) {
+			SocialHistory socialHistory = null;
+			
+			observationClassCode = "";
+			observationMoodCode = "";
+			
+			codeCode = "";
+			codeCodeSystem = "";
+			statusCode = "";
+			effectiveDateLow = "";
+			effectiveDateHigh = "";
+			
+			observationValueType = "";
+			observationValueCode = "";
+			observationDisplayName = "";
+			observationCodeSystem = "";
+			observationCodeSystemName = "";
+			
+			
+			content = entryList.get(i);
+			content = XMLParserUtil.getNode("observation", content.getChildNodes());
+			
+			tempNode = XMLParserUtil.getNode("code", content.getChildNodes());
+			codeCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			codeCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("statusCode", content.getChildNodes());
+			statusCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("effectiveTime", content.getChildNodes());
+			tempNode = XMLParserUtil.getNode("low", tempNode.getChildNodes());
+			effectiveDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("effectiveTime", content.getChildNodes());
+			tempNode = XMLParserUtil.getNode("high", tempNode.getChildNodes());
+			effectiveDateHigh = XMLParserUtil.getNodeAttr("value", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("value", content.getChildNodes());
+			observationValueType = XMLParserUtil.getNodeAttr("xsi:type", tempNode);
+			observationValueCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			observationDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
+			observationCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
+			observationCodeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", tempNode);
+			
+			socialHistory = new SocialHistory(observationClassCode, observationMoodCode, codeCode, codeCodeSystem, statusCode, effectiveDateLow, effectiveDateHigh, 
+					observationValueType, observationValueCode, observationDisplayName, observationCodeSystem, observationCodeSystemName);
+			
+			socialHistoryList.add(socialHistory);
+		}
+		
+		patientBuilder.setSocialHistory(socialHistoryList);
+		
 	}
 
 	private void parsePatientReasonForVisitFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
