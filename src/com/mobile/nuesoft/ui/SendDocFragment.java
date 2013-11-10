@@ -9,24 +9,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
-import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.EncryptionJob;
 import com.mobile.nuesoft.jobs.EncryptionJobEvent;
 
-public class SendDocFragment extends NuesoftFragment implements OnClickListener {
+public class SendDocFragment extends DialogFragment implements OnClickListener {
+	
+	public static final String TAG = "SendDocDialog";
 
 	private View rootView;
 
@@ -42,45 +44,12 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	OnEncryptionEventListener encryptionEventListener = new OnEncryptionEventListener();
 
 	public SendDocFragment() {
-		TAG = "SendDocFragment";
+		this.setStyle(STYLE_NO_FRAME, 0);
+		this.setStyle(STYLE_NO_TITLE, 0);
 	}
 
 	@Override
-	public void onFragmentCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onFragmentPaused() {
-		encryptionEventListener.unregister();
-	}
-
-	@Override
-	public void onFragmentResume() {
-		encryptionEventListener.register();
-	}
-
-	@Override
-	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.send_doc_frag_layout, container, false);
 
 		filenameTitle = (TextView) rootView.findViewById(R.id.nt_filename);
@@ -97,16 +66,30 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 
 		filenameTitle.setText(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
 
-		((MainActivity) getActivity()).hideFooter();
-
 		return rootView;
-	}
+    }
 
 	@Override
-	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+    public void onActivityCreated(Bundle b) {
+	    super.onActivityCreated(b);
+	    
+	    final WindowManager.LayoutParams lp = getDialog().getWindow().getAttributes();
+	    lp.dimAmount = 0.6f;
+	    getDialog().getWindow().setAttributes(lp);
+	    getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
 
-	}
+	@Override
+    public void onPause() {
+	    super.onPause();
+	    encryptionEventListener.unregister();
+    }
+
+	@Override
+    public void onResume() {
+	    super.onResume();
+	    encryptionEventListener.register();
+    }
 
 	private void beginSending() {
 		EncryptionJob job = new EncryptionJob();
@@ -115,6 +98,8 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	}
 
 	private void sendDocument() {
+		((MainActivity) getActivity()).hideFooter();
+		
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", etEmailAddr.getText().toString(),
 		        null));
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Nuesoft Medical Test");
@@ -123,8 +108,6 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 		emailIntent.putExtra(Intent.EXTRA_STREAM,
 		        Uri.parse(Nuesoft.getCurrentCDADocument().getDOC_URI().toString().concat(".ncc")));
 		startActivity(Intent.createChooser(emailIntent, "Send email..."));
-		
-		Log.d(TAG, "NCC - PATH: " + Nuesoft.getCurrentCDADocument().getDOC_URI().toString().concat(".ncc"));
 	}
 
 	private String encodeBase64String(final String str) {

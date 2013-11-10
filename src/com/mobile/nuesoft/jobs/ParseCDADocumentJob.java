@@ -807,7 +807,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	private void parsePatientVitalSignsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
 		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
 		dataNode = XMLParserUtil.getNode("list", dataNode.getChildNodes());
-		
+
 		String val;
 		Node tempNode;
 		for (int i = 0; i < dataNode.getChildNodes().getLength(); i++) {
@@ -848,7 +848,6 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientProceduresFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		
 
 	}
 
@@ -870,7 +869,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	private void parsePatientImmunizationsFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
 		Immunization mImmunization = null;
 		ArrayList<Immunization> mImmunizationList = new ArrayList<Immunization>();
-		
+
 		String mDisplayName = "";
 		String mCodeSystem = "";
 		String mCodeSystemName = "";
@@ -880,7 +879,7 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		String mManufacturerName = "";
 		String mSubstanceAdministrationMoodCode = "";
 		String mSubstanceAdministrationClassCode = "";
-		
+
 		ArrayList<Node> itemList;
 		ArrayList<Node> entryList;
 
@@ -892,59 +891,58 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
 		dataNode = XMLParserUtil.getNode("list", dataNode.getChildNodes());
 		itemList = XMLParserUtil.getNamedNodes("item", dataNode);
-		
+
 		Node tempNode;
 		for (Node n : itemList) {
 			tempNode = XMLParserUtil.getNode("content", n.getChildNodes());
 			medicationNarrativeName.add(XMLParserUtil.getNodeValue(tempNode));
 		}
-		
+
 		entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
-		
+
+		Node mRootNode;
+
 		for (int i = 0; i < entryList.size(); i++) {
-			mDisplayName = ""; //good
-			mCodeSystem = ""; //good
-			mCodeSystemName = ""; //good
-			mEffectiveTime = ""; //good
-			mStatusCode = ""; //good
+			mDisplayName = ""; // good
+			mCodeSystem = ""; // good
+			mCodeSystemName = ""; // good
+			mEffectiveTime = ""; // good
+			mStatusCode = ""; // good
 			mManufacturedClassCode = "";
-			mManufacturerName = ""; //good
-			mSubstanceAdministrationMoodCode = ""; //good
-			mSubstanceAdministrationClassCode = ""; //good
-			
-			
-			
-			tempNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
-			mSubstanceAdministrationMoodCode = XMLParserUtil.getNodeAttr("moodCode", tempNode);
-			mSubstanceAdministrationClassCode = XMLParserUtil.getNodeAttr("classCode", tempNode);
-			
-			tempNode = XMLParserUtil.getNode("statusCode", tempNode.getChildNodes());
+			mManufacturerName = ""; // good
+			mSubstanceAdministrationMoodCode = ""; // good
+			mSubstanceAdministrationClassCode = ""; // good
+
+			mRootNode = XMLParserUtil.getNode("substanceAdministration", entryList.get(i).getChildNodes());
+			mSubstanceAdministrationMoodCode = XMLParserUtil.getNodeAttr("moodCode", mRootNode);
+			mSubstanceAdministrationClassCode = XMLParserUtil.getNodeAttr("classCode", mRootNode);
+
+			tempNode = XMLParserUtil.getNode("statusCode", mRootNode.getChildNodes());
 			mStatusCode = XMLParserUtil.getNodeAttr("code", tempNode);
-			
-			tempNode = XMLParserUtil.getNode("effectiveTime", tempNode.getChildNodes());
+
+			tempNode = XMLParserUtil.getNode("effectiveTime", mRootNode.getChildNodes());
 			mEffectiveTime = XMLParserUtil.getNodeAttr("value", tempNode);
-			
-			tempNode = XMLParserUtil.getNode("consumable", tempNode.getChildNodes());
+
+			tempNode = XMLParserUtil.getNode("consumable", mRootNode.getChildNodes());
 			mManufacturedClassCode = XMLParserUtil.getNodeAttr("classCode", tempNode);
-			tempNode = XMLParserUtil.getNode("manufacturedProduct", tempNode.getChildNodes());
-			tempNode = XMLParserUtil.getNode("manufacturedMaterial", tempNode.getChildNodes());
+
+			mRootNode = XMLParserUtil.getNode("manufacturedProduct", tempNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("manufacturedMaterial", mRootNode.getChildNodes());
 			tempNode = XMLParserUtil.getNode("code", tempNode.getChildNodes());
 			mDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
 			mCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
 			mCodeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", tempNode);
-			
-			tempNode = XMLParserUtil.getNode("manufacturerOrganization", tempNode.getChildNodes());
-			tempNode = XMLParserUtil.getNode("name", tempNode.getChildNodes());
-			
-			mManufacturerName = XMLParserUtil.getNodeValue(tempNode);
-			
-			mImmunization = new Immunization(mDisplayName, mCodeSystem, mEffectiveTime, mStatusCode, mCodeSystemName, mManufacturedClassCode, mManufacturerName, mSubstanceAdministrationMoodCode, mSubstanceAdministrationClassCode);
-			patientBuilder.addImmunizations(mImmunization);
-			
-		}
-		
-		
 
+			tempNode = XMLParserUtil.getNode("manufacturerOrganization", mRootNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("name", tempNode.getChildNodes());
+
+			mManufacturerName = XMLParserUtil.getNodeValue(tempNode);
+
+			mImmunization = new Immunization(mDisplayName, mCodeSystem, mEffectiveTime, mStatusCode, mCodeSystemName,
+			        mManufacturedClassCode, mManufacturerName, mSubstanceAdministrationMoodCode,
+			        mSubstanceAdministrationClassCode);
+			patientBuilder.addImmunizations(mImmunization);
+		}
 	}
 
 	private void parsePatientFunctionalCognitiveStatusFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
@@ -954,13 +952,13 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 	private void parsePatientFamilyHistoryFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
 		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
-		
+
 		String val;
 		Node tempNode;
-		for(int i = 0; i < dataNode.getChildNodes().getLength(); i++) {
+		for (int i = 0; i < dataNode.getChildNodes().getLength(); i++) {
 			tempNode = dataNode.getChildNodes().item(i);
-			
-			if(tempNode.getNodeName().equalsIgnoreCase("paragraph")) {
+
+			if (tempNode.getNodeName().equalsIgnoreCase("paragraph")) {
 				val = XMLParserUtil.getNodeValue(tempNode);
 				FamilyHistory famHistory = new FamilyHistory(val);
 				patBuilder.addFamilyHistoryItem(famHistory);

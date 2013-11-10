@@ -190,10 +190,13 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 
 			case R.id.btn_send_now: {
 
-				Bundle b = new Bundle();
-				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.SEND_DOC_FRAGMENT.ordinal());
-				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+//				Bundle b = new Bundle();
+//				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+//				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.SEND_DOC_FRAGMENT.ordinal());
+//				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+				
+				SendDocFragment dialogFrag = new SendDocFragment();
+				dialogFrag.show(getActivity().getSupportFragmentManager(), SendDocFragment.TAG);
 
 				break;
 			}
@@ -217,7 +220,7 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
 					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
 					if (isFinished) {
-						handleFooter();
+//						handleFooter();
 					}
 				}
 			}

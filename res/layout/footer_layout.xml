@@ -7,17 +7,17 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical" >
 
-<!--     <FrameLayout -->
-<!--         android:id="@+id/footer_shadow" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="8dip" -->
-<!--         android:layout_above="@id/rl_footer_container" -->
-<!--         android:background="@drawable/footer_shadow" /> -->
+    <FrameLayout
+        android:id="@+id/footer_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="8dip"
+        android:layout_above="@id/rl_footer_container"
+        android:background="@drawable/footer_shadow" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/footer_height"
-        android:background="@color/half_charcoal"
+        android:background="@color/white"
         android:orientation="horizontal" >
 
         <ImageView
@@ -27,7 +27,7 @@
             android:background="@drawable/btn_background_basic"
             android:clickable="true"
             android:padding="4dip"
-            android:src="@drawable/ic_action_cancel_white" />
+            android:src="@drawable/ic_action_cancel" />
 
         <com.mobile.nuesoft.ui.NuesoftTextView
             android:id="@+id/nt_title_text"
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="FOOTER"
-            android:textColor="#FFFFFF"
+            android:textColor="#282828"
             android:textSize="18sp"
             custom:textStyle="fonts/Roboto-Regular.ttf" />
 
@@ -48,7 +48,7 @@
             android:background="@drawable/btn_background_basic"
             android:clickable="true"
             android:padding="4dip"
-            android:src="@drawable/ic_action_send_now_white" />
+            android:src="@drawable/ic_action_send_now" />
     </LinearLayout>
 
 </LinearLayout>

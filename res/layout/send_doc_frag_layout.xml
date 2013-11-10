@@ -162,7 +162,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        android:background="@color/white"
+        android:background="@color/charcoal"
         android:orientation="horizontal" >
 
         <Button
@@ -170,9 +170,9 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/btn_background_clickable_item"
+            android:background="@drawable/btn_background_clickable_transparent"
             android:text="Cancel"
-            android:textColor="#AA282828" />
+            android:textColor="@color/white" />
 
         <View
             android:layout_width="1dip"
@@ -185,9 +185,9 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/btn_background_clickable_item"
+            android:background="@drawable/btn_background_clickable_transparent"
             android:text="Send"
-            android:textColor="#AA282828" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>
