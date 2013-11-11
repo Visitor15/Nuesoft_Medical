@@ -142,12 +142,11 @@ public class MedicationFragment extends NuesoftFragment {
 		
 		
 		public ExpandableAdapter(final PatientObj patient) {
+			mInflater = LayoutInflater.from(Nuesoft.getReference());
 			mPatient = patient;
 		}
 		
 		private void init() {
-			mInflater = LayoutInflater.from(Nuesoft.getReference());
-			
 			map.put("Previous Medications", mPatient.getMEDICATION_PREVIOUS());
 			map.put("Current Medications", mPatient.getMEDICATION_CURRENT());
 		}
@@ -169,7 +168,7 @@ public class MedicationFragment extends NuesoftFragment {
 			String key =  (String) map.keySet().toArray()[groupPosition];
 	        Medication medObj = map.get(key).get(childPosition);
 			if(convertView == null) {
-				convertView = mInflater.inflate(R.layout.medication_list_child_view, null);
+				convertView = mInflater.inflate(R.layout.medication_list_child_view, parent, false);
 			}
 			
 			TextView mTitleText = (TextView) convertView.findViewById(R.id.nt_text);
