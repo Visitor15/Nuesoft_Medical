@@ -48,6 +48,7 @@ import com.mobile.nuesoft.patient.Marital;
 import com.mobile.nuesoft.patient.Medication;
 import com.mobile.nuesoft.patient.PatientBuilder;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
+import com.mobile.nuesoft.patient.PlanOfCare;
 import com.mobile.nuesoft.patient.Severity;
 import com.mobile.nuesoft.patient.SocialHistory;
 import com.mobile.nuesoft.patient.Telephone;
@@ -864,7 +865,6 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
 		
 		Node content;
-		Node rootNode;
 		Node tempNode;
 		
 		for (int i = 0; i < entryList.size(); i++) {
@@ -946,8 +946,24 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 	}
 
-	private void parsePatientPlanOfCareFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
+	private void parsePatientPlanOfCareFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
+		String planOfCareItem = "";
+		PlanOfCare planOfCare;
+		
+		Node content = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		Node rootNode;
+		
+		for(int i = 0; i < content.getChildNodes().getLength(); i++){
+			rootNode = content.getChildNodes().item(i);
+			
+			if(rootNode.getNodeName().equalsIgnoreCase("paragraph")){
+				planOfCareItem = XMLParserUtil.getNodeValue(rootNode);
+				planOfCare = new PlanOfCare(planOfCareItem);
+				
+			}
+			
+		}
+		
 
 	}
 

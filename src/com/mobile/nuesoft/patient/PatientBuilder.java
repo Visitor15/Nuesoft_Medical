@@ -24,9 +24,9 @@ public class PatientBuilder {
 	private ArrayList<Encounter> medicalEncounters = new ArrayList<Encounter>();
 	private ArrayList<Allergy> allergies = new ArrayList<Allergy>();
 	private ArrayList<FamilyHistory> familyHistory = new ArrayList<FamilyHistory>();
+	private ArrayList<PlanOfCare> planOfCare = new ArrayList<PlanOfCare>();
 	private ArrayList<Immunization> immunizations = new ArrayList<Immunization>();
 	private ArrayList<SocialHistory> socialHistory = new ArrayList<SocialHistory>();
-
 	private ArrayList<PatientTest> tests = new ArrayList<PatientTest>();
 
 	public PatientBuilder() {
@@ -74,6 +74,14 @@ public class PatientBuilder {
 	
 	public void setFamilyHistory(final ArrayList<FamilyHistory> familyHistory) {
 		this.familyHistory = familyHistory;
+	}
+	
+	public void addPlanOfCareItem(final PlanOfCare planOfCareItem){
+		this.planOfCare.add(planOfCareItem);
+	}
+	
+	public void setPlanOfCare(final ArrayList<PlanOfCare> planOfCare){
+		this.planOfCare = planOfCare;
 	}
 	
 	public void setSocialHistory(final ArrayList<SocialHistory> socialHistory){
@@ -214,7 +222,7 @@ public class PatientBuilder {
 
 	public PatientObj build() {
 		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
-		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, socialHistory, immunizations);
+		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, planOfCare, socialHistory, immunizations);
 	}
 
 	public class PatientObj implements Serializable {
@@ -242,6 +250,7 @@ public class PatientBuilder {
 		private ArrayList<Encounter> MEDICAL_ENCOUNTERS;
 		private ArrayList<PatientTest> TESTS;
 		private ArrayList<FamilyHistory> FAMILY_HISTORY;
+		private ArrayList<PlanOfCare> PLAN_OF_CARE;
 		private ArrayList<SocialHistory> SOCIAL_HISTORY;
 		private ArrayList<Immunization> IMMUNIZATIONS;
 
@@ -250,7 +259,8 @@ public class PatientBuilder {
 		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
-		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY, final ArrayList<SocialHistory> SOCIAL_HISTORY, final ArrayList<Immunization> IMMUNIZATIONS) {
+		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY, final ArrayList<PlanOfCare> PLAN_OF_CARE, 
+		        final ArrayList<SocialHistory> SOCIAL_HISTORY, final ArrayList<Immunization> IMMUNIZATIONS) {
 
 			this.IDENTIFIER = IDENTIFIER;
 			this.BIRTH_TIME = BIRTH_TIME;
@@ -269,6 +279,7 @@ public class PatientBuilder {
 			this.TESTS = TESTS;
 			this.MARITAL = MARITAL_STATUS;
 			this.FAMILY_HISTORY = FAMILY_HISTORY;
+			this.PLAN_OF_CARE = PLAN_OF_CARE;
 			this.SOCIAL_HISTORY = SOCIAL_HISTORY;
 			this.IMMUNIZATIONS = IMMUNIZATIONS;
 			
@@ -304,6 +315,10 @@ public class PatientBuilder {
 		
 		public ArrayList<FamilyHistory> getFAMILY_HISTORY() {
 			return (ArrayList<FamilyHistory>) FAMILY_HISTORY.clone();
+		}
+		
+		public ArrayList<PlanOfCare> getPLAN_OF_CARE(){
+			return (ArrayList<PlanOfCare>) PLAN_OF_CARE.clone();
 		}
 		
 		public ArrayList<SocialHistory> getSOCIAL_HISTORY(){
