@@ -124,11 +124,12 @@ public class ImmunizationFragment extends NuesoftFragment {
 			}
 
 			TextView manufacturerText = (TextView) convertView.findViewById(R.id.nt_manufacturer_value);
-			manufacturerText.setText(list.get(groupPosition).manufacturerName);
-
+			manufacturerText.setText(list.get(groupPosition).manufacturerName);		
+			
 			String date = list.get(groupPosition).effectiveTime;
+			
 			TextView dateText = (TextView) convertView.findViewById(R.id.nt_date_value);
-			dateText.setText(date);
+			dateText.setText(date.toString());
 			
 			TextView codeSystemNameText = (TextView) convertView.findViewById(R.id.nt_code_system_name_value);
 			codeSystemNameText.setText(list.get(groupPosition).codeSystemName);
