@@ -28,6 +28,7 @@ public class PatientBuilder {
 	private ArrayList<Immunization> immunizations = new ArrayList<Immunization>();
 	private ArrayList<SocialHistory> socialHistory = new ArrayList<SocialHistory>();
 	private ArrayList<PatientTest> tests = new ArrayList<PatientTest>();
+	private ArrayList<Problem> problem = new ArrayList<Problem>();
 
 	public PatientBuilder() {
 	}
@@ -98,6 +99,14 @@ public class PatientBuilder {
 	
 	public void setImmunizations(final ArrayList<Immunization> immunizations){
 		this.immunizations = immunizations;
+	}
+	
+	public void addProblem(final Problem problem){
+		this.problem.add(problem);
+	}
+	
+	public void setProblems(final ArrayList<Problem> problem){
+		this.problem = problem;
 	}
 	
 	public ArrayList<FamilyHistory> getFamilyHistory() {
