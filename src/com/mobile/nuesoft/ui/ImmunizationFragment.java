@@ -115,7 +115,7 @@ public class ImmunizationFragment extends NuesoftFragment {
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 		        ViewGroup parent) {
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.immunization_list_child_view, null);
+				convertView = mInflater.inflate(R.layout.immunization_list_child_view, parent, false);
 			}
 
 			TextView mTitleText = (TextView) convertView.findViewById(R.id.nt_text);

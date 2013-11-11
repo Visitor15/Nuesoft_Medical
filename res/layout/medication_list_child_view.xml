@@ -63,7 +63,7 @@
 	        android:layout_marginTop="4dip"
 	        android:background="@drawable/btn_background_dark_clickable_item" >
             
-            <com.mobile.nuesoft.ui.NueSoftTextView
+            <com.mobile.nuesoft.ui.NuesoftTextView
                 android:id="@+id/med_date_low"
                 android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
 	            android:textSize="18sp"
 	            custom:textStyle="fonts/Roboto-Thin.ttf" />
             
-            <com.mobile.nuesoft.ui.NueSoftTextView
+            <com.mobile.nuesoft.ui.NuesoftTextView
                 android:id="@+id/med_date_high"
                 android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
 	            android:textSize="18sp"
 	            custom:textStyle="fonts/Roboto-Thin.ttf" />
             
-            <com.mobile.nuesoft.ui.NueSoftTextView
+            <com.mobile.nuesoft.ui.NuesoftTextView
                 android:id="@+id/med_instructions"
                 android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
