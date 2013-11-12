@@ -24,35 +24,35 @@ public class Immunization {
 		this.substanceAdministrationClassCode = substanceAdministrationClassCode;
 	}
 	
-	public String GetDisplayName(){
+	public String getDisplayName(){
 		return displayName;
 	}
 	
-	public String GetEffectiveTime(){
+	public String getEffectiveTime(){
 		return effectiveTime;
 	}
 	
-	public String GetCodeSystem(){
+	public String getCodeSystem(){
 		return codeSystem;
 	}
 	
-	public String GetCodeSystemName(){
+	public String getCodeSystemName(){
 		return codeSystemName;
 	}
 	
-	public String GetManufactureredClassCode(){
+	public String getManufactureredClassCode(){
 		return manufacturedClassCode;
 	}
 	
-	public String GetManufacturerName(){
+	public String getManufacturerName(){
 		return manufacturerName;
 	}
 	
-	public String GetSubstanceAdministrationMoodCode(){
+	public String getSubstanceAdministrationMoodCode(){
 		return substanceAdministrationMoodCode;
 	}
 	
-	public String GetSubstanceAdministrationClassCode(){
+	public String getSubstanceAdministrationClassCode(){
 		return substanceAdministrationClassCode;
 	}
 	

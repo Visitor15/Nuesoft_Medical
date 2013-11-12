@@ -144,7 +144,7 @@ public class ImmunizationFragment extends NuesoftFragment {
 
 		@Override
 		public String getGroup(int pos) {
-			return list.get(pos).GetDisplayName();
+			return list.get(pos).getDisplayName();
 		}
 
 		@Override

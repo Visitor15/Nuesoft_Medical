@@ -11,25 +11,29 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.mobile.nuesoft.Nuesoft;
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
-import com.mobile.nuesoft.patient.Medication;
+import com.mobile.nuesoft.patient.Allergy;
+import com.mobile.nuesoft.patient.FamilyHistory;
+import com.mobile.nuesoft.patient.Immunization;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
-import com.mobile.nuesoft.util.Util;
+import com.mobile.nuesoft.patient.VitalSign;
 
-public class MedicationFragment extends NuesoftFragment {
-	private LayoutInflater mInflater;
+public class PatientOverviewFragment extends NuesoftFragment {
+
+	private View rootView;
+
+	private TextView mTitle;
+
+	private ExpandableListView expandableList;
+
 	private ExpandableAdapter mAdapter;
-	private ExpandableListView listView;
-	private TextView titleText;
 
-	public MedicationFragment() {
-		super();
+	public PatientOverviewFragment() {
+
 	}
 
 	@Override
@@ -70,73 +74,35 @@ public class MedicationFragment extends NuesoftFragment {
 
 	@Override
 	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mInflater = inflater;
-		View v = mInflater.inflate(R.layout.medication_fragment_layout, container, false);
+		rootView = inflater.inflate(R.layout.patient_overview_frag_layout, container, false);
 
-		titleText = (TextView) v.findViewById(R.id.nt_title);
-		titleText.setText("Medications");
+		mTitle = (TextView) rootView.findViewById(R.id.nt_title);
+		expandableList = (ExpandableListView) rootView.findViewById(R.id.expandable_list_view);
 
-		if (Nuesoft.getCurrentPatient() == null) {
-			showNoDataView(v);
-		} else {
-			hideNoDataView(v);
-		}
+		mTitle.setText("Patient Overview");
 
-		return v;
+		initExpandableListAdapter();
+
+		return rootView;
 	}
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 
 	}
 
-	// public void setPatientObj(final PatientObj patient) {
-	// this.mPatient = patient;
-	// }
-	//
-	// public PatientObj getPatient() {
-	// return mPatient;
-	// }
-
-	public void showNoDataView(final View v) {
-		// ((RelativeLayout)
-		// v.findViewById(R.id.rl_container)).removeAllViews();
-
-		RelativeLayout view = (RelativeLayout) mInflater.inflate(R.layout.no_data_layout, null);
-
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-		        LayoutParams.MATCH_PARENT);
-		view.setLayoutParams(params);
-
-		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(view);
-	}
-
-	public void hideNoDataView(final View v) {
-		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
-		ExpandableListView addedView = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout,
-		        null);
-		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(addedView);
-		ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) addedView.getLayoutParams();
-
-		int mMargin = Util.convertDpToPixel(8f, getActivity());
-		mlp.setMargins(mMargin, 0, mMargin, 0);
-
-		initMedsView(v);
-	}
-
-	private void initMedsView(final View v) {
-		listView = (ExpandableListView) v.findViewById(R.id.expandable_list_view);
-
+	private void initExpandableListAdapter() {
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentPatient());
-		listView.setAdapter(mAdapter);
 		mAdapter.init();
+		expandableList.setAdapter(mAdapter);
 	}
 
 	private class ExpandableAdapter extends BaseExpandableListAdapter {
 
 		private LayoutInflater mInflater;
 
-		private HashMap<String, ArrayList<Medication>> map = new HashMap<String, ArrayList<Medication>>();
+		private HashMap<String, ArrayList<?>> map = new HashMap<String, ArrayList<?>>();
 
 		private final PatientObj mPatient;
 
@@ -146,12 +112,14 @@ public class MedicationFragment extends NuesoftFragment {
 		}
 
 		private void init() {
-			map.put("Previous Medications", mPatient.getMEDICATION_PREVIOUS());
-			map.put("Current Medications", mPatient.getMEDICATION_CURRENT());
+			map.put("Allergies", mPatient.getALLERGIES());
+			map.put("Immunizations", mPatient.getIMMUNIZATIONS());
+			map.put("Vital Signs", mPatient.getVITAL_SIGNS());
+			map.put("Family History", mPatient.getFAMILY_HISTORY());
 		}
 
 		@Override
-		public Medication getChild(int groupPosition, int childPosition) {
+		public Object getChild(int groupPosition, int childPosition) {
 			return map.get(map.keySet().toArray()[groupPosition]).get(childPosition);
 		}
 
@@ -164,32 +132,21 @@ public class MedicationFragment extends NuesoftFragment {
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 		        ViewGroup parent) {
 
-			String key = (String) map.keySet().toArray()[groupPosition];
-
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.medication_list_child_view, parent, false);
 			}
 
 			TextView mTitleText = (TextView) convertView.findViewById(R.id.nt_text);
 
-			if (map.get(map.keySet().toArray()[groupPosition]).size() == 0) {
-				mTitleText.setText("No medication recorded");
-			} else {
-				Medication medObj = map.get(key).get(childPosition);
-				mTitleText.setText(medObj.getTITLE());
-			}
-
-			FrameLayout iconColor = (FrameLayout) convertView.findViewById(R.id.iv_icon);
-
-			switch (groupPosition) {
-				case 0: {
-					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
-					break;
-				}
-				case 1: {
-					iconColor.setBackgroundColor(Color.parseColor("#AA66CC"));
-					break;
-				}
+			String key = (String) map.keySet().toArray()[groupPosition];
+			if (key.equalsIgnoreCase("vital signs")) {
+				mTitleText.setText(((ArrayList<VitalSign>) map.get(key)).get(childPosition).getDisplayName());
+			} else if (key.equalsIgnoreCase("allergies")) {
+				mTitleText.setText(((ArrayList<Allergy>) map.get(key)).get(childPosition).getDisplayName());
+			} else if (key.equalsIgnoreCase("immunizations")) {
+				mTitleText.setText(((ArrayList<Immunization>) map.get(key)).get(childPosition).getDisplayName());
+			} else if (key.equalsIgnoreCase("family history")) {
+				mTitleText.setText(((ArrayList<FamilyHistory>) map.get(key)).get(childPosition).getDisplayName());
 			}
 
 			return convertView;
@@ -197,13 +154,7 @@ public class MedicationFragment extends NuesoftFragment {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			int count = map.get(map.keySet().toArray()[groupPosition]).size();
-
-			if (count == 0) {
-				count = 1;
-			}
-
-			return count;
+			return map.get(map.keySet().toArray()[groupPosition]).size();
 		}
 
 		@Override
@@ -239,6 +190,14 @@ public class MedicationFragment extends NuesoftFragment {
 					break;
 				}
 				case 1: {
+					iconColor.setBackgroundColor(Color.parseColor("#9933CC"));
+					break;
+				}
+				case 2: {
+					iconColor.setBackgroundColor(Color.parseColor("#0099CC"));
+					break;
+				}
+				case 3: {
 					iconColor.setBackgroundColor(Color.parseColor("#9933CC"));
 					break;
 				}
