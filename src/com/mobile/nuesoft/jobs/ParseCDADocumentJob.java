@@ -49,6 +49,7 @@ import com.mobile.nuesoft.patient.Medication;
 import com.mobile.nuesoft.patient.PatientBuilder;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.patient.PlanOfCare;
+import com.mobile.nuesoft.patient.Procedure;
 import com.mobile.nuesoft.patient.Severity;
 import com.mobile.nuesoft.patient.SocialHistory;
 import com.mobile.nuesoft.patient.Telephone;
@@ -829,16 +830,13 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientSocialHistoryFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
-		/*Notes: code 8517006 = former smoker
-		 * 
-		 * 
-		 * 
+		/*
+		 * Notes: code 8517006 = former smoker
 		 */
-		
-		
+
 		String templateCode = "";
 		String templateDisplayName = "";
-		
+
 		String observationClassCode = "";
 		String observationMoodCode = "";
 		String codeCode = "";
@@ -851,74 +849,72 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 		String observationDisplayName = "";
 		String observationCodeSystem = "";
 		String observationCodeSystemName = "";
-		
-		
+
 		ArrayList<SocialHistory> socialHistoryList = new ArrayList<SocialHistory>();
 		ArrayList<Node> itemList;
 		ArrayList<Node> entryList;
-		
+
 		Node dataNode = XMLParserUtil.getNode("code", sectionNode.getChildNodes());
 		templateCode = XMLParserUtil.getNodeAttr("code", dataNode);
 		templateDisplayName = XMLParserUtil.getNodeAttr("displayName", dataNode);
-		
-		
+
 		entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
-		
+
 		Node content;
 		Node tempNode;
-		
+
 		for (int i = 0; i < entryList.size(); i++) {
 			SocialHistory socialHistory = null;
-			
+
 			observationClassCode = "";
 			observationMoodCode = "";
-			
+
 			codeCode = "";
 			codeCodeSystem = "";
 			statusCode = "";
 			effectiveDateLow = "";
 			effectiveDateHigh = "";
-			
+
 			observationValueType = "";
 			observationValueCode = "";
 			observationDisplayName = "";
 			observationCodeSystem = "";
 			observationCodeSystemName = "";
-			
-			
+
 			content = entryList.get(i);
 			content = XMLParserUtil.getNode("observation", content.getChildNodes());
-			
+
 			tempNode = XMLParserUtil.getNode("code", content.getChildNodes());
 			codeCode = XMLParserUtil.getNodeAttr("code", tempNode);
 			codeCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
-			
+
 			tempNode = XMLParserUtil.getNode("statusCode", content.getChildNodes());
 			statusCode = XMLParserUtil.getNodeAttr("code", tempNode);
-			
+
 			tempNode = XMLParserUtil.getNode("effectiveTime", content.getChildNodes());
 			tempNode = XMLParserUtil.getNode("low", tempNode.getChildNodes());
 			effectiveDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
-			
+
 			tempNode = XMLParserUtil.getNode("effectiveTime", content.getChildNodes());
 			tempNode = XMLParserUtil.getNode("high", tempNode.getChildNodes());
 			effectiveDateHigh = XMLParserUtil.getNodeAttr("value", tempNode);
-			
+
 			tempNode = XMLParserUtil.getNode("value", content.getChildNodes());
 			observationValueType = XMLParserUtil.getNodeAttr("xsi:type", tempNode);
 			observationValueCode = XMLParserUtil.getNodeAttr("code", tempNode);
 			observationDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
 			observationCodeSystem = XMLParserUtil.getNodeAttr("codeSystem", tempNode);
 			observationCodeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", tempNode);
-			
-			socialHistory = new SocialHistory(observationClassCode, observationMoodCode, codeCode, codeCodeSystem, statusCode, effectiveDateLow, effectiveDateHigh, 
-					observationValueType, observationValueCode, observationDisplayName, observationCodeSystem, observationCodeSystemName);
-			
+
+			socialHistory = new SocialHistory(observationClassCode, observationMoodCode, codeCode, codeCodeSystem,
+			        statusCode, effectiveDateLow, effectiveDateHigh, observationValueType, observationValueCode,
+			        observationDisplayName, observationCodeSystem, observationCodeSystemName);
+
 			socialHistoryList.add(socialHistory);
 		}
-		
+
 		patientBuilder.setSocialHistory(socialHistoryList);
-		
+
 	}
 
 	private void parsePatientReasonForVisitFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
@@ -938,32 +934,137 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientProceduresFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
+		ArrayList<Procedure> procedureList = new ArrayList<Procedure>();
 
+		Node tempNode;
+		tempNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		tempNode = XMLParserUtil.getNode("list", tempNode.getChildNodes());
+
+		int i = 0;
+		Node dataNode;
+		for (i = 0; i < tempNode.getChildNodes().getLength(); i++) {
+			Log.d(TAG, "NCC - NODE NAME: " + tempNode.getNodeName());
+			dataNode = tempNode.getChildNodes().item(i);
+			if (dataNode.getNodeName().equalsIgnoreCase("item")) {
+				dataNode = XMLParserUtil.getNode("content", dataNode.getChildNodes());
+				Procedure mProcedure = new Procedure();
+				mProcedure.setDISPLAY_TITLE(XMLParserUtil.getNodeValue(dataNode));
+				mProcedure.setSTATUS(XMLParserUtil.getNodeAttr("ID", dataNode));
+				procedureList.add(mProcedure);
+			}
+		}
+		
+		for (i = 0; i < sectionNode.getChildNodes().getLength(); i++) {
+			if (sectionNode.getChildNodes().item(i).getNodeName().equalsIgnoreCase("entry")) {
+				dataNode = sectionNode.getChildNodes().item(i);
+				dataNode = XMLParserUtil.getNode("procedure", dataNode.getChildNodes());
+				tempNode = XMLParserUtil.getNode("code", dataNode.getChildNodes());
+
+				dataNode = XMLParserUtil.getNode("originalText", tempNode.getChildNodes());
+				String mID = XMLParserUtil.getNodeAttr("value",
+				        XMLParserUtil.getNode("reference", dataNode.getChildNodes()));
+				mID = mID.substring(1);
+
+				for (int p = 0; p < procedureList.size(); p++) {
+					Procedure curProcedure = procedureList.get(p);
+					if (curProcedure.getSTATUS().equalsIgnoreCase(mID)) {
+						dataNode = sectionNode.getChildNodes().item(i);
+						dataNode = XMLParserUtil.getNode("procedure", dataNode.getChildNodes());
+						tempNode = XMLParserUtil.getNode("statusCode", dataNode.getChildNodes());
+
+						String mStatusCode = XMLParserUtil.getNodeAttr("code", tempNode);
+						curProcedure.setSTATUS(mStatusCode);
+
+						String effectiveDateLow = "";
+						String effectiveDateHigh = "";
+
+						tempNode = XMLParserUtil.getNode("effectiveTime", dataNode.getChildNodes());
+						tempNode = XMLParserUtil.getNode("low", tempNode.getChildNodes());
+
+						if (tempNode != null) {
+							effectiveDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
+						}
+						tempNode = XMLParserUtil.getNode("effectiveTime", dataNode.getChildNodes());
+						tempNode = XMLParserUtil.getNode("high", tempNode.getChildNodes());
+						if (tempNode != null) {
+							effectiveDateHigh = XMLParserUtil.getNodeAttr("value", tempNode);
+						}
+
+						tempNode = XMLParserUtil.getNode("effectiveTime", dataNode.getChildNodes());
+						tempNode = XMLParserUtil.getNode("center", tempNode.getChildNodes());
+						if (tempNode != null) {
+							effectiveDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
+						}
+
+						curProcedure.setEFFECTIVE_DATE_LOW(effectiveDateLow);
+						curProcedure.setEFFECTIVE_DATE_HIGH(effectiveDateHigh);
+						tempNode = XMLParserUtil.getNode("performer", dataNode.getChildNodes());
+
+						if (tempNode != null) {
+							tempNode = XMLParserUtil.getNode("assignedEntity", tempNode.getChildNodes());
+
+							dataNode = XMLParserUtil.getNode("assignedPerson", tempNode.getChildNodes());
+							dataNode = XMLParserUtil.getNode("name", dataNode.getChildNodes());
+
+							String mGiveName = XMLParserUtil.getNodeValue(XMLParserUtil.getNode("given",
+							        dataNode.getChildNodes()));
+							String mFamilyName = XMLParserUtil.getNodeValue(XMLParserUtil.getNode("family",
+							        dataNode.getChildNodes()));
+							String mSuffixName = XMLParserUtil.getNodeValue(XMLParserUtil.getNode("suffix",
+							        dataNode.getChildNodes()));
+
+							Personnel mPerformer = new Personnel(mGiveName, mFamilyName, mSuffixName);
+
+							dataNode = XMLParserUtil.getNode("representedOrganization", tempNode.getChildNodes());
+
+							String mDisplayTitle = XMLParserUtil.getNodeValue(XMLParserUtil.getNode("name",
+							        dataNode.getChildNodes()));
+							Telephone mTelephone = getTelephoneFromNode(XMLParserUtil.getNode("telecom",
+							        dataNode.getChildNodes()));
+							Address mAddress = getAddressFromNode(XMLParserUtil.getNode("addr",
+							        dataNode.getChildNodes()));
+							Organization mRepresentedOrg = new Organization(mDisplayTitle, mAddress, mTelephone);
+
+							mPerformer.setPERSONNEL_ORGANIZATION(mRepresentedOrg);
+
+							dataNode = sectionNode.getChildNodes().item(i);
+							dataNode = XMLParserUtil.getNode("procedure", dataNode.getChildNodes());
+							tempNode = XMLParserUtil.getNode("statusCode", dataNode.getChildNodes());
+
+							String personnelType = XMLParserUtil.getNodeAttr("displayName", tempNode);
+							mPerformer.setPERSONNEL_TYPE(personnelType);
+
+							curProcedure.setPERFORMER(mPerformer);
+						}
+
+						Log.d(TAG, "NCC - CREATED PROCEDURE: " + curProcedure.getDISPLAY_TITLE());
+					}
+				}
+			}
+		}
 	}
 
 	private void parsePatientProblemsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void parsePatientPlanOfCareFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
 		String planOfCareItem = "";
 		PlanOfCare planOfCare;
-		
+
 		Node content = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
 		Node rootNode;
-		
-		for(int i = 0; i < content.getChildNodes().getLength(); i++){
+
+		for (int i = 0; i < content.getChildNodes().getLength(); i++) {
 			rootNode = content.getChildNodes().item(i);
-			
-			if(rootNode.getNodeName().equalsIgnoreCase("paragraph")){
+
+			if (rootNode.getNodeName().equalsIgnoreCase("paragraph")) {
 				planOfCareItem = XMLParserUtil.getNodeValue(rootNode);
 				planOfCare = new PlanOfCare(planOfCareItem);
-				
+
 			}
-			
+
 		}
-		
 
 	}
 
