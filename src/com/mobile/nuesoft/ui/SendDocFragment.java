@@ -9,25 +9,24 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
+import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.EncryptionJob;
 import com.mobile.nuesoft.jobs.EncryptionJobEvent;
 
-public class SendDocFragment extends DialogFragment implements OnClickListener {
-	
+public class SendDocFragment extends NuesoftFragment implements OnClickListener {
+
 	public static final String TAG = "SendDocDialog";
 
 	private View rootView;
@@ -40,16 +39,38 @@ public class SendDocFragment extends DialogFragment implements OnClickListener {
 	private EditText etEmailAddr;
 	private EditText etPinPswrd1;
 	private EditText etPinPswrd2;
-	
+
 	OnEncryptionEventListener encryptionEventListener = new OnEncryptionEventListener();
 
 	public SendDocFragment() {
-		this.setStyle(STYLE_NO_FRAME, 0);
-		this.setStyle(STYLE_NO_TITLE, 0);
 	}
 
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public void onFragmentCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSave(Bundle outState) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onFragmentStart() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onFragmentStop() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public View onFragmentCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.send_doc_frag_layout, container, false);
 
 		filenameTitle = (TextView) rootView.findViewById(R.id.nt_filename);
@@ -65,31 +86,27 @@ public class SendDocFragment extends DialogFragment implements OnClickListener {
 		btnEncryptAndSend.setOnClickListener(this);
 
 		filenameTitle.setText(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
+		
+		((MainActivity) getActivity()).hideFooter();
 
 		return rootView;
-    }
+	}
 
 	@Override
-    public void onActivityCreated(Bundle b) {
-	    super.onActivityCreated(b);
-	    
-	    final WindowManager.LayoutParams lp = getDialog().getWindow().getAttributes();
-	    lp.dimAmount = 0.6f;
-	    getDialog().getWindow().setAttributes(lp);
-	    getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-    }
+	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public void onPause() {
-	    super.onPause();
-	    encryptionEventListener.unregister();
-    }
+	public void onFragmentPaused() {
+		encryptionEventListener.unregister();
+	}
 
 	@Override
-    public void onResume() {
-	    super.onResume();
-	    encryptionEventListener.register();
-    }
+	public void onFragmentResume() {
+		encryptionEventListener.register();
+	}
 
 	private void beginSending() {
 		EncryptionJob job = new EncryptionJob();
@@ -99,12 +116,12 @@ public class SendDocFragment extends DialogFragment implements OnClickListener {
 
 	private void sendDocument() {
 		((MainActivity) getActivity()).hideFooter();
-		
+
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", etEmailAddr.getText().toString(),
 		        null));
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Nuesoft Medical Test");
-		emailIntent.putExtra(Intent.EXTRA_TEXT,
-		        "Encoded PIN: ".concat(encodeBase64String("0000".concat(etPinPswrd1.getText().toString())).substring(16)));
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "Encoded PIN: ".concat(encodeBase64String(
+		        "0000".concat(etPinPswrd1.getText().toString())).substring(16)));
 		emailIntent.putExtra(Intent.EXTRA_STREAM,
 		        Uri.parse(Nuesoft.getCurrentCDADocument().getDOC_URI().toString().concat(".ncc")));
 		startActivity(Intent.createChooser(emailIntent, "Send email..."));
@@ -142,6 +159,7 @@ public class SendDocFragment extends DialogFragment implements OnClickListener {
 			}
 		}
 	}
+
 	public class OnEncryptionEventListener extends NuesoftBroadcastReceiver {
 		void register() {
 			final IntentFilter filter = EncryptionJobEvent.createFilter();

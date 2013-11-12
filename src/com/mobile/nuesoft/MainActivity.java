@@ -22,6 +22,7 @@ import com.mobile.nuesoft.ui.LoginFragment;
 import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.PatientFragment;
 import com.mobile.nuesoft.ui.RegistrationFragment;
+import com.mobile.nuesoft.ui.SendDocFragment;
 import com.mobile.nuesoft.ui.UnlockCDADocFragment;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
@@ -222,7 +223,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					case 4: {
 						// Send CDA Document fragment
 						// this.closeAndLockDrawer();
-//						replaceMainContent(new SendDocFragment());
+						replaceMainContent(new SendDocFragment());
 						break;
 					}
 				}
