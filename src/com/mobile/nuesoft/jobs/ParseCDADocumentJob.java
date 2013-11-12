@@ -50,6 +50,7 @@ import com.mobile.nuesoft.patient.PatientBuilder;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 import com.mobile.nuesoft.patient.PlanOfCare;
 import com.mobile.nuesoft.patient.Procedure;
+import com.mobile.nuesoft.patient.Problem;
 import com.mobile.nuesoft.patient.Severity;
 import com.mobile.nuesoft.patient.SocialHistory;
 import com.mobile.nuesoft.patient.Telephone;
@@ -1043,9 +1044,70 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			}
 		}
 	}
-
-	private void parsePatientProblemsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-
+	
+	private void parsePatientProblemsFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
+		String actStatusCode = "";
+		String effectiveTimeLow = "";
+		String actCodeDisplayName = "";
+		String entryReferenceId = "";
+		String entryStatusCode = "";
+		String entryCodeDisplayName = "";
+		String entryValueType = "";
+		String entryValueDisplayName = "";
+		String entryValueCodeSystemName = "";
+		
+		Problem problem = null;
+		
+		ArrayList<Node> entryList = XMLParserUtil.getNamedNodes("entry", sectionNode);
+		
+		Node rootNode;
+		Node tempNode;
+		Node effectiveTimeNode;
+		
+		for (int i = 0; i < entryList.size(); i++) {
+			actStatusCode = "";
+			effectiveTimeLow = "";
+			actCodeDisplayName = "";
+			
+			entryReferenceId = "";
+	
+			entryStatusCode = "";
+			entryCodeDisplayName = "";
+			entryValueType = "";
+			entryValueDisplayName = "";
+			entryValueCodeSystemName = "";
+			
+			rootNode = XMLParserUtil.getNode("act", entryList.get(i).getChildNodes());
+			
+			tempNode = XMLParserUtil.getNode("code", rootNode.getChildNodes());
+			actCodeDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("statusCode", rootNode.getChildNodes());
+			actStatusCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("effectiveTime", rootNode.getChildNodes());
+			effectiveTimeNode = XMLParserUtil.getNode("low", tempNode.getChildNodes());
+			effectiveTimeLow = XMLParserUtil.getNodeAttr("value", effectiveTimeNode);
+			
+			tempNode = XMLParserUtil.getNode("entryRelationship", rootNode.getChildNodes());
+			rootNode = XMLParserUtil.getNode("observation", tempNode.getChildNodes());
+			
+			tempNode = XMLParserUtil.getNode("code", rootNode.getChildNodes());
+			entryStatusCode = XMLParserUtil.getNodeAttr("code", tempNode);
+			entryCodeDisplayName = XMLParserUtil.getNodeAttr("code", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("value", rootNode.getChildNodes());
+			entryValueType = XMLParserUtil.getNodeAttr("xsi:type", tempNode);
+			entryValueDisplayName = XMLParserUtil.getNodeAttr("displayName", tempNode);
+			entryValueCodeSystemName = XMLParserUtil.getNodeAttr("codeSystemName", tempNode);
+			
+			tempNode = XMLParserUtil.getNode("text", rootNode.getChildNodes());
+			tempNode = XMLParserUtil.getNode("reference", tempNode.getChildNodes());
+			entryReferenceId = XMLParserUtil.getNodeAttr("value", tempNode);
+			
+			problem = new Problem(actStatusCode, effectiveTimeLow, actCodeDisplayName, entryReferenceId, entryStatusCode, entryCodeDisplayName, entryValueType, entryValueDisplayName, entryValueCodeSystemName);
+			patientBuilder.addProblem(problem);
+		}
 	}
 
 	private void parsePatientPlanOfCareFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {
@@ -1061,11 +1123,9 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 			if (rootNode.getNodeName().equalsIgnoreCase("paragraph")) {
 				planOfCareItem = XMLParserUtil.getNodeValue(rootNode);
 				planOfCare = new PlanOfCare(planOfCareItem);
-
+				patientBuilder.addPlanOfCareItem(planOfCare);
 			}
-
 		}
-
 	}
 
 	private void parsePatientInstructionsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {

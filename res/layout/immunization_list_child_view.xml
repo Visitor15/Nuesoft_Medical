@@ -18,7 +18,7 @@
         android:layout_marginRight="8dip"
         android:layout_marginTop="4dip"
         android:background="@drawable/btn_background_dark_clickable_item"
-        android:clickable="true" >
+        android:clickable="false" >
 
         <FrameLayout
             android:id="@+id/iv_icon"
@@ -40,57 +40,62 @@
             android:layout_margin="4dip"
             android:layout_toRightOf="@id/iv_icon"
             android:background="@color/light_grey" />
-
+        
         <com.mobile.nuesoft.ui.NuesoftTextView
-            android:id="@+id/nt_text"
+            android:id="@+id/nt_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="8dip"
-            android:layout_toLeftOf="@id/more"
+            android:layout_marginLeft="4dip"
             android:layout_toRightOf="@id/divider"
+            android:text="Date:"
             android:textColor="#AA282828"
-            android:textSize="18sp"
+            android:textSize="14sp"
             custom:textStyle="fonts/Roboto-Thin.ttf" />
         
-        <LinearLayout
-            android:id="@+id/ll_details_container"
-            android:layout_width="match_parent"
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_date_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dip"
-	        android:layout_marginLeft="8dip"
-	        android:layout_marginRight="8dip"
-	        android:layout_marginTop="4dip"
-	        android:background="@drawable/btn_background_dark_clickable_item" >
-            
-            <com.mobile.nuesoft.ui.NuesoftTextView
-                android:id="@+id/med_date_low"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="8dip"
-	            android:textColor="#AA282828"
-	            android:textSize="18sp"
-	            custom:textStyle="fonts/Roboto-Thin.ttf" />
-            
-            <com.mobile.nuesoft.ui.NuesoftTextView
-                android:id="@+id/med_date_high"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="8dip"
-	            android:textColor="#AA282828"
-	            android:textSize="18sp"
-	            custom:textStyle="fonts/Roboto-Thin.ttf" />
-            
-            <com.mobile.nuesoft.ui.NuesoftTextView
-                android:id="@+id/med_instructions"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="8dip"
-	            android:textColor="#AA282828"
-	            android:textSize="18sp"
-	            custom:textStyle="fonts/Roboto-Thin.ttf" />
-            
-        </LinearLayout>
+            android:layout_marginLeft="4dip"
+            android:layout_toRightOf="@id/nt_date_title"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_manufacturer_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dip"
+            android:layout_toRightOf="@id/divider"
+            android:layout_below="@id/nt_date_title"
+            android:text="Manufacturer:"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_manufacturer_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dip"
+            android:layout_toRightOf="@id/nt_manufacturer_title"
+            android:layout_below="@id/nt_date_title"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        
+        <com.mobile.nuesoft.ui.NuesoftTextView
+            android:id="@+id/nt_code_system_name_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dip"
+            android:layout_toRightOf="@id/divider"
+            android:layout_below="@id/nt_manufacturer_title"
+            android:textColor="#AA282828"
+            android:textSize="14sp"
+            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        
     </RelativeLayout>
 
 </RelativeLayout>

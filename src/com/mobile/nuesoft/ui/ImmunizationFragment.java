@@ -1,8 +1,13 @@
 package com.mobile.nuesoft.ui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,8 +123,16 @@ public class ImmunizationFragment extends NuesoftFragment {
 				convertView = mInflater.inflate(R.layout.immunization_list_child_view, parent, false);
 			}
 
-			TextView mTitleText = (TextView) convertView.findViewById(R.id.nt_text);
-			mTitleText.setText(list.get(groupPosition).manufacturerName);
+			TextView manufacturerText = (TextView) convertView.findViewById(R.id.nt_manufacturer_value);
+			manufacturerText.setText(list.get(groupPosition).manufacturerName);		
+			
+			String date = list.get(groupPosition).effectiveTime;
+			
+			TextView dateText = (TextView) convertView.findViewById(R.id.nt_date_value);
+			dateText.setText(date.toString());
+			
+			TextView codeSystemNameText = (TextView) convertView.findViewById(R.id.nt_code_system_name_value);
+			codeSystemNameText.setText(list.get(groupPosition).codeSystemName);
 
 			return convertView;
 		}
