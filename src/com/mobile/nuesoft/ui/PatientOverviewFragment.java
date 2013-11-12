@@ -20,6 +20,8 @@ import com.mobile.nuesoft.patient.Allergy;
 import com.mobile.nuesoft.patient.FamilyHistory;
 import com.mobile.nuesoft.patient.Immunization;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
+import com.mobile.nuesoft.patient.Problem;
+import com.mobile.nuesoft.patient.Procedure;
 import com.mobile.nuesoft.patient.VitalSign;
 
 public class PatientOverviewFragment extends NuesoftFragment {
@@ -116,6 +118,8 @@ public class PatientOverviewFragment extends NuesoftFragment {
 			map.put("Immunizations", mPatient.getIMMUNIZATIONS());
 			map.put("Vital Signs", mPatient.getVITAL_SIGNS());
 			map.put("Family History", mPatient.getFAMILY_HISTORY());
+			map.put("Medical Procedures", mPatient.getPROCEDURES());
+			map.put("Known Issues", mPatient.getKNOWN_ISSUES());
 		}
 
 		@Override
@@ -147,6 +151,10 @@ public class PatientOverviewFragment extends NuesoftFragment {
 				mTitleText.setText(((ArrayList<Immunization>) map.get(key)).get(childPosition).getDisplayName());
 			} else if (key.equalsIgnoreCase("family history")) {
 				mTitleText.setText(((ArrayList<FamilyHistory>) map.get(key)).get(childPosition).getDisplayName());
+			} else if (key.equalsIgnoreCase("Medical Procedures")) {
+				mTitleText.setText(((ArrayList<Procedure>) map.get(key)).get(childPosition).getDISPLAY_TITLE());
+			} else if(key.equalsIgnoreCase("known issues")) {
+				mTitleText.setText(((ArrayList<Problem>) map.get(key)).get(childPosition).getDisplayname());
 			}
 
 			return convertView;

@@ -24,4 +24,44 @@ public class Problem {
 		this.entryValueDisplayName = entryValueDisplayName;
 		this.entryValueCodeSystemName = entryValueCodeSystemName;
 	}
+
+	public String getActStatusCode() {
+		return actStatusCode;
+	}
+
+	public String getEffectiveTimeLow() {
+		return effectiveTimeLow;
+	}
+
+	public String getActCodeDisplayName() {
+		return actCodeDisplayName;
+	}
+
+	public String getEntryReferenceId() {
+		return entryReferenceId;
+	}
+
+	public String getEntryStatusCode() {
+		return entryStatusCode;
+	}
+
+	public String getEntryCodeDisplayName() {
+		return entryCodeDisplayName;
+	}
+
+	public String getEntryValueType() {
+		return entryValueType;
+	}
+
+	public String getEntryValueDisplayName() {
+		return entryValueDisplayName;
+	}
+
+	public String getEntryValueCodeSystemName() {
+		return entryValueCodeSystemName;
+	}
+	
+	public String getDisplayname() {
+		return this.entryValueDisplayName;
+	}
 }

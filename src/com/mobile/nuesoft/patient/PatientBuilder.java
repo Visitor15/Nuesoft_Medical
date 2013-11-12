@@ -229,10 +229,14 @@ public class PatientBuilder {
 	public void setLanguages(ArrayList<Language> languages) {
 		this.languages = languages;
 	}
+	
+	public void addProcedure(final Procedure procedure) {
+		this.procedures.add(procedure);
+	}
 
 	public PatientObj build() {
 		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
-		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, planOfCare, socialHistory, immunizations);
+		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, planOfCare, socialHistory, immunizations, procedures, problem);
 	}
 
 	public class PatientObj implements Serializable {
@@ -263,6 +267,8 @@ public class PatientBuilder {
 		private ArrayList<PlanOfCare> PLAN_OF_CARE;
 		private ArrayList<SocialHistory> SOCIAL_HISTORY;
 		private ArrayList<Immunization> IMMUNIZATIONS;
+		private ArrayList<Procedure> PROCEDURES;
+		private ArrayList<Problem> KNOWN_ISSUES;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
 		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
@@ -270,7 +276,7 @@ public class PatientBuilder {
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
 		        final Marital.STATUS MARITAL_STATUS, final ArrayList<FamilyHistory> FAMILY_HISTORY, final ArrayList<PlanOfCare> PLAN_OF_CARE, 
-		        final ArrayList<SocialHistory> SOCIAL_HISTORY, final ArrayList<Immunization> IMMUNIZATIONS) {
+		        final ArrayList<SocialHistory> SOCIAL_HISTORY, final ArrayList<Immunization> IMMUNIZATIONS, final ArrayList<Procedure> PROCEDURES, final ArrayList<Problem> KNOWN_ISSUES) {
 
 			this.IDENTIFIER = IDENTIFIER;
 			this.BIRTH_TIME = BIRTH_TIME;
@@ -292,7 +298,8 @@ public class PatientBuilder {
 			this.PLAN_OF_CARE = PLAN_OF_CARE;
 			this.SOCIAL_HISTORY = SOCIAL_HISTORY;
 			this.IMMUNIZATIONS = IMMUNIZATIONS;
-			
+			this.PROCEDURES = PROCEDURES;
+			this.KNOWN_ISSUES = KNOWN_ISSUES;
 		}
 
 		public PatientIdentifier getIDENTIFIER() {
@@ -369,6 +376,22 @@ public class PatientBuilder {
 
 		public ArrayList<PatientTest> getTESTS() {
 			return (ArrayList<PatientTest>) TESTS.clone();
+		}
+		
+		public void setPROCEDURES(ArrayList<Procedure> pROCEDURES) {
+			PROCEDURES = pROCEDURES;
+		}
+		
+		public ArrayList<Procedure> getPROCEDURES() {
+			return (ArrayList<Procedure>) PROCEDURES.clone();
+		}
+		
+		public void setKNOWN_ISSUES(ArrayList<Problem> KNOWN_ISSUES) {
+			this.KNOWN_ISSUES = KNOWN_ISSUES;
+		}
+		
+		public ArrayList<Problem> getKNOWN_ISSUES() {
+			return this.KNOWN_ISSUES;
 		}
 
 		public void setTESTS(ArrayList<PatientTest> tESTS) {

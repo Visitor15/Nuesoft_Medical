@@ -1037,6 +1037,8 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 							curProcedure.setPERFORMER(mPerformer);
 						}
+						
+						patBuilder.addProcedure(curProcedure);
 
 						Log.d(TAG, "NCC - CREATED PROCEDURE: " + curProcedure.getDISPLAY_TITLE());
 					}
