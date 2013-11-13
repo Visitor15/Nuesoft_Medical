@@ -29,6 +29,8 @@
                 android:text="0000"
                 android:textColor="@color/white"
                 android:textSize="64dip"
+                android:textIsSelectable="true"
+                android:longClickable="true"
                 custom:textStyle="fonts/Roboto-Thin.ttf" />
 
             <LinearLayout

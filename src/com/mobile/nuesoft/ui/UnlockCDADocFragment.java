@@ -19,12 +19,11 @@ import android.widget.TextView;
 
 import com.mobile.nuesoft.NuesoftFragment;
 import com.mobile.nuesoft.R;
+import com.mobile.nuesoft.jobs.DecryptionJob;
 
 public class UnlockCDADocFragment extends NuesoftFragment implements OnClickListener {
 
 	public static final String TAG = "UnlockCDADocuFragment";
-
-	private static final String ENC_PIECE_1 = "rO0ABXcKAAgwMDAw";
 
 	private View rootView;
 
@@ -95,7 +94,7 @@ public class UnlockCDADocFragment extends NuesoftFragment implements OnClickList
 	private String decodeBase64String(final String encodedStr) {
 		String decodedStr = "";
 
-		final byte[] byteVal = Base64.decode(ENC_PIECE_1.concat(encodedStr), Base64.DEFAULT);
+		final byte[] byteVal = Base64.decode(DecryptionJob.ENC_PIECE_1.concat(encodedStr), Base64.DEFAULT);
 		final ByteArrayInputStream is = new ByteArrayInputStream(byteVal);
 		final ObjectInputStream in;
 

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="12dip"
-                android:text="Preparing to send..."
+                android:text="PIN Number Required"
                 android:textColor="#FFFFFF"
                 android:textSize="32sp"
                 custom:textStyle="fonts/Roboto-Thin.ttf" />
@@ -43,50 +43,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <com.mobile.nuesoft.ui.NuesoftTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dip"
-                    android:background="@color/off_white"
-                    android:paddingLeft="8dip"
-                    android:paddingRight="8dip"
-                    android:text="Send to"
-                    android:textColor="#AA282828"
-                    custom:textStyle="fonts/Roboto-Bold.ttf" />
-
-                <EditText
-                    android:id="@+id/et_email_addr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dip"
-                    android:layout_marginRight="12dip"
-                    android:background="@color/white"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textEmailAddress"
-                    android:lines="1"
-                    android:padding="12dip"
-                    android:singleLine="true" />
-            </LinearLayout>
-
-            <com.mobile.nuesoft.ui.NuesoftTextView
-                android:id="@+id/nt_filename"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dip"
-                android:layout_marginLeft="24dip"
-                android:layout_marginRight="24dip"
-                android:layout_marginTop="24dip"
-                android:gravity="center"
-                android:text="For security we password protect your file before emailing."
-                android:textColor="#FFFFFF"
-                custom:textStyle="fonts/Roboto-Thin.ttf" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dip"
                 android:orientation="vertical" >
 
@@ -97,46 +53,12 @@
                     android:background="@color/off_white"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
-                    android:text="Enter password"
+                    android:text="PIN #"
                     android:textColor="#AA282828"
                     custom:textStyle="fonts/Roboto-Bold.ttf" />
 
                 <EditText
                     android:id="@+id/et_pswrd1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dip"
-                    android:layout_marginRight="12dip"
-                    android:background="@color/white"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="4-digit PIN"
-                    android:inputType="numberPassword"
-                    android:lines="1"
-                    android:maxLength="4"
-                    android:padding="12dip"
-                    android:singleLine="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dip"
-                android:orientation="vertical" >
-
-                <com.mobile.nuesoft.ui.NuesoftTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dip"
-                    android:background="@color/off_white"
-                    android:paddingLeft="8dip"
-                    android:paddingRight="8dip"
-                    android:text="Enter password"
-                    android:textColor="#AA282828"
-                    custom:textStyle="fonts/Roboto-Bold.ttf" />
-
-                <EditText
-                    android:id="@+id/et_pswrd2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dip"
@@ -181,12 +103,12 @@
             android:background="#AAC2C2C2" />
 
         <Button
-            android:id="@+id/btn_send"
+            android:id="@+id/btn_unlock"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_background_clickable_transparent"
-            android:text="Lock &amp; Send"
+            android:text="Unlock"
             android:textColor="@color/white" />
     </LinearLayout>
 

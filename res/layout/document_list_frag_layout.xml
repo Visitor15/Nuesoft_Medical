@@ -17,14 +17,25 @@
         android:textSize="24sp"
         custom:textStyle="fonts/Roboto-Thin.ttf" />
 
-    <ListView
-        android:id="@+id/list"
+    <ExpandableListView
+        android:id="@+id/expandable_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:clipToPadding="false"
         android:divider="@null"
-        android:paddingTop="12dip"
-        android:paddingBottom="@dimen/footer_height" >
-    </ListView>
+        android:paddingBottom="@dimen/footer_height"
+        android:paddingTop="12dip" />
+
+    <!-- <ListView -->
+    <!-- android:id="@+id/list" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="match_parent" -->
+    <!-- android:clipToPadding="false" -->
+    <!-- android:divider="@null" -->
+    <!-- android:paddingTop="12dip" -->
+    <!-- android:paddingBottom="@dimen/footer_height" > -->
+    <!-- </ListView> -->
 
 </LinearLayout>

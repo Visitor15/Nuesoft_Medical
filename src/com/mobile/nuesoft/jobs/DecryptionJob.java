@@ -13,13 +13,15 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.mobile.nuesoft.Nuesoft;
+
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class DecryptionJob extends AsyncTask<String, Void, Boolean> {
-
-	private static final String TAG = "DecryptionJob";
-
+	public static final String TAG = "DecryptionJob";
+	public static final String ENC_PIECE_1 = "rO0ABXcKAAgwMDAw";
 	private static final String ALGORITHM = "DES";
 	private static final String FULL_ALGORITHM = "DES/ECB/PKCS5Padding";
 
@@ -50,7 +52,12 @@ public class DecryptionJob extends AsyncTask<String, Void, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
 
-		Log.d(TAG, "ENCRYPTION: " + result);
+		if (result) {
+			ParseCDADocumentJob parseJob = new ParseCDADocumentJob();
+			parseJob.execute(mFile.getPath());
+		} else {
+			Toast.makeText(Nuesoft.getReference(), "Failed to unlock document", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
