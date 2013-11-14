@@ -154,7 +154,7 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 				break;
 			}
 			case R.id.btn_cancel: {
-
+				getActivity().getSupportFragmentManager().popBackStackImmediate();
 				break;
 			}
 		}
