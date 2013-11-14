@@ -147,7 +147,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 					return ((ArrayList<Medication>) map.get("Previous Medications")).get(childPosition);
 				}
 				case ID_MED_PROCEDURES: {
-					return ((ArrayList<Procedure>) map.get("Medication Procedures")).get(childPosition);
+					return ((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition);
 				}
 				case ID_VITAL_SIGNS: {
 					return ((ArrayList<VitalSign>) map.get("Vital Signs")).get(childPosition);
@@ -215,7 +215,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 				}
 				case ID_MED_PROCEDURES: {
 					try {
-						mTitleText.setText(((ArrayList<Procedure>) map.get("Medication Procedures")).get(childPosition)
+						mTitleText.setText(((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition)
 						        .getDISPLAY_TITLE());
 					} catch (final IndexOutOfBoundsException e) {
 						mTitleText.setText("No data found");
@@ -315,7 +315,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 					break;
 				}
 				case ID_MED_PROCEDURES: {
-					count = ((ArrayList<Procedure>) map.get("Medication Procedures")).size();
+					count = ((ArrayList<Procedure>) map.get("Medical Procedures")).size();
 					break;
 				}
 				case ID_VITAL_SIGNS: {
