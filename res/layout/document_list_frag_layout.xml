@@ -25,6 +25,7 @@
         android:layout_marginRight="8dip"
         android:clipToPadding="false"
         android:divider="@null"
+        android:groupIndicator="@null"
         android:paddingBottom="@dimen/footer_height"
         android:paddingTop="12dip" />
 
