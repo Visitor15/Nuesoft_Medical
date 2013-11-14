@@ -90,8 +90,6 @@ public class DocumentListFragment extends NuesoftFragment {
 		rootView = inflater.inflate(R.layout.document_list_frag_layout, container, false);
 
 		expandableList = (ExpandableListView) rootView.findViewById(R.id.expandable_list_view);
-		// listView.setBackgroundResource(R.color.light_grey);
-
 		mAdapter = new ExpandableAdapter();
 
 		return rootView;
@@ -111,8 +109,6 @@ public class DocumentListFragment extends NuesoftFragment {
 		static final int GROUP_TWO = 1;
 
 		private LayoutInflater mInflater;
-
-		private HashMap<String, ArrayList<Medication>> map = new HashMap<String, ArrayList<Medication>>();
 
 		private ArrayList<DocFile> openDocs;
 		private ArrayList<DocFile> encryptedDocs;
@@ -362,9 +358,6 @@ public class DocumentListFragment extends NuesoftFragment {
 
 				DecryptDocDialog mDialog = new DecryptDocDialog(mUri);
 				mDialog.show(getActivity().getSupportFragmentManager(), DecryptDocDialog.TAG);
-
-				// DecryptionJob job = new DecryptionJob();
-				// job.execute(new String[] { mUri.getPath(), "11111111" });
 			} else {
 				ParseCDADocumentJob job = new ParseCDADocumentJob();
 				job.execute(mUri.getPath());
