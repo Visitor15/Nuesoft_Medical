@@ -140,7 +140,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 			if (Nuesoft.getCurrentCDADocument() != null) {
 //				dataList.add(new AllergyFragment());
 				dataList.add(new PatientOverviewFragment());
-				dataList.add(new MedicationFragment());
+//				dataList.add(new MedicationFragment());
 //				dataList.add(new PatientVitalsFragment());
 //				dataList.add(new ImmunizationFragment());
 //				dataList.add(new FamilyHistoryFragment());
