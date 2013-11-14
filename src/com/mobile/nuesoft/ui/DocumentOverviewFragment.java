@@ -121,6 +121,7 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 	}
 
 	public void hideNoDataView(final View v) {
+		titleText.setText("Document Overview");
 		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
 		expandableList = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout, null);
 		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(expandableList);

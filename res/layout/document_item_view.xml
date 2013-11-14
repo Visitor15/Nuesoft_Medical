@@ -53,25 +53,25 @@
             android:textSize="18sp"
             custom:textStyle="fonts/Roboto-Bold.ttf" />
 
-        <com.mobile.nuesoft.ui.NuesoftTextView
-            android:id="@+id/nt_date_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/nt_text"
-            android:layout_below="@id/nt_text"
-            android:text="Date added:"
-            android:textColor="#AA282828"
-            android:textSize="14sp"
-            custom:textStyle="fonts/Roboto-Thin.ttf" />
+        <!-- <com.mobile.nuesoft.ui.NuesoftTextView -->
+        <!-- android:id="@+id/nt_date_title" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_alignLeft="@id/nt_text" -->
+        <!-- android:layout_below="@id/nt_text" -->
+        <!-- android:text="Date added:" -->
+        <!-- android:textColor="#AA282828" -->
+        <!-- android:textSize="14sp" -->
+        <!-- custom:textStyle="fonts/Roboto-Thin.ttf" /> -->
 
         <com.mobile.nuesoft.ui.NuesoftTextView
             android:id="@+id/nt_date_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/nt_date_title"
-            android:layout_marginBottom="8dip"
-            android:layout_marginLeft="4dip"
-            android:layout_toRightOf="@id/nt_date_title"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="2dip"
+            android:layout_marginRight="8dip"
             android:textColor="#AA282828"
             android:textSize="14sp"
             custom:textStyle="fonts/Roboto-Thin.ttf" />
