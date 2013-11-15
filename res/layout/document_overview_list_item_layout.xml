@@ -49,6 +49,7 @@
             android:layout_marginLeft="8dip"
             android:layout_toLeftOf="@id/more"
             android:layout_toRightOf="@id/divider"
+            android:maxLines="2"
             android:textColor="#AA282828"
             android:textSize="18sp"
             custom:textStyle="fonts/Roboto-Thin.ttf" />

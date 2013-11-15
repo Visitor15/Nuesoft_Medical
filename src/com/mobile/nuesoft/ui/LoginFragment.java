@@ -90,12 +90,12 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 		btnLogin = (Button) rootView.findViewById(R.id.btn_login);
 		btnRegister = (LinearLayout) rootView.findViewById(R.id.btn_register);
-		btnUnlockDoc = (LinearLayout) rootView.findViewById(R.id.btn_unlock_doc);
+//		btnUnlockDoc = (LinearLayout) rootView.findViewById(R.id.btn_unlock_doc);
 
 		btnCancel.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-		btnUnlockDoc.setOnClickListener(this);
+//		btnUnlockDoc.setOnClickListener(this);
 
 		((MainActivity) getActivity()).hideFooter();
 

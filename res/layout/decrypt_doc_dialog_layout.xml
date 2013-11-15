@@ -53,26 +53,73 @@
                     android:background="@color/off_white"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
-                    android:text="PIN #"
+                    android:text="Encoded PIN"
                     android:textColor="#AA282828"
                     custom:textStyle="fonts/Roboto-Bold.ttf" />
 
                 <EditText
-                    android:id="@+id/et_pswrd1"
+                    android:id="@+id/et_ecrypted_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dip"
                     android:layout_marginRight="12dip"
                     android:background="@color/white"
+                    android:maxLength="8"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="4-digit PIN"
-                    android:inputType="numberPassword"
+                    android:hint="wT3eD1g="
                     android:lines="1"
-                    android:maxLength="4"
                     android:padding="12dip"
                     android:singleLine="true" />
             </LinearLayout>
+            
+            <com.mobile.nuesoft.ui.NuesoftTextView
+                android:id="@+id/nt_decoded_pswrd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dip"
+                android:layout_marginTop="12dip"
+                android:gravity="center"
+                android:text="----"
+                android:textColor="@color/white"
+                android:textSize="64dip"
+                android:textIsSelectable="true"
+                android:longClickable="true"
+                custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+<!--             <LinearLayout -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginBottom="8dip" -->
+<!--                 android:orientation="vertical" > -->
+
+<!--                 <com.mobile.nuesoft.ui.NuesoftTextView -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_marginLeft="12dip" -->
+<!--                     android:background="@color/off_white" -->
+<!--                     android:paddingLeft="8dip" -->
+<!--                     android:paddingRight="8dip" -->
+<!--                     android:text="Real PIN" -->
+<!--                     android:textColor="#AA282828" -->
+<!--                     custom:textStyle="fonts/Roboto-Bold.ttf" /> -->
+
+<!--                 <EditText -->
+<!--                     android:id="@+id/et_pswrd1" -->
+<!--                     android:layout_width="match_parent" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_marginLeft="12dip" -->
+<!--                     android:layout_marginRight="12dip" -->
+<!--                     android:background="@color/white" -->
+<!--                     android:ems="10" -->
+<!--                     android:gravity="center" -->
+<!--                     android:hint="4-digit PIN" -->
+<!--                     android:inputType="numberPassword" -->
+<!--                     android:lines="1" -->
+<!--                     android:maxLength="4" -->
+<!--                     android:padding="12dip" -->
+<!--                     android:singleLine="true" /> -->
+<!--             </LinearLayout> -->
         </LinearLayout>
     </ScrollView>
 

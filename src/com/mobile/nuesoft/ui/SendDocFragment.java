@@ -86,7 +86,7 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 		btnEncryptAndSend.setOnClickListener(this);
 
 		filenameTitle.setText(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
-		
+
 		((MainActivity) getActivity()).hideFooter();
 
 		return rootView;
@@ -154,6 +154,9 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 				break;
 			}
 			case R.id.btn_cancel: {
+				if (Nuesoft.getCurrentCDADocument() != null) {
+					((MainActivity) getActivity()).showFooter();
+				}
 				getActivity().getSupportFragmentManager().popBackStackImmediate();
 				break;
 			}

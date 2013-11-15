@@ -111,9 +111,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		// frag, RegistrationFragment.TAG)
 		// .commit();
 
-		// Fragment frag = new PatientFragment();
-		// this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
-		// frag, PatientFragment.TAG).commit();
+//		 Fragment frag = new PatientFragment();
+//		 this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
+//		 frag, PatientFragment.TAG).commit();
 	}
 
 	public void hideFooter() {
