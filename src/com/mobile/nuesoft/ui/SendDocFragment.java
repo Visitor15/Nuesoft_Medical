@@ -121,8 +121,6 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 		        .getPath().concat("/")
 		        .concat(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment().concat(".ncc")));
 
-		Log.d(TAG, "NCC - URI: " + mFile.toString());
-
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", etEmailAddr.getText().toString(),
 		        null));
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Nuesoft Medical Test");
@@ -172,11 +170,6 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_CODE) {
-			// File mFile = new
-			// File(Nuesoft.getCurrentCDADocument().getDOC_URI().getPath().concat(".ncc"));
-			// if (mFile.exists()) {
-			// mFile.delete();
-			// }
 			((MainActivity) getActivity()).showFooter();
 			getActivity().getSupportFragmentManager().popBackStackImmediate();
 		}
