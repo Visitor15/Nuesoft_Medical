@@ -38,15 +38,11 @@ import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 public class DocumentListFragment extends NuesoftFragment {
 
 	private View rootView;
-
 	private ExpandableListView expandableList;
-
 	private ExpandableAdapter mAdapter;
-
 	private OnPatientUpdatedListener patientEventListener = new OnPatientUpdatedListener();
 
 	public DocumentListFragment() {
-
 	}
 
 	@Override
@@ -61,28 +57,18 @@ public class DocumentListFragment extends NuesoftFragment {
 
 	@Override
 	public void onFragmentResume() {
-		// if (Nuesoft.getCurrentCDADocument() == null) {
-		// ((MainActivity)
-		// getActivity()).getFooter().setTitleText("No document loaded");
-		// }
 	}
 
 	@Override
 	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -97,19 +83,16 @@ public class DocumentListFragment extends NuesoftFragment {
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		expandableList.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
 		expandableList.expandGroup(0);
 	}
 
 	private class ExpandableAdapter extends BaseExpandableListAdapter implements OnClickListener {
-
 		static final int GROUP_ONE = 0;
 		static final int GROUP_TWO = 1;
 
 		private LayoutInflater mInflater;
-
 		private ArrayList<DocFile> openDocs;
 		private ArrayList<DocFile> encryptedDocs;
 
@@ -339,9 +322,6 @@ public class DocumentListFragment extends NuesoftFragment {
 
 			String extension = mUri.getLastPathSegment().substring(mUri.getLastPathSegment().length() - 3);
 			if (extension.equalsIgnoreCase("ncc")) {
-				Log.d(TAG, "NCC - GOT PATH: " + mUri.getPath());
-				Toast.makeText(getActivity(), "Encrypted File", Toast.LENGTH_LONG).show();
-
 				DecryptDocDialog mDialog = new DecryptDocDialog(mUri);
 				mDialog.show(getActivity().getSupportFragmentManager(), DecryptDocDialog.TAG);
 			} else {
@@ -361,7 +341,6 @@ public class DocumentListFragment extends NuesoftFragment {
 
 			patientEventListener.register();
 		}
-
 	}
 
 	public class DocFile {
@@ -374,41 +353,6 @@ public class DocumentListFragment extends NuesoftFragment {
 			this.mUri = mUri;
 		}
 	}
-
-	// @Override
-	// public void onClick(View v) {
-	// Uri mUri = Uri.parse((String) v.getTag());
-	//
-	// String extension =
-	// mUri.getLastPathSegment().substring(mUri.getLastPathSegment().length() -
-	// 3);
-	// if (extension.equalsIgnoreCase("ncc")) {
-	// Log.d(TAG, "NCC - GOT PATH: " + mUri.getPath());
-	// Toast.makeText(getActivity(), "Encrypted File",
-	// Toast.LENGTH_LONG).show();
-	// // DecryptionJob job = new DecryptionJob();
-	// // job.execute(new String[] { mUri.getPath(), "11111111" });
-	// } else {
-	// // EncryptionJob job = new EncryptionJob();
-	// // job.execute(new String[] { mUri.getPath(), "11111111" });
-	// ParseCDADocumentJob job = new ParseCDADocumentJob();
-	// job.execute(mUri.getPath());
-	// }
-	//
-	// //
-	// //
-	// // Log.d(TAG, "CLICKED URI: " + mUri);
-	// //
-	// // Bundle b = new Bundle();
-	// // b.putInt(FragmentCallbackEvent.ACTION_KEY,
-	// // FragmentCallbackEvent.ACTIONS.SHOW_FRAGMENT_IN_PAGER.ordinal());
-	// // b.putInt(FragmentCallbackEvent.FRAGMENT, 1);
-	// // FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
-	//
-	//
-	//
-	// patientEventListener.register();
-	// }
 
 	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {
 		void register() {
@@ -437,7 +381,6 @@ public class DocumentListFragment extends NuesoftFragment {
 					}
 				}
 			}
-
 			mAdapter.notifyDataSetChanged();
 		}
 	}

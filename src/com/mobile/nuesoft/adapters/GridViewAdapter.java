@@ -19,15 +19,12 @@ public class GridViewAdapter extends BaseAdapter {
 	public static final String TAG = "GridViewAdapter";
 
 	ArrayList<GridViewObject> dataList;
-	
 	private LayoutInflater mInflater;
-	
 	private Context mContext;
 
 	public GridViewAdapter(final Context c) {
 		mInflater = LayoutInflater.from(c);
 		mContext = c;
-		
 		init();
 	}
 
@@ -65,15 +62,11 @@ public class GridViewAdapter extends BaseAdapter {
 		dataList = new ArrayList<GridViewObject>();
 		String[] categories = mContext.getResources().getStringArray(R.array.profile_categories);
 		int[] categoryIcons = mContext.getResources().getIntArray(R.array.profile_category_icons);
-		
-		Log.d(TAG, "DATA: " + categories.length + " AND " + categoryIcons.length);
-		
 		if(categories.length == categoryIcons.length) {
 			for(int i = 0; i < categories.length; i++) {
 				dataList.add(new GridViewObject(categories[i], categoryIcons[i]));
 			}
 		} else{
-			Log.e(TAG, "NOT ALL GRIDVIEW TITLES HAVE AN ICON");
 		}
 	}
 

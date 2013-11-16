@@ -756,7 +756,6 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 					break;
 				}
 				default: {
-					Log.d(TAG, "DOCUMENT CODE NOT FOUND: " + id);
 				}
 			}
 		}
@@ -1404,7 +1403,6 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 
 				for (int k = 0; k < dateNode.getChildNodes().getLength(); k++) {
 					tempNode = dateNode.getChildNodes().item(k);
-					Log.d(TAG, "MEDICATION DATE NODE NAME: " + tempNode.getNodeName());
 					if (tempNode.getNodeName().equals("low")) {
 						mDateLow = XMLParserUtil.getNodeAttr("value", tempNode);
 					} else if (tempNode.getNodeName().equals("high")) {

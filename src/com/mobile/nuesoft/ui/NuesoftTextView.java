@@ -35,9 +35,6 @@ public class NuesoftTextView extends TextView {
 				textPath = "fonts/Roboto-Thin.ttf";
 			}
 		}
-		
-		Log.d(TAG, "FONT PATH IS: " + textPath);
-
 		this.setTypeface(Typeface.createFromAsset(c.getAssets(), textPath));
 	}
 }

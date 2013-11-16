@@ -1,14 +1,8 @@
 package com.mobile.nuesoft.ui;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,8 +96,6 @@ public class ImmunizationFragment extends NuesoftFragment {
 		private void init() {
 			mInflater = LayoutInflater.from(Nuesoft.getReference());
 			list = mPatient.getIMMUNIZATIONS();
-
-			Log.d(TAG, "NCC - List SIZE: " + list.size());
 		}
 
 		@Override

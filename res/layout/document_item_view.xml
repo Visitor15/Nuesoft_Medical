@@ -53,17 +53,6 @@
             android:textSize="18sp"
             custom:textStyle="fonts/Roboto-Bold.ttf" />
 
-        <!-- <com.mobile.nuesoft.ui.NuesoftTextView -->
-        <!-- android:id="@+id/nt_date_title" -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_alignLeft="@id/nt_text" -->
-        <!-- android:layout_below="@id/nt_text" -->
-        <!-- android:text="Date added:" -->
-        <!-- android:textColor="#AA282828" -->
-        <!-- android:textSize="14sp" -->
-        <!-- custom:textStyle="fonts/Roboto-Thin.ttf" /> -->
-
         <com.mobile.nuesoft.ui.NuesoftTextView
             android:id="@+id/nt_date_value"
             android:layout_width="wrap_content"

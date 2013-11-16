@@ -66,8 +66,8 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	public void onFragmentResume() {
 		onPatientUpdatedListener.register();
 		onFragmentCallbackListener.register();
-		
-		if(Nuesoft.getCurrentPatient() == null) {
+
+		if (Nuesoft.getCurrentPatient() == null) {
 			mPatientTitleName.setText("Hello, " + Nuesoft.getCurrentUser().getUserName());
 		}
 	}
@@ -93,7 +93,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 		mPatientTitleName = (TextView) v.findViewById(R.id.nt_name);
 		profileIcon = (ProfilePicImageView) v.findViewById(R.id.nt_profile_pic);
-		
+
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
 		mPagerAdapter.init();
@@ -211,14 +211,11 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 							        mPatient.getIDENTIFIER().getFIRST_NAME() + " "
 							                + mPatient.getIDENTIFIER().getLAST_NAME());
 						}
-
 						mPagerAdapter.init();
 						mPagerAdapter.notifyDataSetChanged();
-
 						return;
 					}
 				}
-				Log.d(TAG, "JOB FINISHED");
 			}
 		}
 	}
@@ -273,7 +270,6 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
 			onHandleFragmentCallback(intent.getExtras());
 		}
 	}

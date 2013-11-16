@@ -35,16 +35,10 @@ import com.mobile.nuesoft.util.Util;
 public class CurrentEncounterFragment extends NuesoftFragment {
 
 	private View rootView;
-
 	private TextView titleText;
-
 	private ExpandableListView expandableList;
-
 	private LayoutInflater mInflater;
-
 	private ExpandableAdapter mAdapter;
-
-	private HashMap<Integer, String> expandableListData = new HashMap<Integer, String>();
 
 	private OnCDADocumentUpdateEventListener documentUpdateListener = new OnCDADocumentUpdateEventListener();
 
@@ -96,13 +90,11 @@ public class CurrentEncounterFragment extends NuesoftFragment {
 		} else {
 			hideNoDataView(rootView);
 		}
-
 		return rootView;
 	}
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 	}
 
 	public void showNoDataView(final View v) {
@@ -260,7 +252,6 @@ public class CurrentEncounterFragment extends NuesoftFragment {
 
 					break;
 				}
-
 				default: {
 					break;
 				}
@@ -377,7 +368,6 @@ public class CurrentEncounterFragment extends NuesoftFragment {
 					break;
 				}
 			}
-
 			return convertView;
 		}
 
@@ -406,8 +396,6 @@ public class CurrentEncounterFragment extends NuesoftFragment {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
-
 			try {
 				if ((Nuesoft.getCurrentCDADocument() == null)) {
 					showNoDataView(rootView);
@@ -416,7 +404,6 @@ public class CurrentEncounterFragment extends NuesoftFragment {
 					((MainActivity) getActivity()).getFooter().setTitleText(
 					        Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
 				}
-
 				if (mAdapter != null) {
 					mAdapter.init();
 					mAdapter.notifyDataSetChanged();

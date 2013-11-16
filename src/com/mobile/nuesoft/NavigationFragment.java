@@ -128,8 +128,6 @@ public class NavigationFragment extends NuesoftFragment implements OnPatientObjU
 				}
 			}
 		}
-
-		Log.d(TAG, "JOB FINISHED");
 	}
 
 	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {

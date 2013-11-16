@@ -123,35 +123,6 @@
                         android:textSize="18sp"
                         custom:textStyle="fonts/Roboto-Thin.ttf" />
                 </LinearLayout>
-
-<!--                 <LinearLayout -->
-<!--                     android:id="@+id/btn_unlock_doc" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:layout_below="@id/btn_register" -->
-<!--                     android:background="@drawable/btn_background_clickable_transparent" -->
-<!--                     android:clickable="true" -->
-<!--                     android:padding="8dip" > -->
-
-<!--                     <ImageView -->
-<!--                         android:id="@+id/iv_unlock_btn" -->
-<!--                         android:layout_width="32dip" -->
-<!--                         android:layout_height="32dip" -->
-<!--                         android:clickable="true" -->
-<!--                         android:padding="4dip" -->
-<!--                         android:src="@drawable/unlock_icon" /> -->
-
-<!--                     <com.mobile.nuesoft.ui.NuesoftTextView -->
-<!--                         android:id="@+id/nt_unlock_doc" -->
-<!--                         android:layout_width="wrap_content" -->
-<!--                         android:layout_height="wrap_content" -->
-<!--                         android:layout_gravity="center_vertical" -->
-<!--                         android:layout_marginLeft="4dip" -->
-<!--                         android:text="Unlock Document" -->
-<!--                         android:textColor="#FFFFFF" -->
-<!--                         android:textSize="18sp" -->
-<!--                         custom:textStyle="fonts/Roboto-Thin.ttf" /> -->
-<!--                 </LinearLayout> -->
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
