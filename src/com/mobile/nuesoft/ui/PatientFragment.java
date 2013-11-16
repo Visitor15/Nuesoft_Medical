@@ -66,6 +66,10 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	public void onFragmentResume() {
 		onPatientUpdatedListener.register();
 		onFragmentCallbackListener.register();
+		
+		if(Nuesoft.getCurrentPatient() == null) {
+			mPatientTitleName.setText("Hello, " + Nuesoft.getCurrentUser().getUserName());
+		}
 	}
 
 	@Override

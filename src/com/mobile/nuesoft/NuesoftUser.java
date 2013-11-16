@@ -80,6 +80,7 @@ public class NuesoftUser {
 			objOutStream.write(salt, 0, salt.length);
 			objOutStream.writeInt(encryptedPSWRD.length);
 			objOutStream.write(encryptedPSWRD, 0, encryptedPSWRD.length);
+			objOutStream.writeUTF(getUserName());
 			objOutStream.writeUTF(getProfilePicUri());
 			
 			objOutStream.flush();
@@ -109,6 +110,7 @@ public class NuesoftUser {
 	       	length = in.readInt();
 	       	user.setEncryptedPassword(new byte[length]);
 	       	in.read(user.encryptedPSWRD);
+	       	user.setUserName(in.readUTF());
 	       	user.setProfilePicURI(in.readUTF());
         } catch (StreamCorruptedException e) {
 	        e.printStackTrace();
