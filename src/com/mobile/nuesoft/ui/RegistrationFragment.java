@@ -45,8 +45,6 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 	@Override
 	public void onFragmentCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -63,20 +61,14 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 	@Override
 	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
