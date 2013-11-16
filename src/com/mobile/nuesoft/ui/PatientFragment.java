@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,11 +18,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobile.nuesoft.Nuesoft;
@@ -31,20 +31,14 @@ import com.mobile.nuesoft.jobs.ParseCDADocumentJob;
 import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 import com.mobile.nuesoft.patient.PatientBuilder.PatientObj;
 
-public class PatientFragment extends NuesoftFragment implements OnPatientObjUpdated {
-
-	public static final int NUM_OF_CARDS = 5;
+public class PatientFragment extends NuesoftFragment implements OnPatientObjUpdated, OnClickListener {
+	private static final int REQUEST_CODE = 138;
 
 	private ViewPager mPager;
-
 	private ScreenSlidePagerAdapter mPagerAdapter;
-
 	private TextView mPatientTitleName;
-
 	private ProfilePicImageView profileIcon;
-
 	private PatientObj mPatient;
-
 	private OnPatientUpdatedListener onPatientUpdatedListener = new OnPatientUpdatedListener();
 	private OnFragmentCallbackListener onFragmentCallbackListener = new OnFragmentCallbackListener();
 
@@ -67,7 +61,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		onPatientUpdatedListener.register();
 		onFragmentCallbackListener.register();
 
-		if (Nuesoft.getCurrentPatient() == null) {
+		if (Nuesoft.getCurrentPatient() == null && mPatientTitleName != null) {
 			mPatientTitleName.setText("Hello, " + Nuesoft.getCurrentUser().getUserName());
 		}
 	}
@@ -98,6 +92,10 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
 		mPagerAdapter.init();
 		mPager.setAdapter(mPagerAdapter);
+
+		if (profileIcon != null) {
+			profileIcon.setOnClickListener(this);
+		}
 
 		return v;
 	}
@@ -240,6 +238,42 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.nt_profile_pic: {
+
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				intent.addCategory(Intent.CATEGORY_OPENABLE);
+				startActivityForResult(intent, REQUEST_CODE);
+
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
+			try {
+				InputStream stream = getActivity().getContentResolver().openInputStream(data.getData());
+				Bitmap bitmap = BitmapFactory.decodeStream(stream);
+				stream.close();
+				profileIcon.setImageBitmap(bitmap);
+				profileIcon.initWithNewImage();
+				Nuesoft.getCurrentUser().setProfilePicURI(data.getData().toString());
+				Nuesoft.getReference().saveCurrentUser();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	public class OnPatientUpdatedListener extends NuesoftBroadcastReceiver {

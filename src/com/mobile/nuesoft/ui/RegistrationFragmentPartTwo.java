@@ -132,7 +132,6 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 			case R.id.btn_register: {
 				RegisterUserJob registerJob = new RegisterUserJob();
 				registerJob.execute(mUser);
-
 				break;
 			}
 			case R.id.more: {
@@ -142,14 +141,12 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 				intent.setAction(Intent.ACTION_GET_CONTENT);
 				intent.addCategory(Intent.CATEGORY_OPENABLE);
 				startActivityForResult(intent, REQUEST_CODE);
-
 				break;
 			}
 			case R.id.btn_cancel: {
 				getActivity().getSupportFragmentManager().popBackStackImmediate();
 				break;
 			}
-
 		}
 	}
 
