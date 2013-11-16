@@ -57,6 +57,9 @@ public class DocumentListFragment extends NuesoftFragment {
 
 	@Override
 	public void onFragmentResume() {
+		if (mAdapter != null) {
+			mAdapter.init();
+		}
 	}
 
 	@Override
@@ -106,6 +109,8 @@ public class DocumentListFragment extends NuesoftFragment {
 		}
 
 		private void init() {
+			openDocs.clear();
+			encryptedDocs.clear();
 			mFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
 			if (mFile.exists()) {

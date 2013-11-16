@@ -17,6 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
@@ -25,7 +26,7 @@ import com.mobile.nuesoft.Nuesoft;
 public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 
 	private static final String TAG = "EncryptionJob";
-	
+
 	public static final String IS_FINISHED_KEY = "is_finished_bool";
 
 	private static final String ALGORITHM = "DES";
@@ -36,7 +37,7 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 	private CipherOutputStream ciphStream;
 	private Cipher mEncrypt;
 	private SecretKeySpec mKeySpec;
-	
+
 	private Bundle updateBundle;
 
 	private byte[] mBuf;
@@ -55,7 +56,7 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
-		
+
 		updateBundle = new Bundle();
 		updateBundle.putBoolean(EncryptionJob.IS_FINISHED_KEY, result);
 		EncryptionJobEvent.broadcast(Nuesoft.getReference(), updateBundle);
@@ -75,7 +76,12 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 
 				byte[] seedKey = param[1].getBytes();
 				in = new FileInputStream(mFile);
-				mFile = new File(mFile.getAbsolutePath().concat(".ncc"));
+
+				mFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS)
+				        .getPath().concat("/").concat(mFile.getName().concat(".ncc")));
+
+//				mFile = new File(Nuesoft.getReference().getFilesDir().getPath().concat("/").concat(mFile.getName())
+//				        .concat(".ncc"));
 				out = new FileOutputStream(mFile);
 				mKeySpec = new SecretKeySpec(seedKey, ALGORITHM);
 				mEncrypt = Cipher.getInstance(FULL_ALGORITHM);

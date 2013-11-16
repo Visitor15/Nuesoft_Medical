@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -116,13 +117,18 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	private void sendDocument() {
 		((MainActivity) getActivity()).hideFooter();
 
+		File mFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS)
+		        .getPath().concat("/")
+		        .concat(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment().concat(".ncc")));
+
+		Log.d(TAG, "NCC - URI: " + mFile.toString());
+
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", etEmailAddr.getText().toString(),
 		        null));
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Nuesoft Medical Test");
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Encoded PIN: ".concat(encodeBase64String(
 		        "0000".concat(etPinPswrd1.getText().toString())).substring(16)));
-		emailIntent.putExtra(Intent.EXTRA_STREAM,
-		        Uri.parse(Nuesoft.getCurrentCDADocument().getDOC_URI().toString().concat(".ncc")));
+		emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mFile));
 		startActivityForResult(Intent.createChooser(emailIntent, "Send email..."), REQUEST_CODE);
 	}
 
@@ -166,10 +172,11 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_CODE) {
-			File mFile = new File(Nuesoft.getCurrentCDADocument().getDOC_URI().getPath().concat(".ncc"));
-			if (mFile.exists()) {
-				mFile.delete();
-			}
+			// File mFile = new
+			// File(Nuesoft.getCurrentCDADocument().getDOC_URI().getPath().concat(".ncc"));
+			// if (mFile.exists()) {
+			// mFile.delete();
+			// }
 			((MainActivity) getActivity()).showFooter();
 			getActivity().getSupportFragmentManager().popBackStackImmediate();
 		}
