@@ -114,8 +114,6 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 				String pswrd1 = "";
 				String pswrd2 = "";
 
-				((MainActivity) getActivity()).replaceMainContent(new RegistrationFragmentPartTwo(mUser));
-
 				try {
 					userName = userNameET.getText().toString();
 				} catch (final NullPointerException e) {
@@ -134,7 +132,8 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 				}
 
-				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equalsIgnoreCase(pswrd2)) {
+				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equalsIgnoreCase(pswrd2)
+				        && userName.trim().length() > 0) {
 
 					mUser.setUserName(userName);
 
@@ -152,7 +151,10 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+				} else if (userName.trim().length() < 1) {
+					Toast.makeText(getActivity(), "Username is empty", Toast.LENGTH_LONG).show();
 				} else {
+
 					Toast.makeText(getActivity(), "Passwords do not equal", Toast.LENGTH_LONG).show();
 				}
 
