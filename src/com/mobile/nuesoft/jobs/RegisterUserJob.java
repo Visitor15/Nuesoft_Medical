@@ -50,6 +50,7 @@ public class RegisterUserJob extends AsyncTask<NuesoftUser, Void, Boolean> {
 			try {
 				mUser = new NuesoftUser();
 				mUser.setUserName(user[0].getUserName());
+				mUser.setProfilePicURI(user[0].getProfilePicUri());
 				mUser.setSalt(generateSalt());
 				mUser.setEncryptedPassword(Util.getEncryptedPassword(user[0].getString64PSWRD(), mUser.getSalt()));
 				

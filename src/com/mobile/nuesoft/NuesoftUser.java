@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
 import android.util.Base64;
+import android.util.Log;
 
 /*
  * Simple class used to represent a user during registration or login.
@@ -19,6 +20,7 @@ public class NuesoftUser {
 
 	private String userName = "";
 	private String string64PSWRD = "";
+	private String profilePicURI = "";
 
 	private byte[] salt;
 	private byte[] encryptedPSWRD;
@@ -39,6 +41,15 @@ public class NuesoftUser {
 
 	public String getString64PSWRD() {
 		return this.string64PSWRD;
+	}
+	
+	public void setProfilePicURI(final String uri) {
+		this.profilePicURI = uri;
+		Log.d(TAG, "URI IS: " + this.profilePicURI);
+	}
+	
+	public String getProfilePicUri() {
+		return this.profilePicURI;
 	}
 
 	public void setSalt(final byte[] salt) {
@@ -71,6 +82,10 @@ public class NuesoftUser {
 			objOutStream.writeInt(encryptedPSWRD.length);
 			objOutStream.write(encryptedPSWRD, 0, encryptedPSWRD.length);
 			
+			Log.d(TAG, "NCC - WRITING URI: " + getProfilePicUri());
+			
+			objOutStream.writeUTF(getProfilePicUri());
+			
 			objOutStream.flush();
 			
 			val = Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT);
@@ -98,6 +113,7 @@ public class NuesoftUser {
 	       	length = in.readInt();
 	       	user.setEncryptedPassword(new byte[length]);
 	       	in.read(user.encryptedPSWRD);
+	       	user.setProfilePicURI(in.readUTF());
         } catch (StreamCorruptedException e) {
 	        e.printStackTrace();
         } catch (IOException e) {

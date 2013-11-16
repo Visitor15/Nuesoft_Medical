@@ -1,10 +1,15 @@
 package com.mobile.nuesoft.ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -107,8 +112,31 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(
-		        new ProfilePicImageView(getActivity()).getDrawable());
+
+		try {
+			Bitmap bitmap;
+			Uri docUri = Uri.parse(Nuesoft.getCurrentUser().getProfilePicUri());
+			InputStream stream;
+			stream = getActivity().getContentResolver().openInputStream(docUri);
+			bitmap = BitmapFactory.decodeStream(stream);
+			stream.close();
+
+			if (profileIcon != null) {
+				profileIcon.setImageBitmap(bitmap);
+				profileIcon.initWithNewImage();
+			} else {
+				profileIcon = new ProfilePicImageView(getActivity());
+				profileIcon.setImageBitmap(bitmap);
+				profileIcon.initWithNewImage();
+				((ActionBarActivity) getActivity()).getSupportActionBar().setIcon(profileIcon.getDrawable());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

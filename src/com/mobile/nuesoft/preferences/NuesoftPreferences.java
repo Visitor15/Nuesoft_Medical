@@ -55,4 +55,8 @@ public class NuesoftPreferences {
 
 		return false;
 	}
+	
+	public boolean updateRegisteredUser(final NuesoftUser user) {
+		return mPrefs.edit().putString(user.getUserName().toLowerCase(Locale.getDefault()), user.toString()).commit();
+	}
 }

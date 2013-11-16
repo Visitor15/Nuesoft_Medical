@@ -31,6 +31,7 @@ import com.mobile.nuesoft.NuesoftUser;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.NuesoftRegisteredUserEvent;
 import com.mobile.nuesoft.jobs.RegisterUserJob;
+import com.mobile.nuesoft.preferences.NuesoftPreferences;
 
 public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnClickListener {
 
@@ -134,54 +135,10 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_register: {
-				NuesoftUser mUser = new NuesoftUser();
 
-				String userName = "";
-				String pswrd1 = "";
-				String pswrd2 = "";
-
-				try {
-					userName = userNameET.getText().toString();
-				} catch (final NullPointerException e) {
-					Toast.makeText(getActivity(), "Username cannot be empty", Toast.LENGTH_LONG).show();
-				}
-
-				try {
-					pswrd1 = pswrd1ET.getText().toString();
-				} catch (final NullPointerException e) {
-
-				}
-
-				try {
-					pswrd2 = pswrd2ET.getText().toString();
-				} catch (final NullPointerException e) {
-
-				}
-
-				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equals(pswrd2)) {
-
-					mUser.setUserName(userName);
-
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					ObjectOutputStream objOutStream;
-
-					try {
-						objOutStream = new ObjectOutputStream(outStream);
-						objOutStream.writeUTF(pswrd1);
-						objOutStream.flush();
-
-						mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
-
-						Log.d(TAG, "NCC - STUFF: " + mUser.getString64PSWRD() + " AND " + mUser.getUserName());
-
-						RegisterUserJob registerJob = new RegisterUserJob();
-						registerJob.execute(mUser);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
-					Toast.makeText(getActivity(), "Your passwords must equal", Toast.LENGTH_LONG).show();
-				}
+				RegisterUserJob registerJob = new RegisterUserJob();
+				Log.d(TAG, "NCC - PROFILE PIC URI: " + mUser.getProfilePicUri());
+				registerJob.execute(mUser);
 
 				break;
 			}
@@ -218,6 +175,10 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 				stream.close();
 				profilePic.setImageBitmap(bitmap);
 				profilePic.initWithNewImage();
+				
+				Log.d(TAG, "NCC - GOT URI: " + data.getData().toString());
+				
+				mUser.setProfilePicURI(data.getData().toString());
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

@@ -167,6 +167,9 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 			boolean mSuccess = result.getBoolean(NuesoftUserLoginEvent.RESULT_KEY);
 
 			if (mSuccess) {
+				Nuesoft.getReference().setCurrentUser(
+				        NuesoftUser.fromString(result.getString(NuesoftUserLoginEvent.USER_KEY)));
+
 				Bundle b = new Bundle();
 				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
 				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());

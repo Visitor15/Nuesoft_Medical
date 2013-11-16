@@ -116,52 +116,48 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 				String pswrd2 = "";
 
 				((MainActivity) getActivity()).replaceMainContent(new RegistrationFragmentPartTwo(mUser));
-				
-//				try {
-//					userName = userNameET.getText().toString();
-//				} catch (final NullPointerException e) {
-//					Toast.makeText(getActivity(), "Username cannot be empty", Toast.LENGTH_LONG).show();
-//				}
-//
-//				try {
-//					pswrd1 = pswrd1ET.getText().toString();
-//				} catch (final NullPointerException e) {
-//
-//				}
-//
-//				try {
-//					pswrd2 = pswrd2ET.getText().toString();
-//				} catch (final NullPointerException e) {
-//
-//				}
-//
-//				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equals(pswrd2)) {
-//
-//					mUser.setUserName(userName);
-//
-//					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-//					ObjectOutputStream objOutStream;
-//
-//					try {
-//						objOutStream = new ObjectOutputStream(outStream);
-//						objOutStream.writeUTF(pswrd1);
-//						objOutStream.flush();
-//
-//						mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
-//
-//						Log.d(TAG, "NCC - STUFF: " + mUser.getString64PSWRD() + " AND " + mUser.getUserName());
-//
-//						((MainActivity) getActivity()).replaceMainContent(new RegistrationFragmentPartTwo(mUser));
-//						
-//						
-////						RegisterUserJob registerJob = new RegisterUserJob();
-////						registerJob.execute(mUser);
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				} else {
-//					Toast.makeText(getActivity(), "Your passwords must equal", Toast.LENGTH_LONG).show();
-//				}
+
+				try {
+					userName = userNameET.getText().toString();
+				} catch (final NullPointerException e) {
+					Toast.makeText(getActivity(), "Username cannot be empty", Toast.LENGTH_LONG).show();
+				}
+
+				try {
+					pswrd1 = pswrd1ET.getText().toString();
+				} catch (final NullPointerException e) {
+
+				}
+
+				try {
+					pswrd2 = pswrd2ET.getText().toString();
+				} catch (final NullPointerException e) {
+
+				}
+
+				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equals(pswrd2)) {
+
+					mUser.setUserName(userName);
+
+					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+					ObjectOutputStream objOutStream;
+
+					try {
+						objOutStream = new ObjectOutputStream(outStream);
+						objOutStream.writeUTF(pswrd1);
+						objOutStream.flush();
+
+						mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
+
+						Log.d(TAG, "NCC - STUFF: " + mUser.getString64PSWRD() + " AND " + mUser.getUserName());
+
+						((MainActivity) getActivity()).replaceMainContent(new RegistrationFragmentPartTwo(mUser));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getActivity(), "Your passwords must equal", Toast.LENGTH_LONG).show();
+				}
 
 				break;
 			}
