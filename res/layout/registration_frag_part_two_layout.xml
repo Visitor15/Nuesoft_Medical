@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_blue_background"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:id="@+id/ll_menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <com.mobile.nuesoft.ui.NuesoftTextView
+                android:id="@+id/nt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dip"
+                android:gravity="center"
+                android:padding="12dip"
+                android:text="Personalize"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp"
+                custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+            <RelativeLayout
+                android:id="@+id/rl_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/off_white"
+                android:clickable="true" >
+
+                <com.mobile.nuesoft.ui.ProfilePicImageView
+                    android:id="@+id/nt_profile_pic"
+                    android:layout_width="148dip"
+                    android:layout_height="148dip"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="16dip" />
+
+                <ImageView
+                    android:id="@+id/more"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_toRightOf="@id/nt_profile_pic"
+                    android:background="@drawable/btn_background_clickable_transparent"
+                    android:clickable="true"
+                    android:src="@drawable/menu_overflow" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dip"
+                android:orientation="vertical" >
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dip"
+                    android:background="@color/off_white"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:text="First name"
+                    android:textColor="#AA282828"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="12dip"
+                    android:layout_marginRight="12dip"
+                    android:background="@color/off_white"
+                    android:padding="8dip" >
+
+                    <EditText
+                        android:id="@+id/et_firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dip"
+                        android:ems="10"
+                        android:hint="First name..."
+                        android:singleLine="true" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.mobile.nuesoft.ui.NuesoftTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dip"
+                    android:background="@color/off_white"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:text="Last name"
+                    android:textColor="#AA282828"
+                    custom:textStyle="fonts/Roboto-Bold.ttf" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="12dip"
+                    android:layout_marginRight="12dip"
+                    android:background="@color/off_white"
+                    android:padding="8dip" >
+
+                    <EditText
+                        android:id="@+id/et_lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dip"
+                        android:ems="10"
+                        android:hint="Last name..."
+                        android:singleLine="true" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#AAC2C2C2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_background_clickable_item"
+            android:text="Cancel"
+            android:textColor="#AA282828" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dip"
+            android:background="#AAC2C2C2" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_background_clickable_item"
+            android:text="Register"
+            android:textColor="#AA282828" />
+    </LinearLayout>
+
+</LinearLayout>

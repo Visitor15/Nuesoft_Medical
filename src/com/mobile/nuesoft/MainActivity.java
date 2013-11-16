@@ -197,7 +197,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		mFooterContainer.startAnimation(outAnim);
 	}
 
-	private void replaceMainContent(final NuesoftFragment frag) {
+	public void replaceMainContent(final NuesoftFragment frag) {
 		this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, frag, NuesoftFragment.TAG)
 		        .addToBackStack(NuesoftFragment.TAG).commit();
 	}
