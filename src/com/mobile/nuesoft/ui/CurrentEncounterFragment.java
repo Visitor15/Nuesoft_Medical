@@ -26,14 +26,13 @@ import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.document.Author;
 import com.mobile.nuesoft.document.CDADocumentBuilder.CDADocument;
 import com.mobile.nuesoft.document.DataEnterer;
-import com.mobile.nuesoft.document.LegalAuthenticator;
 import com.mobile.nuesoft.document.Participant;
-import com.mobile.nuesoft.document.ServiceEvent;
-import com.mobile.nuesoft.document.ServicePerformer;
 import com.mobile.nuesoft.jobs.CDADocumentUpdateEvent;
+import com.mobile.nuesoft.patient.PlanOfCare;
+import com.mobile.nuesoft.patient.VitalSign;
 import com.mobile.nuesoft.util.Util;
 
-public class DocumentOverviewFragment extends NuesoftFragment {
+public class CurrentEncounterFragment extends NuesoftFragment {
 
 	private View rootView;
 
@@ -104,7 +103,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void showNoDataView(final View v) {
@@ -121,7 +119,7 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 	}
 
 	public void hideNoDataView(final View v) {
-		titleText.setText("Document Overview");
+		titleText.setText("Current Encounter");
 		((RelativeLayout) v.findViewById(R.id.rl_container)).removeAllViews();
 		expandableList = (ExpandableListView) mInflater.inflate(R.layout.medication_fragment_meds_layout, null);
 		((RelativeLayout) v.findViewById(R.id.rl_container)).addView(expandableList);
@@ -139,16 +137,16 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 		mAdapter = new ExpandableAdapter(Nuesoft.getCurrentCDADocument());
 		expandableList.setAdapter(mAdapter);
 		mAdapter.init();
-		expandableList.expandGroup(ExpandableAdapter.DOC_ELEMENT_GET_SUMMARY);
+		expandableList.expandGroup(ExpandableAdapter.DOC_ELEMENT_INSTRUCTIONS);
 	}
 
 	private class ExpandableAdapter extends BaseExpandableListAdapter {
-
-		public static final int DOC_ELEMENT_GET_SUMMARY = 0;
-		public static final int DOC_ELEMENT_AUTHOR = 1;
-		public static final int DOC_ELEMENT_DATA_ENTRY = 2;
-		public static final int DOC_ELEMENT_SERVICE_EVENT_PERSONNEL = 3;
-		public static final int DOC_ELEMENT_LEGAL_AUTH = 4;
+		
+		public static final int DOC_ELEMENT_INSTRUCTIONS = 0;
+		public static final int DOC_ELEMENT_REASON_FOR_REFERRAL = 1;
+		public static final int DOC_ELEMENT_REASON_FOR_VISIT = 2;
+		public static final int DOC_ELEMENT_PLAN_OF_CARE = 3;
+		public static final int DOC_ELEMENT_VITAL_SIGNS = 4;
 		public static final int DOC_ELEMENT_PARTICIPANTS = 5;
 
 		private ArrayList<Object> parentElements;
@@ -164,13 +162,13 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 		private void init() {
 			mInflater = LayoutInflater.from(Nuesoft.getReference());
-			parentElements = new ArrayList<Object>();
-			parentElements.add(mDocument.getSUMMARY_TITLE());
-			parentElements.add(mDocument.getAUTHOR());
-			parentElements.add(mDocument.getDATA_ENTERER());
-			parentElements.add(mDocument.getSERVICE_EVENT().getSERVICE_PERFORMERS());
-			parentElements.add(mDocument.getLEGAL_AUTHENTICATOR());
-			parentElements.add(mDocument.getPARTICIPANTS());
+			parentElements = new ArrayList<Object>(6);
+			parentElements.add(DOC_ELEMENT_INSTRUCTIONS, mDocument.getPATIENT().getINSTRUCTIONS());
+			parentElements.add(DOC_ELEMENT_REASON_FOR_REFERRAL, mDocument.getPATIENT().getREASON_FOR_REFFERAL());
+			parentElements.add(DOC_ELEMENT_REASON_FOR_VISIT, mDocument.getPATIENT().getREASON_FOR_VISIT());
+			parentElements.add(DOC_ELEMENT_PLAN_OF_CARE, mDocument.getPATIENT().getPLAN_OF_CARE());
+			parentElements.add(DOC_ELEMENT_VITAL_SIGNS, mDocument.getPATIENT().getVITAL_SIGNS());
+			parentElements.add(DOC_ELEMENT_PARTICIPANTS, mDocument.getPARTICIPANTS());
 		}
 
 		@Override
@@ -178,24 +176,23 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 			try {
 				switch (groupPosition) {
-					case DOC_ELEMENT_GET_SUMMARY: {
+					
+					case DOC_ELEMENT_INSTRUCTIONS: {
 						return (String) parentElements.get(groupPosition);
 					}
-					case DOC_ELEMENT_AUTHOR: {
-						return (String) ((ArrayList<Author>) parentElements.get(groupPosition)).get(childPosition)
-						        .getAUTHOR().getPRINTABLE_NAME();
+					case DOC_ELEMENT_REASON_FOR_REFERRAL: {
+						return (String) parentElements.get(groupPosition);
 					}
-					case DOC_ELEMENT_DATA_ENTRY: {
-						return (String) ((ArrayList<DataEnterer>) parentElements.get(groupPosition)).get(childPosition)
-						        .getENTERER().getPRINTABLE_NAME();
+					case DOC_ELEMENT_REASON_FOR_VISIT: {
+						return (String) parentElements.get(groupPosition);
 					}
-					case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-						return (String) ((ArrayList<ServicePerformer>) parentElements.get(groupPosition)).get(
-						        childPosition).getDISPLAY_NAME();
+					case DOC_ELEMENT_PLAN_OF_CARE: {
+						return (String) ((ArrayList<PlanOfCare>) parentElements.get(groupPosition)).get(childPosition)
+						        .getDisplayName();
 					}
-					case DOC_ELEMENT_LEGAL_AUTH: {
-						return (String) ((ArrayList<LegalAuthenticator>) parentElements.get(groupPosition))
-						        .get(childPosition).getAUTHENTICATOR().getPRINTABLE_NAME();
+					case DOC_ELEMENT_VITAL_SIGNS: {
+						return (String) ((ArrayList<VitalSign>) parentElements.get(groupPosition)).get(childPosition)
+						        .getDisplayName();
 					}
 					case DOC_ELEMENT_PARTICIPANTS: {
 						return (String) ((ArrayList<Participant>) parentElements.get(groupPosition)).get(childPosition)
@@ -226,31 +223,32 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 			FrameLayout iconColor = (FrameLayout) convertView.findViewById(R.id.iv_icon);
 
 			switch (groupPosition) {
-				case DOC_ELEMENT_GET_SUMMARY: {
+				case DOC_ELEMENT_INSTRUCTIONS: {
 					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
 
 					break;
 				}
-				case DOC_ELEMENT_AUTHOR: {
+				case DOC_ELEMENT_REASON_FOR_REFERRAL: {
 					iconColor.setBackgroundColor(Color.parseColor("#AA66CC"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
 
 					break;
 				}
-				case DOC_ELEMENT_DATA_ENTRY: {
+				case DOC_ELEMENT_REASON_FOR_VISIT: {
 					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
 
 					break;
 				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
+				case DOC_ELEMENT_PLAN_OF_CARE: {
 					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
 
 					break;
 				}
-				case DOC_ELEMENT_LEGAL_AUTH: {
+
+				case DOC_ELEMENT_VITAL_SIGNS: {
 					iconColor.setBackgroundColor(Color.parseColor("#FF4444"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
 
@@ -262,16 +260,11 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 					break;
 				}
+
 				default: {
 					break;
 				}
 			}
-
-			// RelativeLayout.LayoutParams params = new
-			// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-			// RelativeLayout.LayoutParams.WRAP_CONTENT);
-			// ((RelativeLayout)
-			// convertView.findViewById(R.id.rl_container)).setLayoutParams(params);
 
 			return convertView;
 		}
@@ -279,23 +272,23 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 		@Override
 		public int getChildrenCount(int groupPosition) {
 			switch (groupPosition) {
-				case DOC_ELEMENT_GET_SUMMARY: {
+				case DOC_ELEMENT_INSTRUCTIONS: {
 					return 1;
 				}
-				case DOC_ELEMENT_AUTHOR: {
+				case DOC_ELEMENT_REASON_FOR_REFERRAL: {
+					return 1;
+				}
+				case DOC_ELEMENT_REASON_FOR_VISIT: {
+					return 1;
+				}
+				case DOC_ELEMENT_PLAN_OF_CARE: {
 					return ((ArrayList<Author>) parentElements.get(groupPosition)).size();
 				}
-				case DOC_ELEMENT_DATA_ENTRY: {
+				case DOC_ELEMENT_VITAL_SIGNS: {
 					return ((ArrayList<DataEnterer>) parentElements.get(groupPosition)).size();
-				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-					return ((ArrayList<ServicePerformer>) parentElements.get(groupPosition)).size();
-				}
-				case DOC_ELEMENT_LEGAL_AUTH: {
-					return ((ArrayList<LegalAuthenticator>) parentElements.get(groupPosition)).size();
 				}
 				case DOC_ELEMENT_PARTICIPANTS: {
-					return ((ArrayList<DataEnterer>) parentElements.get(groupPosition)).size();
+					return 1;
 				}
 				default: {
 					return 0;
@@ -306,23 +299,23 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 		@Override
 		public String getGroup(int groupPosition) {
 			switch (groupPosition) {
-				case DOC_ELEMENT_GET_SUMMARY: {
-					return "Summary";
+				case DOC_ELEMENT_INSTRUCTIONS: {
+					return "Instructions";
 				}
-				case DOC_ELEMENT_AUTHOR: {
-					return "Author";
+				case DOC_ELEMENT_REASON_FOR_REFERRAL: {
+					return "Reason For Referral";
 				}
-				case DOC_ELEMENT_DATA_ENTRY: {
-					return "Data Entry";
+				case DOC_ELEMENT_REASON_FOR_VISIT: {
+					return "Reason For Visit";
 				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-					return "Service Personnel";
+				case DOC_ELEMENT_PLAN_OF_CARE: {
+					return "Plan of Care";
 				}
-				case DOC_ELEMENT_LEGAL_AUTH: {
-					return "Legal Authenticator";
+				case DOC_ELEMENT_VITAL_SIGNS: {
+					return "Vital Signs";
 				}
 				case DOC_ELEMENT_PARTICIPANTS: {
-					return "Other Participants";
+					return "Participants";
 				}
 				default: {
 					return "Uknown";
@@ -352,27 +345,28 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 			FrameLayout iconColor = (FrameLayout) convertView.findViewById(R.id.iv_icon);
 
 			switch (groupPosition) {
-				case DOC_ELEMENT_GET_SUMMARY: {
+				case DOC_ELEMENT_INSTRUCTIONS: {
 					iconColor.setBackgroundColor(Color.parseColor("#0099CC"));
 
 					break;
 				}
-				case DOC_ELEMENT_AUTHOR: {
+				case DOC_ELEMENT_REASON_FOR_REFERRAL: {
 					iconColor.setBackgroundColor(Color.parseColor("#9933CC"));
 
 					break;
 				}
-				case DOC_ELEMENT_DATA_ENTRY: {
+				
+				case DOC_ELEMENT_REASON_FOR_VISIT: {
 					iconColor.setBackgroundColor(Color.parseColor("#669900"));
 
 					break;
 				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
+				case DOC_ELEMENT_PLAN_OF_CARE: {
 					iconColor.setBackgroundColor(Color.parseColor("#FF8800"));
 
 					break;
 				}
-				case DOC_ELEMENT_LEGAL_AUTH: {
+				case DOC_ELEMENT_VITAL_SIGNS: {
 					iconColor.setBackgroundColor(Color.parseColor("#CC0000"));
 
 					break;

@@ -1131,8 +1131,14 @@ public class ParseCDADocumentJob extends AsyncTask<String, PatientObj, CDADocume
 	}
 
 	private void parsePatientInstructionsFromNode(final Node sectionNode, final PatientBuilder patBuilder) {
-		// TODO Auto-generated method stub
-
+		String instructions = "";
+		
+		Node dataNode = XMLParserUtil.getNode("text", sectionNode.getChildNodes());
+		dataNode = XMLParserUtil.getNode("paragraph", dataNode.getChildNodes());
+		
+		instructions = XMLParserUtil.getNodeValue(dataNode);
+		
+		patBuilder.setInstructions(instructions);
 	}
 
 	private void parsePatientImmunizationsFromNode(final Node sectionNode, final PatientBuilder patientBuilder) {

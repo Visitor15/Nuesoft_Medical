@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.mobile.nuesoft"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.mobile.nuesoft.ui.NuesoftTextView
+        android:id="@+id/nt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AA282828"
+        android:gravity="center"
+        android:padding="4dip"
+        android:singleLine="true"
+        android:text="Current Encounter"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        custom:textStyle="fonts/Roboto-Thin.ttf" />
+
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <ExpandableListView
+            android:id="@+id/expandable_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null"
+            android:paddingBottom="@dimen/footer_height"
+            android:paddingTop="12dip" >
+        </ExpandableListView>
+    </RelativeLayout>
+
+</LinearLayout>

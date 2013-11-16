@@ -8,4 +8,7 @@ public class PlanOfCare {
 		this.planOfCareItem = planOfCareItem;
 	}
 	
+	public String getDisplayName() {
+		return planOfCareItem;
+	}
 }

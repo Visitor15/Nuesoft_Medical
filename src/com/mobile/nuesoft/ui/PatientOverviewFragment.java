@@ -106,13 +106,12 @@ public class PatientOverviewFragment extends NuesoftFragment {
 
 		private static final int ID_CURRENT_MED = 0;
 		private static final int ID_PREVIOUS_MED = 1;
-		private static final int ID_MED_PROCEDURES = 2;
-		private static final int ID_VITAL_SIGNS = 3;
-		private static final int ID_KNOWN_ISSUES = 4;
-		private static final int ID_ALLERGIES = 5;
-		private static final int ID_IMMUNIZATIONS = 6;
-		private static final int ID_FAM_HISTORY = 7;
-		private static final int ID_SOCIAL_HISTORY = 8;
+		private static final int ID_ALLERGIES = 2;
+		private static final int ID_KNOWN_ISSUES = 3;
+		private static final int ID_MED_PROCEDURES = 4;
+		private static final int ID_IMMUNIZATIONS = 5;
+		private static final int ID_FAM_HISTORY = 6;
+		private static final int ID_SOCIAL_HISTORY = 7;
 
 		private LayoutInflater mInflater;
 
@@ -128,10 +127,9 @@ public class PatientOverviewFragment extends NuesoftFragment {
 		private void init() {
 			map.put("Current Medications", mPatient.getMEDICATION_CURRENT());
 			map.put("Previous Medications", mPatient.getMEDICATION_PREVIOUS());
-			map.put("Medical Procedures", mPatient.getPROCEDURES());
-			map.put("Vital Signs", mPatient.getVITAL_SIGNS());
-			map.put("Known Issues", mPatient.getKNOWN_ISSUES());
 			map.put("Allergies", mPatient.getALLERGIES());
+			map.put("Known Issues", mPatient.getKNOWN_ISSUES());
+			map.put("Medical Procedures", mPatient.getPROCEDURES());
 			map.put("Immunizations", mPatient.getIMMUNIZATIONS());
 			map.put("Family History", mPatient.getFAMILY_HISTORY());
 			map.put("Social History", mPatient.getSOCIAL_HISTORY());
@@ -146,17 +144,14 @@ public class PatientOverviewFragment extends NuesoftFragment {
 				case ID_PREVIOUS_MED: {
 					return ((ArrayList<Medication>) map.get("Previous Medications")).get(childPosition);
 				}
-				case ID_MED_PROCEDURES: {
-					return ((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition);
-				}
-				case ID_VITAL_SIGNS: {
-					return ((ArrayList<VitalSign>) map.get("Vital Signs")).get(childPosition);
+				case ID_ALLERGIES: {
+					return ((ArrayList<Allergy>) map.get("Allergies")).get(childPosition);
 				}
 				case ID_KNOWN_ISSUES: {
 					return ((ArrayList<Problem>) map.get("Known Issues")).get(childPosition);
 				}
-				case ID_ALLERGIES: {
-					return ((ArrayList<Allergy>) map.get("Allergies")).get(childPosition);
+				case ID_MED_PROCEDURES: {
+					return ((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition);
 				}
 				case ID_IMMUNIZATIONS: {
 					return ((ArrayList<Immunization>) map.get("Immunizations")).get(childPosition);
@@ -213,27 +208,15 @@ public class PatientOverviewFragment extends NuesoftFragment {
 
 					break;
 				}
-				case ID_MED_PROCEDURES: {
+				case ID_ALLERGIES: {
 					try {
-						mTitleText.setText(((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition)
-						        .getDISPLAY_TITLE());
-					} catch (final IndexOutOfBoundsException e) {
-						mTitleText.setText("No data found");
-					}
-
-					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
-
-					break;
-				}
-				case ID_VITAL_SIGNS: {
-					try {
-						mTitleText.setText(((ArrayList<VitalSign>) map.get("Vital Signs")).get(childPosition)
+						mTitleText.setText(((ArrayList<Allergy>) map.get("Allergies")).get(childPosition)
 						        .getDisplayName());
 					} catch (final IndexOutOfBoundsException e) {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
+					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
 
 					break;
 				}
@@ -245,19 +228,19 @@ public class PatientOverviewFragment extends NuesoftFragment {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#FF4444"));
+					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
 
 					break;
 				}
-				case ID_ALLERGIES: {
+				case ID_MED_PROCEDURES: {
 					try {
-						mTitleText.setText(((ArrayList<Allergy>) map.get("Allergies")).get(childPosition)
-						        .getDisplayName());
+						mTitleText.setText(((ArrayList<Procedure>) map.get("Medical Procedures")).get(childPosition)
+						        .getDISPLAY_TITLE());
 					} catch (final IndexOutOfBoundsException e) {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
+					iconColor.setBackgroundColor(Color.parseColor("#FF4444"));
 
 					break;
 				}
@@ -269,7 +252,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#AA66CC"));
+					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
 
 					break;
 				}
@@ -281,7 +264,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
+					iconColor.setBackgroundColor(Color.parseColor("#AA66CC"));
 
 					break;
 				}
@@ -293,7 +276,7 @@ public class PatientOverviewFragment extends NuesoftFragment {
 						mTitleText.setText("No data found");
 					}
 
-					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
+					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
 
 					break;
 				}
@@ -314,20 +297,16 @@ public class PatientOverviewFragment extends NuesoftFragment {
 					count = ((ArrayList<Medication>) map.get("Previous Medications")).size();
 					break;
 				}
-				case ID_MED_PROCEDURES: {
-					count = ((ArrayList<Procedure>) map.get("Medical Procedures")).size();
-					break;
-				}
-				case ID_VITAL_SIGNS: {
-					count = ((ArrayList<VitalSign>) map.get("Vital Signs")).size();
+				case ID_ALLERGIES: {
+					count = ((ArrayList<Allergy>) map.get("Allergies")).size();
 					break;
 				}
 				case ID_KNOWN_ISSUES: {
 					count = ((ArrayList<Problem>) map.get("Known Issues")).size();
 					break;
 				}
-				case ID_ALLERGIES: {
-					count = ((ArrayList<Allergy>) map.get("Allergies")).size();
+				case ID_MED_PROCEDURES: {
+					count = ((ArrayList<Procedure>) map.get("Medical Procedures")).size();
 					break;
 				}
 				case ID_IMMUNIZATIONS: {
@@ -362,20 +341,16 @@ public class PatientOverviewFragment extends NuesoftFragment {
 					value = "Prevous Medications";
 					break;
 				}
-				case ID_MED_PROCEDURES: {
-					value = "Medical Procedures";
-					break;
-				}
-				case ID_VITAL_SIGNS: {
-					value = "Vital Signs";
+				case ID_ALLERGIES: {
+					value = "Allergies";
 					break;
 				}
 				case ID_KNOWN_ISSUES: {
 					value = "Known Issues";
 					break;
 				}
-				case ID_ALLERGIES: {
-					value = "Allergies";
+				case ID_MED_PROCEDURES: {
+					value = "Medical Procedures";
 					break;
 				}
 				case ID_IMMUNIZATIONS: {
@@ -425,38 +400,33 @@ public class PatientOverviewFragment extends NuesoftFragment {
 					titleText.setText("Prevous Medications");
 					break;
 				}
-				case ID_MED_PROCEDURES: {
-					iconColor.setBackgroundColor(Color.parseColor("#669900"));
-					titleText.setText("Medical Procedures");
-					break;
-				}
-				case ID_VITAL_SIGNS: {
-					iconColor.setBackgroundColor(Color.parseColor("#FF8800"));
-					titleText.setText("Vital Signs");
-					break;
-				}
-				case ID_KNOWN_ISSUES: {
-					iconColor.setBackgroundColor(Color.parseColor("#CC0000"));
-					titleText.setText("Known Issues");
-					break;
-				}
 				case ID_ALLERGIES: {
-					iconColor.setBackgroundColor(Color.parseColor("#0099CC"));
+					iconColor.setBackgroundColor(Color.parseColor("#669900"));
 					titleText.setText("Allergies");
 					break;
 				}
+				case ID_KNOWN_ISSUES: {
+					iconColor.setBackgroundColor(Color.parseColor("#FF8800"));
+					titleText.setText("Known Issues");
+					break;
+				}
+				case ID_MED_PROCEDURES: {
+					iconColor.setBackgroundColor(Color.parseColor("#CC0000"));
+					titleText.setText("Medical Procedures");
+					break;
+				}
 				case ID_IMMUNIZATIONS: {
-					iconColor.setBackgroundColor(Color.parseColor("#9933CC"));
+					iconColor.setBackgroundColor(Color.parseColor("#0099CC"));
 					titleText.setText("Immunizations");
 					break;
 				}
 				case ID_FAM_HISTORY: {
-					iconColor.setBackgroundColor(Color.parseColor("#669900"));
+					iconColor.setBackgroundColor(Color.parseColor("#9933CC"));
 					titleText.setText("Family History");
 					break;
 				}
 				case ID_SOCIAL_HISTORY: {
-					iconColor.setBackgroundColor(Color.parseColor("#FF8800"));
+					iconColor.setBackgroundColor(Color.parseColor("#669900"));
 					titleText.setText("Social History");
 					break;
 				}

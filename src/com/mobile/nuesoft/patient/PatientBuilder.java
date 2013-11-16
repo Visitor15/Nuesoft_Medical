@@ -16,6 +16,7 @@ public class PatientBuilder {
 	private String ethnicGroup;
 	private String reasonForReferral;
 	private String reasonForVisit;
+	private String instructions;
 	private Marital.STATUS maritalStatus;
 	private ArrayList<VitalSign> vitalSigns = new ArrayList<VitalSign>();
 	private ArrayList<Language> languages = new ArrayList<Language>();
@@ -56,6 +57,14 @@ public class PatientBuilder {
 
 	public void setMaritalStatus(Marital.STATUS maritalStatus) {
 		this.maritalStatus = maritalStatus;
+	}
+	
+	public void setInstructions(final String instructions) {
+		this.instructions = instructions;
+	}
+	
+	public String getInstructions() {
+		return instructions;
 	}
 
 	public ArrayList<Allergy> getAllergies() {
@@ -235,7 +244,7 @@ public class PatientBuilder {
 	}
 
 	public PatientObj build() {
-		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, religion, ethnicGroup, languages, vitalSigns, allergies,
+		return new PatientObj(id, birthTime, gender, race, reasonForReferral, reasonForVisit, instructions, religion, ethnicGroup, languages, vitalSigns, allergies,
 		        medicationCurrent, medicationPrevious, medicalEncounters, tests, maritalStatus, familyHistory, planOfCare, socialHistory, immunizations, procedures, problem);
 	}
 
@@ -253,6 +262,7 @@ public class PatientBuilder {
 		private final String ETHNIC_GROUP;
 		private final String REASON_FOR_REFERRAL;
 		private final String REASON_FOR_VISIT;
+		private final String INSTRUCTIONS;
 		private final Gender GENDER;
 		private final Marital.STATUS MARITAL;
 
@@ -271,7 +281,7 @@ public class PatientBuilder {
 		private ArrayList<Problem> KNOWN_ISSUES;
 
 		private PatientObj(final PatientIdentifier IDENTIFIER, final String BIRTH_TIME, final Gender GENDER,
-		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String RELIGION, final String ETHNIC_GROUP,
+		        final String RACE, final String REASON_FOR_REFERRAL, final String REASON_FOR_VISIT, final String INSTRUCTIONS, final String RELIGION, final String ETHNIC_GROUP,
 		        final ArrayList<Language> LANGUAGES, final ArrayList<VitalSign> VITAL_SIGNS, final ArrayList<Allergy> ALLERGIES,
 		        final ArrayList<Medication> MEDICATION_CURRENT, final ArrayList<Medication> MEDICATION_PREVIOUS,
 		        final ArrayList<Encounter> MEDICATION_ENCOUNTERS, final ArrayList<PatientTest> TESTS,
@@ -284,6 +294,7 @@ public class PatientBuilder {
 			this.RACE = RACE;
 			this.REASON_FOR_REFERRAL = REASON_FOR_REFERRAL;
 			this.REASON_FOR_VISIT = REASON_FOR_VISIT;
+			this.INSTRUCTIONS = INSTRUCTIONS;
 			this.RELIGION = RELIGION;
 			this.ETHNIC_GROUP = ETHNIC_GROUP;
 			this.LANGUAGES = LANGUAGES;
@@ -316,6 +327,10 @@ public class PatientBuilder {
 
 		public String getBIRTH_TIME() {
 			return BIRTH_TIME;
+		}
+		
+		public String getINSTRUCTIONS() {
+			return INSTRUCTIONS;
 		}
 		
 		public ArrayList<Immunization> getIMMUNIZATIONS(){
