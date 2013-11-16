@@ -28,6 +28,8 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 	public static final String TAG = "DecryptDocDialog";
 
+	private static final String URI_KEY = "doc_uri_key";
+
 	private Uri docUri;
 
 	private View rootView;
@@ -63,12 +65,17 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		if (savedInstanceState != null) {
+			docUri = Uri.parse(savedInstanceState.getString(URI_KEY));
+		}
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle arg0) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(arg0);
+	public void onSaveInstanceState(Bundle b) {
+		super.onSaveInstanceState(b);
+
+		b.putString(URI_KEY, docUri.toString());
 	}
 
 	@Override

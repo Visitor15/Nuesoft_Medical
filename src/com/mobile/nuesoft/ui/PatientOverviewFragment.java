@@ -125,14 +125,16 @@ public class PatientOverviewFragment extends NuesoftFragment {
 		}
 
 		private void init() {
-			map.put("Current Medications", mPatient.getMEDICATION_CURRENT());
-			map.put("Previous Medications", mPatient.getMEDICATION_PREVIOUS());
-			map.put("Allergies", mPatient.getALLERGIES());
-			map.put("Known Issues", mPatient.getKNOWN_ISSUES());
-			map.put("Medical Procedures", mPatient.getPROCEDURES());
-			map.put("Immunizations", mPatient.getIMMUNIZATIONS());
-			map.put("Family History", mPatient.getFAMILY_HISTORY());
-			map.put("Social History", mPatient.getSOCIAL_HISTORY());
+			if (mPatient != null) {
+				map.put("Current Medications", mPatient.getMEDICATION_CURRENT());
+				map.put("Previous Medications", mPatient.getMEDICATION_PREVIOUS());
+				map.put("Allergies", mPatient.getALLERGIES());
+				map.put("Known Issues", mPatient.getKNOWN_ISSUES());
+				map.put("Medical Procedures", mPatient.getPROCEDURES());
+				map.put("Immunizations", mPatient.getIMMUNIZATIONS());
+				map.put("Family History", mPatient.getFAMILY_HISTORY());
+				map.put("Social History", mPatient.getSOCIAL_HISTORY());
+			}
 		}
 
 		@Override

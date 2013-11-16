@@ -90,12 +90,13 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 		btnLogin = (Button) rootView.findViewById(R.id.btn_login);
 		btnRegister = (LinearLayout) rootView.findViewById(R.id.btn_register);
-//		btnUnlockDoc = (LinearLayout) rootView.findViewById(R.id.btn_unlock_doc);
+		// btnUnlockDoc = (LinearLayout)
+		// rootView.findViewById(R.id.btn_unlock_doc);
 
 		btnCancel.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-//		btnUnlockDoc.setOnClickListener(this);
+		// btnUnlockDoc.setOnClickListener(this);
 
 		((MainActivity) getActivity()).hideFooter();
 
@@ -144,16 +145,17 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
 				break;
 			}
-			case R.id.btn_unlock_doc: {
-				
-				Bundle b = new Bundle();
-				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
-				b.putInt(FragmentCallbackEvent.FRAGMENT,
-				        FragmentCallbackEvent.FRAGMENTS.UNLOCK_DOC_FRAGMENT.ordinal());
-				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
-				
-				break;
-			}
+			// case R.id.btn_unlock_doc: {
+			//
+			// Bundle b = new Bundle();
+			// b.putInt(FragmentCallbackEvent.ACTION_KEY,
+			// FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
+			// b.putInt(FragmentCallbackEvent.FRAGMENT,
+			// FragmentCallbackEvent.FRAGMENTS.UNLOCK_DOC_FRAGMENT.ordinal());
+			// FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
+			//
+			// break;
+			// }
 			case R.id.btn_cancel: {
 				getActivity().finish();
 				break;

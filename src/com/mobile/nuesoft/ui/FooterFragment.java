@@ -1,21 +1,16 @@
 package com.mobile.nuesoft.ui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Animation.AnimationListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +50,10 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 	@Override
 	public void onFragmentResume() {
 		patientEventListener.register();
+
+		if (Nuesoft.getCurrentCDADocument() != null) {
+			setTitleText(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
+		}
 	}
 
 	@Override
@@ -99,56 +98,10 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 		this.mTitleText.setText(str);
 	}
 
-	private void handleFooter() {
-		Animation outAnim;
-		if (Nuesoft.getCurrentCDADocument() == null) {
-			outAnim = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_out_right);
-			outAnim.setAnimationListener(new AnimationListener() {
-
-				@Override
-				public void onAnimationEnd(Animation anim) {
-					getView().setVisibility(View.GONE);
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation anim) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onAnimationStart(Animation anim) {
-					// TODO Auto-generated method stub
-
-				}
-
-			});
-
-		} else {
-			outAnim = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_in_left);
-			outAnim.setAnimationListener(new AnimationListener() {
-
-				@Override
-				public void onAnimationEnd(Animation anim) {
-					getView().setVisibility(View.VISIBLE);
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation anim) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void onAnimationStart(Animation anim) {
-					// TODO Auto-generated method stub
-
-				}
-
-			});
+	public void refreshTitle() {
+		if (Nuesoft.getCurrentCDADocument() != null) {
+			setTitleText(Nuesoft.getCurrentCDADocument().getDOC_URI().getLastPathSegment());
 		}
-
-		getView().startAnimation(outAnim);
 	}
 
 	@Override
@@ -157,7 +110,7 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 			case R.id.btn_cancel: {
 				Nuesoft.getReference().setCurrentCDADocument(null);
 
-				handleFooter();
+				((MainActivity) getActivity()).hideFooter();
 
 				Bundle b = new Bundle();
 				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());

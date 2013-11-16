@@ -31,10 +31,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	private static final String DO_INIT_KEY = "do_init_key";
 
+	private static final String FOOTER_FRAG_VISIBLE = "footer_frag_visbility";
+
 	private RelativeLayout mainContainer;
 	private LinearLayout mFooterContainer;
 
 	private boolean do_init = true;
+
+	private boolean showFooter = false;
 
 	private FooterFragment mFooter = new FooterFragment();
 	private OnFragmentCallbackListener fragCallbackListener = new OnFragmentCallbackListener();
@@ -51,6 +55,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		if (savedInstanceState != null) {
 			do_init = savedInstanceState.getBoolean(DO_INIT_KEY);
+			showFooter = savedInstanceState.getBoolean(FOOTER_FRAG_VISIBLE);
 		}
 
 		if (do_init) {
@@ -79,6 +84,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		super.onResume();
 
 		fragCallbackListener.register();
+		if (showFooter) {
+			Log.d(TAG, "NCC - HIT SHOW FOOTER");
+			this.showFooter();
+		}
 	}
 
 	@Override
@@ -111,19 +120,20 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		// frag, RegistrationFragment.TAG)
 		// .commit();
 
-//		 Fragment frag = new PatientFragment();
-//		 this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
-//		 frag, PatientFragment.TAG).commit();
+		// Fragment frag = new PatientFragment();
+		// this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
+		// frag, PatientFragment.TAG).commit();
 	}
 
 	public void hideFooter() {
+		showFooter = false;
 		Animation outAnim;
 		outAnim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
 		outAnim.setAnimationListener(new AnimationListener() {
 
 			@Override
 			public void onAnimationEnd(Animation anim) {
-				getFooter().getView().setVisibility(View.GONE);
+				mFooterContainer.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -140,8 +150,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		});
 
-		getFooter().getView().startAnimation(outAnim);
-		mFooterContainer.setVisibility(View.GONE);
+		if (mFooterContainer.isShown()) {
+			mFooterContainer.startAnimation(outAnim);
+		}
+
 	}
 
 	//
@@ -154,6 +166,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	}
 
 	public void showFooter() {
+		showFooter = true;
 		mFooterContainer.setVisibility(View.VISIBLE);
 		Animation outAnim;
 		outAnim = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
@@ -161,7 +174,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 			@Override
 			public void onAnimationEnd(Animation anim) {
-				getFooter().getView().setVisibility(View.VISIBLE);
+				mFooterContainer.setVisibility(View.VISIBLE);
+				// mFooter = (FooterFragment)
+				// getSupportFragmentManager().findFragmentById(R.id.rl_footer_container);
+				// mFooter.refreshTitle();
 			}
 
 			@Override
@@ -178,7 +194,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		});
 
-		getFooter().getView().startAnimation(outAnim);
+		mFooterContainer.startAnimation(outAnim);
 	}
 
 	private void replaceMainContent(final NuesoftFragment frag) {
@@ -197,7 +213,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 				switch (fragmentID) {
 				// Patient fragment
 					case 0: {
-						// unlockDrawer();
+						mFooter = new FooterFragment();
+						this.getSupportFragmentManager().beginTransaction()
+						        .replace(R.id.ll_footer_container, mFooter, FooterFragment.TAG).commit();
 						replaceMainContent(new PatientFragment());
 						break;
 					}
@@ -249,6 +267,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		super.onSaveInstanceState(outState);
 
 		outState.putBoolean(DO_INIT_KEY, do_init);
+		outState.putBoolean(FOOTER_FRAG_VISIBLE, showFooter);
 	}
 
 	public class OnFragmentCallbackListener extends NuesoftBroadcastReceiver {
