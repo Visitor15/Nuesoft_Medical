@@ -1,14 +1,12 @@
 package com.mobile.nuesoft.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,61 +26,48 @@ import com.mobile.nuesoft.document.CDADocumentBuilder.CDADocument;
 import com.mobile.nuesoft.document.DataEnterer;
 import com.mobile.nuesoft.document.LegalAuthenticator;
 import com.mobile.nuesoft.document.Participant;
-import com.mobile.nuesoft.document.ServiceEvent;
-import com.mobile.nuesoft.document.ServicePerformer;
 import com.mobile.nuesoft.jobs.CDADocumentUpdateEvent;
 import com.mobile.nuesoft.util.Util;
 
 public class DocumentOverviewFragment extends NuesoftFragment {
 
 	private View rootView;
-
 	private TextView titleText;
-
 	private ExpandableListView expandableList;
-
 	private LayoutInflater mInflater;
-
 	private ExpandableAdapter mAdapter;
-
-	private HashMap<Integer, String> expandableListData = new HashMap<Integer, String>();
 
 	private OnCDADocumentUpdateEventListener documentUpdateListener = new OnCDADocumentUpdateEventListener();
 
+	public DocumentOverviewFragment() {
+		super();
+		TAG = "DocumentOverviewFragment";
+	}
+
 	@Override
 	public void onFragmentCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentPaused() {
 		documentUpdateListener.unregister();
-
 	}
 
 	@Override
 	public void onFragmentResume() {
 		documentUpdateListener.register();
-
 	}
 
 	@Override
 	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -143,13 +128,11 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 	}
 
 	private class ExpandableAdapter extends BaseExpandableListAdapter {
-
 		public static final int DOC_ELEMENT_GET_SUMMARY = 0;
 		public static final int DOC_ELEMENT_AUTHOR = 1;
 		public static final int DOC_ELEMENT_DATA_ENTRY = 2;
-		public static final int DOC_ELEMENT_SERVICE_EVENT_PERSONNEL = 3;
-		public static final int DOC_ELEMENT_LEGAL_AUTH = 4;
-		public static final int DOC_ELEMENT_PARTICIPANTS = 5;
+		public static final int DOC_ELEMENT_LEGAL_AUTH = 3;
+		public static final int DOC_ELEMENT_PARTICIPANTS = 4;
 
 		private ArrayList<Object> parentElements;
 
@@ -168,7 +151,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 			parentElements.add(mDocument.getSUMMARY_TITLE());
 			parentElements.add(mDocument.getAUTHOR());
 			parentElements.add(mDocument.getDATA_ENTERER());
-			parentElements.add(mDocument.getSERVICE_EVENT().getSERVICE_PERFORMERS());
 			parentElements.add(mDocument.getLEGAL_AUTHENTICATOR());
 			parentElements.add(mDocument.getPARTICIPANTS());
 		}
@@ -188,10 +170,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 					case DOC_ELEMENT_DATA_ENTRY: {
 						return (String) ((ArrayList<DataEnterer>) parentElements.get(groupPosition)).get(childPosition)
 						        .getENTERER().getPRINTABLE_NAME();
-					}
-					case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-						return (String) ((ArrayList<ServicePerformer>) parentElements.get(groupPosition)).get(
-						        childPosition).getDISPLAY_NAME();
 					}
 					case DOC_ELEMENT_LEGAL_AUTH: {
 						return (String) ((ArrayList<LegalAuthenticator>) parentElements.get(groupPosition))
@@ -229,49 +207,32 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 				case DOC_ELEMENT_GET_SUMMARY: {
 					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
-
 					break;
 				}
 				case DOC_ELEMENT_AUTHOR: {
 					iconColor.setBackgroundColor(Color.parseColor("#AA66CC"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
-
 					break;
 				}
 				case DOC_ELEMENT_DATA_ENTRY: {
 					iconColor.setBackgroundColor(Color.parseColor("#99CC00"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
-
-					break;
-				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
-					mTitleText.setText(getChild(groupPosition, childPosition));
-
 					break;
 				}
 				case DOC_ELEMENT_LEGAL_AUTH: {
-					iconColor.setBackgroundColor(Color.parseColor("#FF4444"));
+					iconColor.setBackgroundColor(Color.parseColor("#FFBB33"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
-
 					break;
 				}
 				case DOC_ELEMENT_PARTICIPANTS: {
-					iconColor.setBackgroundColor(Color.parseColor("#33B5E5"));
+					iconColor.setBackgroundColor(Color.parseColor("#FF4444"));
 					mTitleText.setText(getChild(groupPosition, childPosition));
-
 					break;
 				}
 				default: {
 					break;
 				}
 			}
-
-			// RelativeLayout.LayoutParams params = new
-			// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-			// RelativeLayout.LayoutParams.WRAP_CONTENT);
-			// ((RelativeLayout)
-			// convertView.findViewById(R.id.rl_container)).setLayoutParams(params);
 
 			return convertView;
 		}
@@ -287,9 +248,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 				}
 				case DOC_ELEMENT_DATA_ENTRY: {
 					return ((ArrayList<DataEnterer>) parentElements.get(groupPosition)).size();
-				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-					return ((ArrayList<ServicePerformer>) parentElements.get(groupPosition)).size();
 				}
 				case DOC_ELEMENT_LEGAL_AUTH: {
 					return ((ArrayList<LegalAuthenticator>) parentElements.get(groupPosition)).size();
@@ -314,9 +272,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 				}
 				case DOC_ELEMENT_DATA_ENTRY: {
 					return "Data Entry";
-				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
-					return "Service Personnel";
 				}
 				case DOC_ELEMENT_LEGAL_AUTH: {
 					return "Legal Authenticator";
@@ -367,18 +322,13 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 					break;
 				}
-				case DOC_ELEMENT_SERVICE_EVENT_PERSONNEL: {
+				case DOC_ELEMENT_LEGAL_AUTH: {
 					iconColor.setBackgroundColor(Color.parseColor("#FF8800"));
 
 					break;
 				}
-				case DOC_ELEMENT_LEGAL_AUTH: {
-					iconColor.setBackgroundColor(Color.parseColor("#CC0000"));
-
-					break;
-				}
 				case DOC_ELEMENT_PARTICIPANTS: {
-					iconColor.setBackgroundColor(Color.parseColor("#0099CC"));
+					iconColor.setBackgroundColor(Color.parseColor("#CC0000"));
 
 					break;
 				}
@@ -389,13 +339,11 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 		@Override
 		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
 		@Override
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 	}
@@ -412,8 +360,6 @@ public class DocumentOverviewFragment extends NuesoftFragment {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
-
 			try {
 				if ((Nuesoft.getCurrentCDADocument() == null)) {
 					showNoDataView(rootView);

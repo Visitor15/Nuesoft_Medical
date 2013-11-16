@@ -25,25 +25,16 @@ import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.DecryptionJob;
 
 public class DecryptDocDialog extends DialogFragment implements OnClickListener {
-
 	public static final String TAG = "DecryptDocDialog";
-
 	private static final String URI_KEY = "doc_uri_key";
-
+	
 	private Uri docUri;
-
 	private View rootView;
-
 	private TextView mTitle;
-
 	private TextView decodedPIN;
-
 	private Button btnCancel;
-
 	private Button btnUnlock;
-
 	private EditText etInput;
-
 	private String mData;
 
 	public DecryptDocDialog() {
@@ -63,9 +54,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 		if (savedInstanceState != null) {
 			docUri = Uri.parse(savedInstanceState.getString(URI_KEY));
 		}
@@ -74,7 +63,6 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 	@Override
 	public void onSaveInstanceState(Bundle b) {
 		super.onSaveInstanceState(b);
-
 		b.putString(URI_KEY, docUri.toString());
 	}
 
@@ -99,19 +87,16 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 	}
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -119,15 +104,11 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 		text.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void afterTextChanged(Editable arg0) {
-				// TODO Auto-generated method stub
-
+			public void afterTextChanged(Editable e) {
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -149,13 +130,11 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 					mData = null;
 				}
 			}
-
 		});
 	}
 
 	private String decodeBase64String(final String encodedStr) throws UTFDataFormatException {
 		String decodedStr = "";
-
 		try {
 			final byte[] byteVal = Base64.decode(DecryptionJob.ENC_PIECE_1.concat(encodedStr), Base64.DEFAULT);
 			final ByteArrayInputStream is = new ByteArrayInputStream(byteVal);
@@ -183,12 +162,14 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 				try {
 					DecryptionJob job = new DecryptionJob();
 					job.execute(new String[] { docUri.getPath(), "0000".concat(mData) });
+					dismiss();
 				} catch (final NullPointerException e) {
-//					decodedPIN.setText("(ノಠ益ಠ)ノ No!");
+					// decodedPIN.setText("(ノಠ益ಠ)ノ No!");
 					Toast.makeText(getActivity(), "Incorrect PIN", Toast.LENGTH_LONG).show();
 				}
 				break;
-			} case R.id.btn_cancel: {
+			}
+			case R.id.btn_cancel: {
 				dismiss();
 			}
 		}

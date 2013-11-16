@@ -31,16 +31,12 @@ import com.mobile.nuesoft.jobs.EncryptionJobEvent;
 public class SendDocFragment extends NuesoftFragment implements OnClickListener {
 
 	public static final String TAG = "SendDocDialog";
-
 	private static final int REQUEST_CODE = 121;
 
 	private View rootView;
-
 	private TextView filenameTitle;
-
 	private Button btnCancel;
 	private Button btnEncryptAndSend;
-
 	private EditText etEmailAddr;
 	private EditText etPinPswrd1;
 	private EditText etPinPswrd2;
@@ -52,26 +48,18 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 
 	@Override
 	public void onFragmentCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -99,8 +87,6 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -179,7 +165,6 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 			((MainActivity) getActivity()).showFooter();
 			getActivity().getSupportFragmentManager().popBackStackImmediate();
 		}
-
 	}
 
 	public class OnEncryptionEventListener extends NuesoftBroadcastReceiver {

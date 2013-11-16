@@ -25,7 +25,7 @@ import com.mobile.nuesoft.ui.RegistrationFragment;
 import com.mobile.nuesoft.ui.SendDocFragment;
 import com.mobile.nuesoft.ui.UnlockCDADocFragment;
 
-public class MainActivity extends ActionBarActivity implements OnClickListener {
+public class MainActivity extends ActionBarActivity {
 
 	public static final String TAG = "MainActivity";
 	private static final String DO_INIT_KEY = "do_init_key";
@@ -119,16 +119,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 			@Override
 			public void onAnimationRepeat(Animation anim) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onAnimationStart(Animation anim) {
-				// TODO Auto-generated method stub
-
 			}
-
 		});
 
 		if (mFooterContainer.isShown()) {
@@ -211,13 +206,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 				}
 				break;
 			}
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		// Do nothing
 		}
 	}
 

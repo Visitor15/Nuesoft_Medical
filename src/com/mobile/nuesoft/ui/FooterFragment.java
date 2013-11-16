@@ -24,22 +24,17 @@ import com.mobile.nuesoft.jobs.PatientUpdateEvent;
 public class FooterFragment extends NuesoftFragment implements OnClickListener {
 
 	private View rootView;
-
 	private ImageView btnLeft;
 	private ImageView btnRight;
-
 	private TextView mTitleText;
 
 	OnPatientUpdatedListener patientEventListener = new OnPatientUpdatedListener();
 
 	public FooterFragment() {
-
 	}
 
 	@Override
 	public void onFragmentCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -58,20 +53,14 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 
 	@Override
 	public void onSave(Bundle outState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStart() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onFragmentStop() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -116,21 +105,14 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
 				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.PATIENT_FRAGMENT.ordinal());
 				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
-
 				break;
 			}
 
 			case R.id.btn_send_now: {
-
-				// SendDocFragment dialogFrag = new SendDocFragment();
-				// dialogFrag.show(getActivity().getSupportFragmentManager(),
-				// SendDocFragment.TAG);
-
 				Bundle b = new Bundle();
 				b.putInt(FragmentCallbackEvent.ACTION_KEY, FragmentCallbackEvent.ACTIONS.REPLACE_MAIN_CONTENT.ordinal());
 				b.putInt(FragmentCallbackEvent.FRAGMENT, FragmentCallbackEvent.FRAGMENTS.SEND_DOC_FRAGMENT.ordinal());
 				FragmentCallbackEvent.broadcast(Nuesoft.getReference(), b);
-
 				break;
 			}
 		}
@@ -153,7 +135,7 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
 					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
 					if (isFinished) {
-						 refreshTitle();
+						refreshTitle();
 					}
 				}
 			}
