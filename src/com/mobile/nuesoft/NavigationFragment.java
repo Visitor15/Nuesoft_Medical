@@ -26,15 +26,11 @@ import com.mobile.nuesoft.ui.NuesoftBroadcastReceiver;
 import com.mobile.nuesoft.ui.OnPatientObjUpdated;
 
 public class NavigationFragment extends NuesoftFragment implements OnPatientObjUpdated {
-
 	public static final String TAG = "NavigationFragment";
 
 	private TextView mTitleName;
-
 	private ListView mListview;
-
 	private ListViewAdapter mAdapter;
-
 	private OnPatientUpdatedListener patientUpdatedListener = new OnPatientUpdatedListener();
 
 	public NavigationFragment() {
