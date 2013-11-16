@@ -40,7 +40,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 	private Button btnUnlock;
 
-	private EditText etEncryptedPIN;
+	private EditText etInput;
 
 	private String mData;
 
@@ -75,7 +75,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.decrypt_doc_dialog_layout, container, false);
 
-		etEncryptedPIN = (EditText) rootView.findViewById(R.id.et_ecrypted_pin);
+		etInput = (EditText) rootView.findViewById(R.id.et_input);
 		btnUnlock = (Button) rootView.findViewById(R.id.btn_unlock);
 		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 		mTitle = (TextView) rootView.findViewById(R.id.nt_filename);
@@ -83,7 +83,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 		mTitle.setText(docUri.getLastPathSegment());
 
-		initEditTextListener(etEncryptedPIN);
+		initEditTextListener(etInput);
 		btnUnlock.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
 
@@ -125,14 +125,21 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				mData = null;
 				try {
-					if (etEncryptedPIN.length() >= 8) {
-						mData = decodeBase64String(etEncryptedPIN.getText().toString()).substring(4);
+					if (etInput.length() == 8) {
+						mData = decodeBase64String(etInput.getText().toString()).substring(4);
 						decodedPIN.setText(mData);
+					} else if (etInput.length() == 4) {
+						Integer.parseInt(etInput.getText().toString());
+						mData = etInput.getText().toString();
+					} else {
+						decodedPIN.setText("----");
 					}
 				} catch (final UTFDataFormatException e) {
-					Toast.makeText(getActivity(), "Incorrect encoded PIN", Toast.LENGTH_LONG).show();
-					decodedPIN.setText("----");
+					mData = null;
+				} catch (final NumberFormatException e) {
+					mData = null;
 				}
 			}
 
@@ -146,7 +153,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 			final byte[] byteVal = Base64.decode(DecryptionJob.ENC_PIECE_1.concat(encodedStr), Base64.DEFAULT);
 			final ByteArrayInputStream is = new ByteArrayInputStream(byteVal);
 			final ObjectInputStream in;
-			
+
 			in = new ObjectInputStream(is);
 			decodedStr = in.readUTF();
 		} catch (StreamCorruptedException e) {
@@ -155,7 +162,7 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new UTFDataFormatException();
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new UTFDataFormatException();
 		}
 
@@ -166,12 +173,17 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_unlock: {
-				DecryptionJob job = new DecryptionJob();
-				job.execute(new String[] { docUri.getPath(), "0000".concat(mData) });
+				try {
+					DecryptionJob job = new DecryptionJob();
+					job.execute(new String[] { docUri.getPath(), "0000".concat(mData) });
+					dismiss();
+				} catch (final NullPointerException e) {
+					Toast.makeText(getActivity(), "Incorrect encoded PIN", Toast.LENGTH_LONG).show();
+					decodedPIN.setText("(ノಠ益ಠ)ノ No!");
+					Toast.makeText(getActivity(), "Incorrect PIN", Toast.LENGTH_LONG).show();
+				}
 				break;
 			}
 		}
-
-		dismiss();
 	}
 }
