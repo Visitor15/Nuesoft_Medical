@@ -183,13 +183,13 @@ public class DecryptDocDialog extends DialogFragment implements OnClickListener 
 				try {
 					DecryptionJob job = new DecryptionJob();
 					job.execute(new String[] { docUri.getPath(), "0000".concat(mData) });
-					dismiss();
 				} catch (final NullPointerException e) {
-					Toast.makeText(getActivity(), "Incorrect encoded PIN", Toast.LENGTH_LONG).show();
-					decodedPIN.setText("(ノಠ益ಠ)ノ No!");
+//					decodedPIN.setText("(ノಠ益ಠ)ノ No!");
 					Toast.makeText(getActivity(), "Incorrect PIN", Toast.LENGTH_LONG).show();
 				}
 				break;
+			} case R.id.btn_cancel: {
+				dismiss();
 			}
 		}
 	}

@@ -1,15 +1,18 @@
 package com.mobile.nuesoft.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +31,8 @@ import com.mobile.nuesoft.jobs.EncryptionJobEvent;
 public class SendDocFragment extends NuesoftFragment implements OnClickListener {
 
 	public static final String TAG = "SendDocDialog";
+
+	private static final int REQUEST_CODE = 121;
 
 	private View rootView;
 
@@ -124,7 +129,7 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 		        "0000".concat(etPinPswrd1.getText().toString())).substring(16)));
 		emailIntent.putExtra(Intent.EXTRA_STREAM,
 		        Uri.parse(Nuesoft.getCurrentCDADocument().getDOC_URI().toString().concat(".ncc")));
-		startActivity(Intent.createChooser(emailIntent, "Send email..."));
+		startActivityForResult(Intent.createChooser(emailIntent, "Send email..."), REQUEST_CODE);
 	}
 
 	private String encodeBase64String(final String str) {
@@ -161,6 +166,20 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_CODE) {
+			File mFile = new File(Nuesoft.getCurrentCDADocument().getDOC_URI().getPath().concat(".ncc"));
+			if (mFile.exists()) {
+				mFile.delete();
+			}
+			((MainActivity) getActivity()).showFooter();
+			getActivity().getSupportFragmentManager().popBackStackImmediate();
+		}
+
 	}
 
 	public class OnEncryptionEventListener extends NuesoftBroadcastReceiver {

@@ -153,7 +153,7 @@ public class FooterFragment extends NuesoftFragment implements OnClickListener {
 				if (b.containsKey(ParseCDADocumentJob.IS_FINISHED_KEY)) {
 					boolean isFinished = b.getBoolean(ParseCDADocumentJob.IS_FINISHED_KEY);
 					if (isFinished) {
-						// handleFooter();
+						 refreshTitle();
 					}
 				}
 			}

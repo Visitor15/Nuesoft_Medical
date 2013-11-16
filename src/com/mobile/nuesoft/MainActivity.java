@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public static final String TAG = "MainActivity";
 	private static final String DO_INIT_KEY = "do_init_key";
 	private static final String FOOTER_FRAG_VISIBLE = "footer_frag_visbility";
-	
+
 	private LinearLayout mFooterContainer;
 
 	private boolean do_init = true;
@@ -134,7 +134,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		if (mFooterContainer.isShown()) {
 			mFooterContainer.startAnimation(outAnim);
 		}
-
 	}
 
 	public FooterFragment getFooter() {

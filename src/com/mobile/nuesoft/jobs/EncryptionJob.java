@@ -55,8 +55,6 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
-
-		Log.d(TAG, "ENCRYPTION: " + result);
 		
 		updateBundle = new Bundle();
 		updateBundle.putBoolean(EncryptionJob.IS_FINISHED_KEY, result);
@@ -66,7 +64,6 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected Boolean doInBackground(String... param) {
 		String mPath = param[0];
-		String mPswrd;
 		File mFile = new File(mPath);
 		if (mFile.exists()) {
 			try {
@@ -75,10 +72,6 @@ public class EncryptionJob extends AsyncTask<String, Void, Boolean> {
 				objOutStream = new ObjectOutputStream(outStream);
 				objOutStream.writeUTF(param[1]);
 				objOutStream.flush();
-
-				Log.d(TAG, "NCC - GOT PASSWORD: " + param[1]);
-				
-//				mPswrd = Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT);
 
 				byte[] seedKey = param[1].getBytes();
 				in = new FileInputStream(mFile);

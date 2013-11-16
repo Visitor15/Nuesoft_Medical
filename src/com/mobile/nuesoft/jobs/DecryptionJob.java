@@ -71,10 +71,9 @@ public class DecryptionJob extends AsyncTask<String, Void, Boolean> {
 				in = new FileInputStream(mEncryptedFile);
 
 				String encryptFileName = mEncryptedFile.getName();
-				String decryptFileName = "DEC_" + encryptFileName.substring(0, encryptFileName.length() - 4);
+				String decryptFileName = encryptFileName.substring(0, encryptFileName.length() - 8).concat("_UNLOCKED.xml");
 
 				String mTmpPath = mEncryptedFile.getParentFile().getPath().concat("/").concat(decryptFileName);
-				Log.d(TAG, "NCC - PATH: " + mTmpPath);
 				mFile = new File(mTmpPath);
 				out = new FileOutputStream(mFile);
 				mKeySpec = new SecretKeySpec(seedKey, ALGORITHM);
