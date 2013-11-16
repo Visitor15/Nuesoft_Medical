@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.mobile.nuesoft"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobile.nuesoft"
     android:versionCode="1"
-    android:versionName="1.0"
-     xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Nuesoft"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:debuggable="true"
+        android:icon="@drawable/nuesoft_medical_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:debuggable="true" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.mobile.nuesoft.MainActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation" >
+            android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
