@@ -268,11 +268,11 @@ public class DocumentListFragment extends NuesoftFragment {
 			String mTitle;
 			switch (groupPosition) {
 				case GROUP_ONE: {
-					mTitle = "Open";
+					mTitle = "Unlocked";
 					break;
 				}
 				case GROUP_TWO: {
-					mTitle = "Encrypted";
+					mTitle = "Locked";
 					break;
 				}
 				default: {
@@ -299,21 +299,7 @@ public class DocumentListFragment extends NuesoftFragment {
 				convertView = mInflater.inflate(R.layout.expandable_list_parent_item_view, null);
 			}
 
-			String mTitle;
-
-			switch (groupPosition) {
-				case GROUP_ONE: {
-					mTitle = "Open";
-					break;
-				}
-				case GROUP_TWO: {
-					mTitle = "Encrypted";
-					break;
-				}
-				default: {
-					mTitle = "Error";
-				}
-			}
+			String mTitle = getGroup(groupPosition);
 
 			TextView titleText = (TextView) convertView.findViewById(R.id.nt_name);
 			titleText.setText(mTitle);
