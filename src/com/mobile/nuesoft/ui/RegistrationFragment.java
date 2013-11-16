@@ -134,7 +134,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 				}
 
-				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equals(pswrd2)) {
+				if ((pswrd1.trim().length() > 0) && (pswrd2.trim().length() > 0) && pswrd1.equalsIgnoreCase(pswrd2)) {
 
 					mUser.setUserName(userName);
 
@@ -153,7 +153,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 						e.printStackTrace();
 					}
 				} else {
-					Toast.makeText(getActivity(), "Your passwords must equal", Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "Passwords do not equal", Toast.LENGTH_LONG).show();
 				}
 
 				break;

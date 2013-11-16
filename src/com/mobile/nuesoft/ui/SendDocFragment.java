@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobile.nuesoft.MainActivity;
 import com.mobile.nuesoft.Nuesoft;
@@ -100,9 +101,16 @@ public class SendDocFragment extends NuesoftFragment implements OnClickListener 
 	}
 
 	private void beginSending() {
-		EncryptionJob job = new EncryptionJob();
-		job.execute(new String[] { Nuesoft.getCurrentCDADocument().getDOC_URI().getPath(),
-		        "0000".concat(etPinPswrd1.getText().toString()) });
+		String pin1 = etPinPswrd1.getText().toString();
+		String pin2 = etPinPswrd2.getText().toString();
+
+		if (pin1.equalsIgnoreCase(pin2)) {
+			EncryptionJob job = new EncryptionJob();
+			job.execute(new String[] { Nuesoft.getCurrentCDADocument().getDOC_URI().getPath(),
+			        "0000".concat(etPinPswrd1.getText().toString()) });
+		} else {
+			Toast.makeText(getActivity(), "PIN numbers do not match", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	private void sendDocument() {
