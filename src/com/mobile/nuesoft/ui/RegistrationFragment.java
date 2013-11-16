@@ -88,7 +88,7 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 		pswrd1ET = (EditText) rootView.findViewById(R.id.et_password_one);
 		pswrd2ET = (EditText) rootView.findViewById(R.id.et_password_two);
 
-		btnRegister = (Button) rootView.findViewById(R.id.btn_register);
+		btnRegister = (Button) rootView.findViewById(R.id.btn_next);
 		btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
 
 		btnRegister.setOnClickListener(this);
@@ -102,13 +102,12 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.btn_register: {
+			case R.id.btn_next: {
 				NuesoftUser mUser = new NuesoftUser();
 
 				String userName = "";
@@ -149,8 +148,6 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 						mUser.setString64PSWRD(Base64.encodeToString(outStream.toByteArray(), Base64.DEFAULT));
 
-						Log.d(TAG, "NCC - STUFF: " + mUser.getString64PSWRD() + " AND " + mUser.getUserName());
-
 						((MainActivity) getActivity()).replaceMainContent(new RegistrationFragmentPartTwo(mUser));
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -165,7 +162,6 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 				getActivity().getSupportFragmentManager().popBackStackImmediate();
 				break;
 			}
-
 		}
 	}
 
@@ -181,7 +177,6 @@ public class RegistrationFragment extends NuesoftFragment implements OnClickList
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
 
 			Bundle result = intent.getExtras();
 

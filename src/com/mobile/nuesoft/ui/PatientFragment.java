@@ -45,16 +45,6 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 	private PatientObj mPatient;
 
-	private ParseCDADocumentJob docParseJob;
-
-	private boolean shouldParse = true;
-
-	private String docPath = "mnt/sdcard0/download";
-
-	private Uri parseUri;
-
-	private LinearLayout activeReferralContainer;
-
 	private OnPatientUpdatedListener onPatientUpdatedListener = new OnPatientUpdatedListener();
 	private OnFragmentCallbackListener onFragmentCallbackListener = new OnFragmentCallbackListener();
 
@@ -81,7 +71,6 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 	@Override
 	public void onSave(Bundle outState) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -100,8 +89,7 @@ public class PatientFragment extends NuesoftFragment implements OnPatientObjUpda
 
 		mPatientTitleName = (TextView) v.findViewById(R.id.nt_name);
 		profileIcon = (ProfilePicImageView) v.findViewById(R.id.nt_profile_pic);
-
-		// Instantiate a ViewPager and a PagerAdapter.
+		
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), getActivity());
 		mPagerAdapter.init();

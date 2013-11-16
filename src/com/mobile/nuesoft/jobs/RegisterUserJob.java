@@ -53,16 +53,12 @@ public class RegisterUserJob extends AsyncTask<NuesoftUser, Void, Boolean> {
 				mUser.setProfilePicURI(user[0].getProfilePicUri());
 				mUser.setSalt(generateSalt());
 				mUser.setEncryptedPassword(Util.getEncryptedPassword(user[0].getString64PSWRD(), mUser.getSalt()));
-				
-				Log.d(TAG, "NCC - MORE THINGS: " + mUser.getEncryptedPassword().length);
 
 				// Saving user to preferences
 				result = NuesoftPreferences.getInstance().saveRegisteredUser(mUser);
 			} catch (final NoSuchAlgorithmException e) {
-				Log.d(TAG, "NCC - CAUGHT 1");
 				
 			} catch (InvalidKeySpecException e) {
-				Log.d(TAG, "NCC - CAUGHT 2");
 				e.printStackTrace();
 			}
 		}

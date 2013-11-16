@@ -102,8 +102,6 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
 	@Override
 	public void onFragmentViewCreated(View v, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -161,8 +159,6 @@ public class LoginFragment extends NuesoftFragment implements OnClickListener {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
-
 			Bundle result = intent.getExtras();
 			boolean mSuccess = result.getBoolean(NuesoftUserLoginEvent.RESULT_KEY);
 

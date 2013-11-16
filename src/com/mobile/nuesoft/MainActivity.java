@@ -28,16 +28,12 @@ import com.mobile.nuesoft.ui.UnlockCDADocFragment;
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	public static final String TAG = "MainActivity";
-
 	private static final String DO_INIT_KEY = "do_init_key";
-
 	private static final String FOOTER_FRAG_VISIBLE = "footer_frag_visbility";
-
-	private RelativeLayout mainContainer;
+	
 	private LinearLayout mFooterContainer;
 
 	private boolean do_init = true;
-
 	private boolean showFooter = false;
 
 	private FooterFragment mFooter = new FooterFragment();
@@ -47,17 +43,12 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
-		// navDrawer = (DrawerLayout) findViewById(R.id.nav_drawer);
-		// navHandle = (ImageView) findViewById(R.id.nav_handle);
-		mainContainer = (RelativeLayout) findViewById(R.id.content_frame);
 		mFooterContainer = (LinearLayout) findViewById(R.id.ll_footer_container);
 
 		if (savedInstanceState != null) {
 			do_init = savedInstanceState.getBoolean(DO_INIT_KEY);
 			showFooter = savedInstanceState.getBoolean(FOOTER_FRAG_VISIBLE);
 		}
-
 		if (do_init) {
 			init();
 		}
@@ -85,7 +76,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		fragCallbackListener.register();
 		if (showFooter) {
-			Log.d(TAG, "NCC - HIT SHOW FOOTER");
 			this.showFooter();
 		}
 	}
@@ -114,15 +104,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		        .commit();
 		Fragment frag = new LoginFragment();
 		this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame, frag, LoginFragment.TAG).commit();
-
-		// Fragment frag = new RegistrationFragment();
-		// this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
-		// frag, RegistrationFragment.TAG)
-		// .commit();
-
-		// Fragment frag = new PatientFragment();
-		// this.getSupportFragmentManager().beginTransaction().add(R.id.content_frame,
-		// frag, PatientFragment.TAG).commit();
 	}
 
 	public void hideFooter() {
@@ -156,11 +137,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	}
 
-	//
-	// public void unlockDrawer() {
-	// mFooterContainer.setVisibility(View.VISIBLE);
-	// }
-
 	public FooterFragment getFooter() {
 		return mFooter;
 	}
@@ -175,21 +151,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			@Override
 			public void onAnimationEnd(Animation anim) {
 				mFooterContainer.setVisibility(View.VISIBLE);
-				// mFooter = (FooterFragment)
-				// getSupportFragmentManager().findFragmentById(R.id.rl_footer_container);
-				// mFooter.refreshTitle();
 			}
 
 			@Override
 			public void onAnimationRepeat(Animation anim) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onAnimationStart(Animation anim) {
-				// TODO Auto-generated method stub
-
 			}
 
 		});
@@ -222,25 +191,21 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 					// Registration fragment
 					case 1: {
-						// this.closeAndLockDrawer();
 						replaceMainContent(new RegistrationFragment());
 						break;
 					}
 					// Login fragment
 					case 2: {
-						// this.closeAndLockDrawer();
 						replaceMainContent(new LoginFragment());
 						break;
 					}
 					case 3: {
 						// Unlock CDA Document fragment
-						// this.closeAndLockDrawer();
 						replaceMainContent(new UnlockCDADocFragment());
 						break;
 					}
 					case 4: {
 						// Send CDA Document fragment
-						// this.closeAndLockDrawer();
 						replaceMainContent(new SendDocFragment());
 						break;
 					}
@@ -253,12 +218,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		// case R.id.nav_handle: {
-		//
-		// navDrawer.openDrawer(Gravity.LEFT);
-		//
-		// break;
-		// }
+		// Do nothing
 		}
 	}
 
@@ -282,7 +242,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
 			onHandleFragmentCallback(intent.getExtras());
 		}
 	}

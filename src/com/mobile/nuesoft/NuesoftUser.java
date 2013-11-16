@@ -45,7 +45,6 @@ public class NuesoftUser {
 	
 	public void setProfilePicURI(final String uri) {
 		this.profilePicURI = uri;
-		Log.d(TAG, "URI IS: " + this.profilePicURI);
 	}
 	
 	public String getProfilePicUri() {
@@ -81,9 +80,6 @@ public class NuesoftUser {
 			objOutStream.write(salt, 0, salt.length);
 			objOutStream.writeInt(encryptedPSWRD.length);
 			objOutStream.write(encryptedPSWRD, 0, encryptedPSWRD.length);
-			
-			Log.d(TAG, "NCC - WRITING URI: " + getProfilePicUri());
-			
 			objOutStream.writeUTF(getProfilePicUri());
 			
 			objOutStream.flush();

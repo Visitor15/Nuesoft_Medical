@@ -1,10 +1,8 @@
 package com.mobile.nuesoft.ui;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,8 +11,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +27,6 @@ import com.mobile.nuesoft.NuesoftUser;
 import com.mobile.nuesoft.R;
 import com.mobile.nuesoft.jobs.NuesoftRegisteredUserEvent;
 import com.mobile.nuesoft.jobs.RegisterUserJob;
-import com.mobile.nuesoft.preferences.NuesoftPreferences;
 
 public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnClickListener {
 
@@ -135,9 +130,7 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_register: {
-
 				RegisterUserJob registerJob = new RegisterUserJob();
-				Log.d(TAG, "NCC - PROFILE PIC URI: " + mUser.getProfilePicUri());
 				registerJob.execute(mUser);
 
 				break;
@@ -166,18 +159,11 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 
 		if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
 			try {
-				// We need to recyle unused bitmaps
-				if (bitmap != null) {
-					bitmap.recycle();
-				}
 				InputStream stream = getActivity().getContentResolver().openInputStream(data.getData());
 				bitmap = BitmapFactory.decodeStream(stream);
 				stream.close();
 				profilePic.setImageBitmap(bitmap);
 				profilePic.initWithNewImage();
-				
-				Log.d(TAG, "NCC - GOT URI: " + data.getData().toString());
-				
 				mUser.setProfilePicURI(data.getData().toString());
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -198,8 +184,6 @@ public class RegistrationFragmentPartTwo extends NuesoftFragment implements OnCl
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(TAG, "onReceive HIT");
-
 			Bundle result = intent.getExtras();
 
 			boolean mSuccess = result.getBoolean(NuesoftRegisteredUserEvent.RESULT_KEY);

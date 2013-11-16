@@ -148,12 +148,12 @@
             android:background="#AAC2C2C2" />
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_next"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_background_clickable_item"
-            android:text="Register"
+            android:text="Next"
             android:textColor="#AA282828" />
     </LinearLayout>
 
